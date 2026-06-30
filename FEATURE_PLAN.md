@@ -1,115 +1,159 @@
-# FEATURE_PLAN.md — v0.1 MVP (consolidated)
+# FEATURE_PLAN.md — v0.1 MVP (from-scratch build)
 
-**Mode:** Planner Mode 2 (Feature plan). **Gate:** C2 — plan approved before any code.
-**Scope guard:** SPEC §5 only — exactly the five modules. No feature beyond §5 is planned here; anything larger is v0.2+ backlog (FEATURE_BACKLOG.md, "deferred"), flagged, never silently added.
+Produced by the Planner (FACTORY §2, Mode 2) before any code is written. Covers all five SPEC §5 modules as one buildable unit, since the architecture (SPEC §9) is a single self-contained `index.html` and the modules share one pure block and one registry. Gate C2: the App-Developer may not write code until this plan is explicit.
 
-This is a *consolidated* plan for the whole v0.1 build (all five modules ship in one single-file app), written so a reviewer can check the implementation against it. The single-file architecture (SPEC §9.4) means `filesToChange` is one HTML file plus its test; per Gate C2 the *sections* of that file are named explicitly, both the ones to change and the ones to leave alone.
+**Build context:** this is a from-scratch build. There is no prior `index.html` and no `tests/` directory in the working tree. Do not look for, reference, or copy any earlier implementation — build directly from `SPEC.md`, `SOURCES.md`, and `DESIGN_SYSTEM.md`. `PROJECT_MEMORY.md`'s "Recurring bugs" and prior-iteration notes are carried forward below as constraints, not as code to find.
 
 ---
 
 ## feature
 
-**v0.1 MVP — the five modules** (FEATURE_BACKLOG F-001..F-006):
+**v0.1 MVP — five modules, one architecture.**
 
-- **F-001** — Search-as-spine + unified fastener view (P0). Home is a search field; one query (`M6`, `M8x1`, `1/4-20`, `#10-24`) returns thread + tap drill + clearance together (SPEC §3).
-- **F-002** — Thread data, ISO metric M1.6–M24 + Unified #4–1/2" (P0). Nominal Ø, pitch, pitch Ø, minor Ø; geometry derived from the ISO 68-1 / ASME B1.1 profile, not a transcribed table (SPEC §5.1, SOURCES §7).
-- **F-003** — Tap drill, both engagements (P0). ~75% (`D−P`) and ~50% (`D−0.6495·P`), with the harder-material caveat (SPEC §5.2).
-- **F-004** — Clearance holes (P0). Close / normal / loose; metric per ISO 273, imperial subset per ASME B18.2.8 (SPEC §5.3).
-- **F-005** — Unit conversion (P0). Inch↔mm + common engineering units (length, force, torque, pressure/stress, mass, temperature); the single fastest path, unit inline, convention never guessed (SPEC §5.4).
-- **F-006** — Cantilever beam deflection (P1, architecture showcase). Tip deflection + max bending stress + section properties; formula and source shown; pure `f(inputs)→{result,formula,source}` (SPEC §5.5).
+| ref | name | priority |
+|---|---|---|
+| F-001 | Search-as-spine + unified fastener view | P0 |
+| F-002 | Thread data (ISO metric + Unified subset) | P0 |
+| F-003 | Tap drill sizes (both engagements) | P0 |
+| F-004 | Clearance holes | P0 |
+| F-005 | Unit conversion | P0 |
+| F-006 | Cantilever beam deflection | P1 (architecture showcase) |
 
-The four P0 modules are the daily-open core; F-006 is the one calculator that proves calculators inherit the same provenance discipline as the tables. The showcase must not dilute the core.
+All six ship together in this single iteration: F-001 is the integration surface that consumes F-002/003/004's data, and F-005/F-006 share the same pure-function + provenance pattern. Splitting them across separate plans would fragment a single-file architecture for no benefit — they land as one `index.html` build, sequenced internally per `buildSequence` below.
+
+---
+
+## buildSequence
+
+Three agents own disjoint regions of the same artifact. Each owns a clearly bounded section; no agent edits another's section directly — handoffs happen by the orchestrator re-invoking the next agent once a section is complete, not by agents reaching into each other's code.
+
+### 1. Data-Builder — owns the data portion of the pure block
+**Scope:** inside `/* @pure-start ... @pure-end */` in `index.html`, the *data* half only:
+- The source registry (verbatim structure from SOURCES.md §4: `SRC001`–`SRC009`, fields `title/authority/type/tier/status/usedBy`).
+- Per-record provenance objects matching the SOURCES.md §5 `Provenance` interface, attached to every thread row, tap-drill row, clearance value, conversion factor, and material modulus — never inline prose, always `sourceId` → registry.
+- Domain data:
+  - Thread table: M1.6–M24 (coarse + common fine) + UNC/UNF #4–1/2", with nominal Ø, pitch, major/minor/pitch Ø, each row provenance-tagged per SOURCES.md §6 (SRC001/002/003 metric, SRC005 Unified, SRC004 cross-check) — derived from the ISO 68-1 / ASME B1.1 profile formulas, not a verbatim copied table (SOURCES §7 licensing rule).
+  - Thread-geometry constants: pitch-diameter offset `0.649519`, basic-minor-diameter offset `1.082532` (these must reproduce M6 = 5.350 / 4.917 mm exactly against Machinery's Handbook — see `risks`).
+  - Tap drill table: ~75% and ~50% engagement values per thread, metric rule `drill ≈ D_major − pitch` documented alongside the stored value, material-caveat text in `notes`.
+  - Clearance table: close/normal/loose Ø per fastener size, metric per ISO 273 (SRC006), imperial subset per ASME B18.2.8 (SRC007), SRC004 cross-check; honest gaps (e.g. imperial number sizes #4–#8 outside the confident range) must use the "no verified value" path, never a guessed number.
+  - Conversion factor table: inch↔mm + common engineering units, exact factors (e.g. 1 in = 25.4 mm) marked `Verified Against Primary` / tier A via SRC009 (NIST SP 811); non-exact factors tiered honestly.
+  - Beam-calc material library: E (Young's modulus) per material, cited to SRC008 (Roark) / standard handbook values.
+- A `dataVersion` field (SOURCES §10 stub) at the top of the data block.
+
+**Out of scope for Data-Builder:** no calculator functions, no query parser, no DOM, no rendering. Pure data + provenance objects only, shaped for the App-Developer's registry to consume.
+
+### 2. App-Developer — owns logic, registry, rendering, tests
+**Scope, after Data-Builder's section exists:**
+- The *logic* half of the pure block: pure calculators `f(inputs) -> {result, formula, source}` for tap drill, unit conversion, and beam deflection (rect b×h and round d sections, tip point load + UDL mode, deflection + max bending stress + optional safety factor, Euler–Bernoulli, source = SRC008).
+- The query parser: normalizes typed input (`M6`, `M8x1`, `1/4-20`, `#10-24`, `0.5 in`) into a lookup key. Must normalize the historical fragility class around mixed `#`-prefix conventions for number sizes vs. unprefixed fractional sizes consistently — define one canonical key shape and parse all input variants into it; a valid fastener callout must never silently fail to resolve.
+- The domain registry pattern: `domain -> {label, data, renderer}` so F-001's search-as-spine and the module fallback tabs are data-driven, per SPEC §9.5.
+- The UI layer (IIFE, DOM-only, no business logic): search-as-spine home screen, combined fastener view (thread + tap drill + clearance in one card for F-001), converter UI, beam-calc form, and the **single badge-bearing rendering primitive** every displayed value must route through (e.g. one `valRow`/`callout` component that always renders number + inline unit + tier badge). No second render path may print a bare number — see `risks`.
+- `tests/calculators.test.mjs`: loads the pure block as the single source of truth (no re-implementation of calculator logic in the test file) and checks purity, sampled value correctness, and provenance presence (see `testPlan`).
+
+**Sequencing dependency:** App-Developer's registry and renderer consume the data shapes Data-Builder defines, so App-Developer's section is written/finalized after Data-Builder's data structures exist (or in lockstep, with the data shape agreed first). The orchestrator should not hand App-Developer the rendering pass until thread/tap/clearance/conversion/material data is in place.
+
+### 3. UI/UX-Designer — applies DESIGN_SYSTEM.md across the built UI
+**Scope:** styling pass over the App-Developer's markup/CSS, not new structure or logic:
+- Palette: the 6 named tokens (`--ink`, `--surface`, `--panel`, `--rule`, `--layout-blue`, `--graphite`) + semantic (`--valid`/`--caution`/`--error`), dark mode as a first-class quieter/sharper variant (toggle remembered in-memory only — no storage APIs).
+- Type: tabular-figure monospace for every numeral/column, system humanist sans for UI chrome, no runtime web-font fetch.
+- The tolerance-callout signature element wrapping the primary value of every result (dimension-line framing in `--layout-blue`, tier badge riding it like a balloon callout) — applied via the one badge-bearing primitive App-Developer built, not a one-off per screen.
+- Layout: search as the hero (centered, large, autofocused), progressive disclosure (answer first, source/notes one tap down), mobile-first single column / desktop max ~720px measure.
+- Ergonomics + a11y: touch targets ≥44px (primary actions ≥48px), visible `:focus-visible` ring (2px layout-blue, never removed), `prefers-reduced-motion` respected, all motion ≤160ms ease-out, empty/error states per DESIGN_SYSTEM §7 copy rules.
+
+**Out of scope for UI/UX-Designer:** no changes to the pure block, no new calculator behavior, no new data fields — visual/interaction layer only, applied on top of what Data-Builder + App-Developer produced.
 
 ---
 
 ## filesToChange
 
-1. **`index.html`** — the single self-contained file (SPEC §9.4). Two named regions inside it:
-   - **The pure data + logic block** delimited by `/* @pure-start */` … `/* @pure-end */` (the `MTK` IIFE). This is the "data layer" (SPEC §9.1–9.3): source registry, `prov()` helper, ISO 68-1 constants, thread spec arrays + `buildMetric`/`buildUnified`, `tapDrill`, clearance tables + `clearanceFor`, conversion `categories`/`convert`/`convertTemp`, `beam`, the query parser (`parseQuery`/`findUnitCategory`), `threadsFor`. It must not touch the DOM and is loaded verbatim by the Node test — it is the single source of truth for app and tests.
-   - **The UI layer IIFE** (everything after `/* @pure-end */`): the DOM-only block guarded by `if(typeof document==='undefined') return;`. Holds the registry-pattern renderers (`renderFastener`, `renderThreadList`, `renderConverter`, `renderBeam`, `renderTapDrillTable`, `renderClearanceTable`), the badge/provenance UI (`badge`, `tierName`, `callout`, `valRow`/`valRowBadge`), the search router (`render`, `openModule`, chips), theme toggle, and the `#selftest` mirror. Consumes `MTK`; never redefines data.
-   - The inline `<style>` block (DESIGN_SYSTEM v0.1) and the static `<header>/<search-wrap>/<main>/<footer>` markup are part of this file and may be touched for the UI features (tier badges, callout, converter/beam inputs).
-
-2. **`tests/calculators.test.mjs`** — the Node test (Gate D2 calculator purity + Gate F2 value correctness + Gate G provenance presence). It slices the `@pure-start`/`@pure-end` block out of `index.html`, evals it, and asserts against cited sources. Changes to the pure block's signatures or sampled values are mirrored here.
-
----
+- **`index.html`** (new file — does not yet exist). Two named regions, in this order:
+  1. `/* @pure-start ... @pure-end */` — the pure data+logic block (Data-Builder's data section, then App-Developer's calculators/parser/registry section). No DOM access anywhere inside this delimiter.
+  2. UI layer (IIFE, below/after the pure block) — DOM-only, consumes the pure block exclusively through the registry pattern. App-Developer builds structure/behavior; UI/UX-Designer applies DESIGN_SYSTEM.md styling within this same region.
+- **`tests/calculators.test.mjs`** (new file — `tests/` does not yet exist). Loads `index.html`'s pure block as the single source of truth; no calculator logic duplicated in the test.
 
 ## filesNotToTouch
 
-- **Frozen docs:** `SPEC.md`, `SOURCES.md`, `FACTORY.md` — frozen for v0.1; the plan conforms to them, it does not edit them.
-- **`.claude/agents/*`** — agent charters (including this Planner's own).
-- **`archive/*`** — superseded drafts; never re-edited.
-- Out of this plan's write-scope but owned by other stages (do not edit as part of code work here): `DESIGN_SYSTEM.md`, `PROJECT_MEMORY.md`, `CHANGELOG.md`, `FEATURE_BACKLOG.md`, `README.md`, `CLAUDE.md`, `package.json`.
-- Within `index.html`: the App-Developer must not move data/logic into the UI IIFE or DOM access into the pure block — the `@pure-start/@pure-end` boundary is a hard contract (the test depends on it; SPEC §9.1–9.3).
+- `SPEC.md`
+- `SOURCES.md`
+- `FACTORY.md`
+- `DESIGN_SYSTEM.md`
+- `.claude/agents/*`
+- `archive/*`
+
+(`FEATURE_BACKLOG.md` and `PROJECT_MEMORY.md` are Planner/Orchestrator artifacts, updated by those roles only, not by build agents executing this plan.)
 
 ---
 
 ## dataModelChanges
 
-The architectural core (SPEC §6, SOURCES §5): **provenance is part of the data model, not a footnote.** Three structures live in the pure block:
+**Provenance object** (attached to every value, no exceptions — matches SOURCES.md §5 verbatim, this plan does not modify the schema):
 
-1. **Source registry** (`sourceRegistry`, SOURCES §4). Stable IDs `SRC001..SRC009`, each `{title, authority, type, tier, status}`. Records reference `sourceId`, never inline names. This is the at-a-glance truth map the UI badge reads from.
+```typescript
+interface Provenance {
+  sourceId: string;            // → registry, e.g. "SRC004"
+  confidenceTier: "A"|"B"|"C"|"D"|"E";
+  verificationStatus: "Verified Against Primary"|"Verified Against Secondary"|"Imported"|"Pending Review";
+  unitSystem?: "metric"|"imperial"|"both";
+  convention?: string;         // tolerance class, engagement %, fit series
+  table?: string; section?: string; page?: string; equation?: string;
+  dateVerified?: string; verifiedBy?: string; notes?: string;
+}
+```
 
-2. **Per-record provenance object** (`prov(sourceId, tier, verificationStatus, extra)`, SOURCES §5) that **travels with every value**:
-   - `sourceId` → registry key.
-   - `confidenceTier` — `A|B|C|D|E` (SOURCES §2 single scale).
-   - `verificationStatus` — `Verified Against Primary | Verified Against Secondary | Imported | Pending Review` (the honesty enum, SOURCES §3).
-   - `convention` — the governing convention, surfaced visibly (engagement %, ISO 273 fit series, ASME close/normal/loose, Euler–Bernoulli assumption). SPEC §6: where two conventions exist, force a visible choice — never guess.
-   - `notes` — the at-most-one caveat (material caveat, "primary doc pending", "exact by definition").
-   - plus optional `unitSystem`, `equation`, `table`, `section`, `page`. The object attaches to: every thread record (`prov`), the `tapDrill` result (`source`), each `clearanceFor` result (`source`), every `convert`/`convertTemp` result (`source`), the `beam` result (`source`).
+**Source registry** (SOURCES.md §4, reproduced inside the pure block as data, not re-derived): `SRC001`–`SRC009`, each `{title, authority, type, tier, status, usedBy}`. Stable IDs only; records reference `sourceId`, never full titles inline.
 
-3. **Domain registry pattern** (SPEC §9.5). Each domain = its own data structure independent of rendering: `threads` (built from `metricSpec`/`unifiedSpec` via pure builders), `clearanceMetric`/`clearanceImperial`, `categories`, `materials`. Adding a domain = add a data structure + a renderer entry; nav/search route into it data-driven. The reviewer test of the architecture (SPEC §9): a new table must be addable touching only the data layer.
+**Domain registry pattern** (SPEC §9.5): `domain -> {label, data, renderer}` covering `threads`, `tapDrill`, `clearance`, `conversion`, `beam`. This is the seam that proves "adding a domain touches only the data layer" (SPEC §9 definition of done) — the UI never special-cases a domain by name outside this map.
 
-**Honesty constraints baked into the data:** MVP ships at tier B / `Verified Against Secondary` citing SRC004 (Machinery's Handbook 30th) for threads/tap/clearance; conversions at tier A / `Verified Against Primary` via SRC009 (NIST SP 811, public); beam at tier B via SRC008 (Roark). No record claims tier-A primary verification it hasn't earned (enforced by test). No uncited value path exists; absent values use the "no verified value" path, never an estimate (SPEC §6 failure philosophy).
+No deviation from the SOURCES.md-defined schema is authorized by this plan. If a build agent finds the schema insufficient mid-build, that is a blocker to raise to the Orchestrator/human, not a silent field addition.
 
 ---
 
 ## uiChanges
 
-All in the UI IIFE + static markup of `index.html`, per DESIGN_SYSTEM v0.1 (workshop/blueprint identity):
+(New build — this section describes what is being created, not a diff.)
 
-- **Search-as-spine router** (SPEC §3). `#q` is the hero, sticky, mono, autofocus — the home screen *is* the search field. Live input (60 ms debounce, no submit) → `MTK.parseQuery` → `render` routes to fastener / convert / module / list / none. Module chips are a fallback, not the spine. Reflex paths (search, conversion, thread lookup) stay stable (SPEC §7 / Gate H).
-- **Fastener combined card** (`renderFastener`). One card shows thread geometry (major/pitch/pitch Ø/minor Ø), tap drill (both engagements + rule), and clearance (close/normal/loose) together — the "type M6 → see everything" view. Other pitches offered as variant links (alias paths, not silent default changes).
-- **Converter** (`renderConverter`). Quantity + value + from/to selects; live output; copy button with confirmation microinteraction; convention shown; `≤2 actions` to a result (SPEC §8). Category change re-renders unit lists; convention never guessed.
-- **Beam calc** (`renderBeam`). Length / material (E library) / load type (point | UDL) / section (rect b×h | round Ø) inputs; live `recalc`; outputs δ, σ, M, I with the formula shown; `≤0` inputs render the rejection message, not a number.
-- **Tier badges with expandable provenance** (`badge`/`.prov`). Every value renders a tier badge; tapping expands source title, authority, tier name, verification status, source ID, convention, reference, and notes — the Gate G contract made visible. `Verified Against Primary` badges read `.primary` (green). The signature element is the cited dimension rendered as a **tolerance callout** (`callout`) for the headline value (tap drill 75%, beam δ).
-- **Quality floor:** mobile-first, large tap targets, visible focus, tabular figures for data columns, reduced-motion respected, dark mode as a first-class system (in-memory toggle, no storage). Unit shown inline everywhere.
+- Home screen: single autofocused search field, centered, large type (scale step 28/40). Module chips/tabs as a quiet fallback below, not the primary nav (SPEC §3).
+- Unified fastener view (F-001): one query (`M6`) renders thread + tap drill + clearance together in one card, each value through the badge-bearing primitive.
+- Converter (F-005): type a number, converted value updates live, unit always inline, no submit button.
+- Beam calc (F-006): inputs for length/section/material/load; outputs (deflection, max bending stress, optional safety factor) rendered through the same provenance primitive, formula shown alongside the result.
+- Tier badge: `A`–`E` letter always visible; badge color encodes verification status (`--valid` for Verified-Against-Primary, `--graphite` for Secondary/Imported), expands on tap to `sourceId · standard · verification status`.
+- Failure state: "No verified value" + available references, styled with `--error`, never a blank or guessed cell.
+- Dark mode toggle, in-memory only.
 
 ---
 
 ## testPlan
 
-`tests/calculators.test.mjs`, run with `node tests/calculators.test.mjs` (Gate D2 + F2 + G), mirrored by the in-browser `#selftest`:
+`tests/calculators.test.mjs`, loading the pure block as the single source of truth:
 
-1. **Calculator purity** — the pure block is sliced out and run with no DOM; calculators are `f(inputs)→{result,formula,source}` (SPEC §9.3). Beam rejects `L≤0` and missing section dims with `{error}`, returns `{result,formula,source}` otherwise. App and tests share one source of truth (same block).
-2. **Provenance rendering / presence (no value without a source)** — every thread carries a registered `sourceId`; tap drill, clearance, conversion, and beam results each carry a `source`; conversion is tier A; **no record claims false primary verification** (`A` + `Verified Against Primary` only if the registry source is tier A). This is the data-side guarantee that the UI cannot render an uncited value.
-3. **Sampled value correctness vs cited sources** (a value can be cited and still wrong; this catches it):
-   - Threads: M6 pitch Ø 5.350 / minor Ø 4.917; M8×1.25 7.188 / 6.647; M24 22.051 — must match Machinery's Handbook 30th.
-   - Tap drill: M6 75% = 5.0 / 50% = 5.35; M8×1.25 = 6.75; M10 = 8.5.
-   - Clearance: M6 6.4/6.6/7.0; M12 normal 13.5; M20 loose 24.0; 1/4-20 normal 0.281.
-   - Conversion (exact by definition): 1 in→25.4 mm; 25.4 mm→1 in; 1 ft→0.3048 m; 1 lb→0.45359237 kg; 1 ksi→1000 psi; 0 °C→32 °F; 100 °C→373.15 K.
-   - Beam: I = bh³/12; δ ≈ 0.4 mm and σ ≈ 12 MPa for the reference case; round I = πd⁴/64.
-   - Parser: `M6`/`1/4-20`→fastener, `10 mm to in`→convert, `beam`→module, empty→empty.
-
-Definition of done spot-check (SPEC §13): ≥3 thread rows, ≥3 tap drills, ≥3 clearance values verified against SOURCES.md — satisfied by the sampled checks above.
+1. **Purity check** — the pure block contains no DOM references (no `document`, `window`, `querySelector`, etc.) when loaded standalone in Node; calculators are deterministic (same input → same output, no hidden state/time dependency).
+2. **Provenance-presence check** — every record returned by every domain in the registry (threads, tap drill, clearance, conversion, beam material library) carries a non-empty `sourceId` that resolves to an entry in the source registry, plus `confidenceTier` and `verificationStatus`. Fails the build if any value path can return a number without a provenance object — this is the machine-checkable form of the DESIGN_SYSTEM §8 badge contract.
+3. **Sampled value correctness vs. cited sources** — spot-check at least 3 thread rows, 3 tap drills, 3 clearance values (SPEC §13 definition-of-done requirement), plus conversion factors and one beam-calc case, against the values implied by SOURCES.md and Machinery's Handbook 30th:
+   - M6 coarse: pitch Ø = 5.350 mm, minor Ø = 4.917 mm (using the 0.649519 / 1.082532 constants — exact match required, not rounded-close).
+   - At least one ISO 273 clearance value checked against the standard's actual close/normal/loose figures (transcription risk — see `risks`).
+   - 1 in = 25.4 mm exactly, tier A, Verified Against Primary.
+   - One beam deflection case hand-computed against Euler–Bernoulli and compared to the calculator's output within floating-point tolerance.
+4. **Query parser correctness** — `M6`, `M8x1`, `1/4-20`, `#10-24` all resolve to a registry entry; verify the number-size vs. fractional-size key convention is applied consistently (no silent failure to resolve a valid callout).
+5. **Beam calculator input validation** — rejects ≤0 length/section/load inputs with an explicit error, not a NaN or silent fallback.
 
 ---
 
 ## risks
 
-- **Thread-geometry constants drift the last digit.** Use exactly `K_PITCH = 0.649519` and `K_MINOR = 1.082532` (ISO 68-1) so M6 reads 5.350 / 4.917; a looser constant drifts the final digit and fails the sampled test (PROJECT_MEMORY "Recurring bugs"). Pinned by the value tests.
-- **Imperial tap-drill *name* mapping deferred.** Imperial tap drills are shown as decimal inch + mm, not number/letter/fraction drill names, to avoid transcription risk; the name map is v0.2 backlog. Risk = a maker expecting a drill letter; mitigated by showing the decimal both ways. Must not be silently "filled in" with guessed names.
-- **Convention guessed silently** (the cardinal sin, SPEC §6/§7). Two conventions (engagement %, fit class, unit system, load type) must force a visible choice; a default that silently picks one violates the differentiator. Risk if a future edit changes a default path — Gate H protects the reflex flows.
-- **Imperial clearance gaps.** Only #10 + fractional sizes carry confident ASME B18.2.8 values; number sizes #4–#8 must use the "no verified value" path, not guessed values — `clearanceFor` returns `null` and the UI shows the failure message.
-- **Source-edition / secondary-citation honesty.** Values cite the standard number at `Verified Against Secondary`, tier B, sourced from Machinery's Handbook; if primary ISO/ASME access is later obtained, badges *upgrade* but values must not silently change (could break a muscle-memory read). Edition differences are a known table risk.
-- **Hash-only navigation does not re-run scripts.** `#selftest` must be verified with a full reload, not a hash change (PROJECT_MEMORY).
-- **Mobile readability** of the combined fastener card / data grids — must stay thumb-reachable with the keyboard up (SPEC §8).
+- **Thread-geometry constants** — pitch-diameter offset `0.649519` and basic-minor-diameter offset `1.082532` must be used exactly. A looser/rounded constant drifts the last digit of derived values (e.g. M6 must read 5.350 / 4.917 mm, not 5.349 or 5.351). Mitigation: hard-code these as named constants in Data-Builder's section with a comment citing the derivation, and assert the M6 sample in the test plan.
+- **Clearance values are transcription-risk** — ISO 273 (and ASME B18.2.8 for imperial) values must match the standard exactly; this is hand-transcribed data with no automated cross-check against the primary document (SRC006/007 are `Pending Access` per SOURCES.md openDecisions). Mitigation: cite SRC004 (Machinery's Handbook, tier B) honestly at `Verified Against Secondary` rather than overclaiming tier A; flag any clearance value the agent is not confident in as "no verified value" rather than guessing (SPEC §6 failure philosophy).
+- **Never guess a convention** — where metric vs. imperial, or engagement %, or fit class is ambiguous, the UI must force a visible choice, never silently default. A query parser or renderer that picks a convention without surfacing it violates SPEC §6.
+- **Badge-contract bypass (recurring risk class)** — any render path that prints a number without routing through the single badge-bearing primitive ships an uncited value, which SPEC §6 calls out as catastrophic to the differentiator ("one fabricated value destroys the differentiator permanently"). Mitigation: App-Developer implements exactly one primitive for displaying a sourced value; UI/UX-Designer must style that primitive rather than introducing a second display path; this is the single highest-value check for the Reviewer/Provenance-Auditor stage to re-run before Gate G.
+- **Mixed key-prefix convention for fastener sizes** — number sizes (`#10-24`) and fractional sizes (`1/4-20`) have structurally different string shapes; a parser that handles one path and not the other will silently fail to resolve a valid query. Mitigation: define and document one canonical internal key shape in the query parser before wiring the registry lookups, and cover both shapes explicitly in the test plan.
+- **Imperial clearance/tap-drill gaps** — number sizes #4–#8 may fall outside confidently-sourced clearance data. Mitigation: ship the honest "no verified value" path for those cells rather than inventing or extrapolating a number.
+- **Single-file scale risk** — five modules' data + logic + UI inline in one HTML file raises the chance of accidental coupling between Data-Builder's and App-Developer's sections. Mitigation: enforce the `@pure-start`/`@pure-end` delimiter strictly and keep the data sub-section and logic sub-section visually separated within it so the boundary survives sequential edits.
 
 ---
 
 ## rollbackCommit
 
-`ca08f46` — "Build the Mechanical Reference app + factory scaffolding (v0.1)". Reset here if a gate fails.
+`c940bd7` — "factory: reset app to zero for a from-scratch build." This is the clean starting point (no `index.html`, no `tests/`) to reset to if any gate fails during this build cycle.
 
 ---
 
-**Gate C2 status:** all required sections present and explicit (feature, filesToChange with named sections, filesNotToTouch, dataModelChanges incl. the per-record provenance object, uiChanges, testPlan, risks, rollbackCommit). Scope stays within SPEC §5. No code edited.
+**Gate C2 status:** plan is explicit — features, file scope, data model, test plan, risks, and rollback are all named. App-Developer (and the other two build agents per `buildSequence`) may proceed.
