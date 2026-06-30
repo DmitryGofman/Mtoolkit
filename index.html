@@ -222,6 +222,39 @@
   .callout.callout-error .dim-box { border-color: var(--error); color: var(--error); }
   .callout.callout-error .dim-line::before, .callout.callout-error .dim-line::after { background: var(--error); }
 
+  /* Hero: the ONE bold thing per result — the cited dimension as a
+     drawing callout, at the top of the type scale (40px). Everything
+     else on the card stays quiet (tabular rows below). */
+  .callout-hero { align-items: flex-start; margin: 2px 0 18px; }
+  .callout-hero .dim-line { gap: 8px; }
+  .callout-hero .dim-line::before { width: 22px; }
+  .callout-hero .dim-line::after { width: 22px; }
+  .callout-hero .dim-box {
+    font-size: 40px;
+    padding: 8px 18px;
+    border-width: 2px;
+    border-radius: 8px;
+    letter-spacing: -0.01em;
+  }
+  .callout-hero .dim-unit { font-size: 16px; }
+  .callout-hero .callout-meta { margin-top: 8px; font-size: 13px; }
+  .callout-hero .callout-label { font-weight: 600; color: var(--ink); }
+  .callout-copy {
+    min-height: 28px;
+    padding: 0 8px;
+    border-radius: 6px;
+    border: 1px solid var(--rule);
+    background: var(--panel);
+    color: var(--graphite);
+    cursor: pointer;
+    font-size: 12px;
+    font-family: var(--sans);
+    display: inline-flex;
+    align-items: center;
+  }
+  .callout-copy:hover, .callout-copy:focus-visible { border-color: var(--layout-blue); color: var(--layout-blue); }
+  .callout-copy.copied { border-color: var(--valid); color: var(--valid); }
+
   .callout-row { display: flex; flex-wrap: wrap; gap: 4px 4px; }
 
   /* ---- Badge (tier + verification) ---- */
@@ -329,22 +362,6 @@
     font-weight: 600;
     cursor: pointer;
   }
-  button.copy-btn {
-    min-height: 44px;
-    min-width: 44px;
-    padding: 0 14px;
-    border-radius: 8px;
-    border: 1px solid var(--rule);
-    background: var(--panel);
-    color: var(--ink);
-    cursor: pointer;
-    font-size: 13px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-  button.copy-btn.copied { border-color: var(--valid); color: var(--valid); }
-
   .empty-state, .nomatch-state {
     text-align: center;
     padding: 40px 16px;
@@ -1255,8 +1272,10 @@ const MTK = (function () {
   // cells) — both call renderBadge() internally, so there is exactly
   // one path from "a number" to "a number with a source badge".
   function callout(opts) {
-    // opts: { value, unit, label, source, dp, errorText }
-    const wrap = h('div', { class: 'callout' + (opts.errorText ? ' callout-error' : '') });
+    // opts: { value, unit, label, source, dp, errorText, hero }
+    // hero: render as the single bold signature dimension (one per result),
+    //       at the top of the type scale, with an inline copy affordance.
+    const wrap = h('div', { class: 'callout' + (opts.hero ? ' callout-hero' : '') + (opts.errorText ? ' callout-error' : '') });
     const dimLine = h('div', { class: 'dim-line' });
     const box = h('span', { class: 'dim-box' });
     if (opts.errorText) {
@@ -1269,11 +1288,31 @@ const MTK = (function () {
     wrap.appendChild(dimLine);
 
     const meta = h('div', { class: 'callout-meta' });
-    if (opts.label) meta.appendChild(h('span', null, opts.label));
+    if (opts.label) meta.appendChild(h('span', { class: 'callout-label' }, opts.label));
     if (!opts.errorText) meta.appendChild(renderBadge(opts.source));
     else meta.appendChild(renderBadge(null));
+    if (opts.hero && !opts.errorText && typeof opts.value === 'number' && isFinite(opts.value)) {
+      meta.appendChild(copyInline(fmtNum(opts.value, opts.dp) + (opts.unit ? ' ' + opts.unit : '')));
+    }
     wrap.appendChild(meta);
     return wrap;
+  }
+
+  // Compact copy affordance for the hero callout (confirms understanding,
+  // ≤160ms, no layout shift), sized for the callout meta row.
+  function copyInline(text) {
+    const btn = h('button', { type: 'button', class: 'callout-copy', 'aria-label': 'Copy ' + text }, 'Copy');
+    btn.addEventListener('click', function () {
+      const done = function () {
+        btn.textContent = 'Copied';
+        btn.classList.add('copied');
+        setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1200);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, done);
+      } else { done(); }
+    });
+    return btn;
   }
 
   // Compact inline value-with-badge for table rows (still routes through renderBadge).
@@ -1321,26 +1360,6 @@ const MTK = (function () {
   });
 
   /* ============================================================
-   * Copy-to-clipboard microinteraction
-   * ============================================================ */
-  function copyBtn(text) {
-    const btn = h('button', { type: 'button', class: 'copy-btn' }, 'Copy');
-    btn.addEventListener('click', function () {
-      const done = function () {
-        btn.textContent = 'Copied';
-        btn.classList.add('copied');
-        setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1200);
-      };
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(done, done);
-      } else {
-        done();
-      }
-    });
-    return btn;
-  }
-
-  /* ============================================================
    * Empty / no-match states
    * ============================================================ */
   function renderEmptyState() {
@@ -1377,44 +1396,71 @@ const MTK = (function () {
     const frag = document.createDocumentFragment();
 
     matches.forEach(function (thread) {
+      const gdp = thread.unit === 'in' ? 4 : 3; // geometry decimal places
+      const tdp = thread.unit === 'in' ? 4 : 2; // tap-drill decimal places
       const card = h('div', { class: 'card' });
       card.appendChild(h('h2', null, [h('span', { class: 'badge-key' }, thread.label), ' · ' + thread.series]));
 
-      // Geometry
+      // HERO: the tap-drill (~75%) is the decision the user came for
+      // ("what drill for this tap"). It is the ONE bold callout per card;
+      // everything else on the card is quiet tabular data.
+      const td = MTK.tapDrill(thread);
+      if (td.result) {
+        card.appendChild(callout({
+          value: td.result.pct75, unit: thread.unit, dp: tdp,
+          label: 'Tap drill · ~75% engagement', source: td.source, hero: true
+        }));
+      } else {
+        card.appendChild(h('div', { class: 'no-value' }, [td.notes || 'No verified value', renderBadge(null)]));
+      }
+
+      // Quiet supporting data: geometry + the ~50% tap drill, as a table.
       const geomSection = h('div', { class: 'module-section' });
-      geomSection.appendChild(h('div', { class: 'callout-row' }, [
-        callout({ value: thread.majorDia, unit: thread.unit, dp: thread.unit === 'in' ? 4 : 3, label: 'Major Ø', source: thread.provenance }),
-        callout({ value: thread.pitchDia, unit: thread.unit, dp: thread.unit === 'in' ? 4 : 3, label: 'Pitch Ø', source: thread.provenance }),
-        callout({ value: thread.minorDia, unit: thread.unit, dp: thread.unit === 'in' ? 4 : 3, label: 'Minor Ø', source: thread.provenance })
-      ]));
+      geomSection.appendChild(h('h2', null, 'Thread geometry'));
+      const geomTable = h('table', { class: 'val-table' });
+      geomTable.appendChild(h('thead', null, h('tr', null, [
+        h('th', null, 'Dimension'), h('th', null, 'Value'), h('th', null, 'Source')
+      ])));
+      const geomBody = h('tbody');
+      function geomRow(label, value, dp, source) {
+        geomBody.appendChild(h('tr', null, [
+          h('td', null, label),
+          h('td', null, valRow(value, thread.unit, dp, source)),
+          h('td', null, renderBadge(source))
+        ]));
+      }
+      geomRow('Major Ø', thread.majorDia, gdp, thread.provenance);
+      geomRow('Pitch Ø', thread.pitchDia, gdp, thread.provenance);
+      geomRow('Minor Ø', thread.minorDia, gdp, thread.provenance);
+      geomRow('Pitch', thread.pitch, gdp, thread.provenance);
+      if (td.result) geomRow('Tap drill · ~50%', td.result.pct50, tdp, td.source);
+      geomTable.appendChild(geomBody);
+      geomSection.appendChild(geomTable);
+      if (td.result && td.source && td.source.notes) {
+        geomSection.appendChild(h('div', { class: 'formula-box' }, td.source.notes));
+      }
       card.appendChild(geomSection);
 
-      // Tap drill
-      const td = MTK.tapDrill(thread);
-      const tdSection = h('div', { class: 'module-section' });
-      tdSection.appendChild(h('h2', null, 'Tap drill'));
-      if (td.result) {
-        tdSection.appendChild(h('div', { class: 'callout-row' }, [
-          callout({ value: td.result.pct75, unit: thread.unit, dp: thread.unit === 'in' ? 4 : 2, label: '~75% engagement', source: td.source }),
-          callout({ value: td.result.pct50, unit: thread.unit, dp: thread.unit === 'in' ? 4 : 2, label: '~50% engagement', source: td.source })
-        ]));
-        if (td.source && td.source.notes) tdSection.appendChild(h('div', { class: 'formula-box' }, td.source.notes));
-      } else {
-        tdSection.appendChild(h('div', { class: 'no-value' }, [td.notes || 'No verified value', renderBadge(null)]));
-      }
-      card.appendChild(tdSection);
-
-      // Clearance
+      // Clearance hole — quiet table.
       const clSection = h('div', { class: 'module-section' });
       clSection.appendChild(h('h2', null, 'Clearance hole'));
       const cl = MTK.clearanceFor(thread.sizeKey, thread.system === 'metric' ? 'metric' : 'imperial');
       if (cl.close !== null) {
         const dp = cl.unit === 'in' ? 3 : 1;
-        clSection.appendChild(h('div', { class: 'callout-row' }, [
-          callout({ value: cl.close, unit: cl.unit, dp: dp, label: 'Close', source: cl.source }),
-          callout({ value: cl.normal, unit: cl.unit, dp: dp, label: 'Normal', source: cl.source }),
-          callout({ value: cl.loose, unit: cl.unit, dp: dp, label: 'Loose', source: cl.source })
-        ]));
+        const clTable = h('table', { class: 'val-table' });
+        clTable.appendChild(h('thead', null, h('tr', null, [
+          h('th', null, 'Fit'), h('th', null, 'Hole Ø'), h('th', null, 'Source')
+        ])));
+        const clBody = h('tbody');
+        [['Close', cl.close], ['Normal', cl.normal], ['Loose', cl.loose]].forEach(function (r) {
+          clBody.appendChild(h('tr', null, [
+            h('td', null, r[0]),
+            h('td', null, valRow(r[1], cl.unit, dp, cl.source)),
+            h('td', null, renderBadge(cl.source))
+          ]));
+        });
+        clTable.appendChild(clBody);
+        clSection.appendChild(clTable);
       } else {
         clSection.appendChild(h('div', { class: 'no-value' }, [cl.notes || 'No verified value for this size.', renderBadge(null)]));
       }
@@ -1508,10 +1554,8 @@ const MTK = (function () {
         return;
       }
       const dp = catKey === 'temperature' ? 2 : 6;
-      const out = callout({ value: res.result, unit: to, dp: dp, label: from + ' → ' + to, source: res.source });
+      const out = callout({ value: res.result, unit: to, dp: dp, label: from + ' → ' + to, source: res.source, hero: true });
       outputWrap.appendChild(out);
-      const copy = copyBtn(fmtNum(res.result, dp) + ' ' + to);
-      outputWrap.appendChild(copy);
       if (res.formula) outputWrap.appendChild(h('div', { class: 'formula-box' }, res.formula));
     }
 
@@ -1597,12 +1641,30 @@ const MTK = (function () {
         outputWrap.appendChild(callout({ errorText: res.error, label: 'Deflection' }));
         return;
       }
-      outputWrap.appendChild(h('div', { class: 'callout-row' }, [
-        callout({ value: res.result.deflection * 1000, unit: 'mm', dp: 4, label: 'Tip deflection', source: res.source }),
-        callout({ value: res.result.stress / 1e6, unit: 'MPa', dp: 3, label: 'Max bending stress', source: res.source }),
-        callout({ value: res.result.moment, unit: 'N·m', dp: 3, label: 'Moment', source: res.source }),
-        callout({ value: res.result.I * 1e12, unit: 'mm⁴', dp: 1, label: 'I (second moment)', source: res.source })
-      ]));
+      // HERO: tip deflection is the primary decision for a cantilever check.
+      outputWrap.appendChild(callout({
+        value: res.result.deflection * 1000, unit: 'mm', dp: 4,
+        label: 'Tip deflection', source: res.source, hero: true
+      }));
+      // Quiet supporting outputs as a table.
+      const outTable = h('table', { class: 'val-table' });
+      outTable.appendChild(h('thead', null, h('tr', null, [
+        h('th', null, 'Output'), h('th', null, 'Value'), h('th', null, 'Source')
+      ])));
+      const outBody = h('tbody');
+      [
+        ['Max bending stress', res.result.stress / 1e6, 'MPa', 3],
+        ['Moment', res.result.moment, 'N·m', 3],
+        ['I (second moment)', res.result.I * 1e12, 'mm⁴', 1]
+      ].forEach(function (r) {
+        outBody.appendChild(h('tr', null, [
+          h('td', null, r[0]),
+          h('td', null, valRow(r[1], r[2], r[3], res.source)),
+          h('td', null, renderBadge(res.source))
+        ]));
+      });
+      outTable.appendChild(outBody);
+      outputWrap.appendChild(outTable);
       outputWrap.appendChild(h('div', { class: 'formula-box' }, res.formula));
     }
 
