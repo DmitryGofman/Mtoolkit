@@ -2,7 +2,24 @@
 
 Why each thing exists + the gates it passed. Newest first.
 
-## v0.1.0 — first build (RELEASE CANDIDATE)
+## v0.1.0 — verified through the factory (RELEASE CANDIDATE)
+
+The factory was run end-to-end as an agent team (orchestrator + specialists), not authored solo. This pass produced the full artifact chain and caught + fixed a real provenance defect through the gates.
+
+**Factory run**
+- `FEATURE_PLAN.md` (Planner, Gate C2); source map verified + 5 values web-checked (Sourcer, Gate B).
+- `REVIEW_REPORT.md` (Reviewer, E1/E2 pass), `QA_REPORT.md` (QA-Breaker, F pass / F2 19-of-19 at 0.0% discrepancy / H baseline), `PROVENANCE_REPORT.md` (Provenance-Auditor, G).
+- `ITERATION_METRICS.md`, `RELEASE_NOTES.md` added.
+
+**Fixed (gate-routed re-entry)**
+- **Gate G (blocking):** the beam tip-deflection rendered through `callout()` with no source badge — an uncited value path. `callout()` now carries provenance; beam deflection and the tap-drill signature callout self-cite. Re-audited → Gate G PASS.
+- **Defect F1 (QA Gate F):** `#1/4-20` (and `10-24`) parsed to a key the data didn't have, so a valid fastener silently showed "no match". `parseQuery` now normalizes unified size keys. 9 regression tests added.
+- **E2 nit:** the temperature converter defaulted to °C→°C identity; `defaultTarget` now gives a real default (°C→°F, K→°C).
+- Tests: 40 → **49 checks, all pass.** No engineering value or provenance datum changed.
+
+**All gates A–H pass → release candidate.**
+
+## v0.1.0 — first build
 
 The factory's first product: a search-first, source-cited mechanical reference, shipped as a single self-contained `index.html`. Built against the frozen SPEC.md + SOURCES.md through the FACTORY loop (A–H).
 

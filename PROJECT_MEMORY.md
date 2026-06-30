@@ -27,10 +27,16 @@ Read by every agent before it starts. Updated by the Orchestrator after every it
 - Watch: thread geometry constants. Use 0.649519 (pitch-Ø) and 1.082532 (basic minor) so M6 reads 5.350 / 4.917 exactly, matching Machinery's Handbook. A looser constant drifts the last digit.
 
 ## v0.1 build outcome (first iteration)
-- Built `index.html` (5 modules), `DESIGN_SYSTEM.md`, `tests/calculators.test.mjs` (40 checks, all pass), `FEATURE_BACKLOG.md`, `CHANGELOG.md`.
+- Built `index.html` (5 modules), `DESIGN_SYSTEM.md`, `tests/calculators.test.mjs` (now 49 checks, all pass), `FEATURE_BACKLOG.md`, `CHANGELOG.md`.
 - Architecture held: data + calculators in one delimited pure block, separated from DOM; the Node test loads that same block so app and tests share one source of truth.
 - Decision: imperial tap drills shown as decimal inch + mm (not number/letter/fraction drill names) to avoid transcription risk; drill-name mapping deferred to v0.2 (in backlog).
 - Decision: imperial clearance limited to #10 + fractional sizes (confident ASME B18.2.8 values); number sizes #4–#8 use the honest "no verified value" path rather than guessed values.
+
+## Factory run (v0.1 verified through gates A–H)
+- The factory was run as an agent team: Planner (C2), Sourcer (B), Reviewer (E1/E2), QA-Breaker (F/F2/H), Provenance-Auditor (G), then App-Developer for the routed fix. Reports persisted as REVIEW_REPORT / QA_REPORT / PROVENANCE_REPORT / ITERATION_METRICS / RELEASE_NOTES.
+- Recurring bug (caught by Gate G): a value rendered through the `callout()` signature helper bypassed the badge contract → uncited. FIX/RULE: every displayed value must route through a single badge-bearing primitive (valRow/valRowBadge/callout-with-prov). Don't add a render path that prints a number without provenance.
+- Recurring bug (Gate F / F1): unified thread size keys had inconsistent `#` prefixes (`#1/4-20` vs `1/4-20`); normalize in `parseQuery` — fractional sizes have no `#`, number sizes do. A valid fastener must never silently fail.
+- Orchestration note: the three read-only audits (Reviewer/QA/Provenance) parallelize safely over the same files — cheaper wall-clock than the spec's strict serial chain, no conflict. Gate ordering still enforced on the results.
 
 ## User preferences
 - Preference: Concise, spoken-style prompts; bias toward building working things fast over over-planning. Evidence: prior sessions.
