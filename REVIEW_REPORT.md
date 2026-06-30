@@ -1,24 +1,25 @@
 # REVIEW_REPORT.md — Reviewer (Gate E1/E2)
 
-Iteration: v0.1 release candidate · target: `index.html`, `tests/calculators.test.mjs` · rollback: `ca08f46`
+Iteration: **from-scratch v0.1 build** · target `index.html` + `tests/calculators.test.mjs` · rollback `74a39ab` · tests 67/67.
 
 ## Summary
-Architecture is faithful to SPEC §9: data + provenance live entirely in the pure `MTK` block (`@pure-start/@pure-end`); the UI IIFE is DOM-only and consumes `MTK` without redefining data; single self-contained file, no build step, no browser-storage APIs. The four calculators (`tapDrill`, `convert`, `convertTemp`, `beam`) are pure and return `{result, formula, source}` (beam returns `{error}` on invalid input — correct failure shape). All 40 Node tests pass. **Both gates pass.**
+The factory built the app fresh (Data-Builder → App-Developer → UI/UX-Designer). Architecture is sound and the code is clean. **Both gates pass.**
 
 ## Gate E1 — architecture integrity
 ```json
-{"gate":"E1","status":"pass","blocking":true,"failed_checks":[],"files_involved":["index.html"],"return_to":"app-developer","rollback_commit":"ca08f46"}
+{"gate":"E1","status":"pass","blocking":true,"failed_checks":[],"files_involved":["index.html"],"return_to":null,"rollback_commit":"74a39ab"}
 ```
-- Data/UI separation verified concretely: a new thread/clearance series touches only the pure block; a wholly new module also needs a renderer + `openModule` branch — the expected, bounded "add + register" cost (SPEC §9.1/§9.5), not a violation.
-- No uncited value path: every record carries `prov`; every calc result carries `source`; absent values use the honest "no verified value" path.
-- No `localStorage`/`sessionStorage`/`cookie`/`indexedDB`; theme toggle is in-memory only.
+- Pure block (`@pure-start/@pure-end`) is a DOM-free `MTK` IIFE; UI IIFE consumes it exclusively (defines no values/provenance).
+- New domain = data only: `renderConvertModule` iterates `Object.keys(MTK.categories)`; materials/threads/clearance flow the same way — no renderer special-cases a value by name.
+- Calculators pure → `{result, formula, source}` (`tapDrill`, `convert`, `convertTemp`, `beam`; beam returns `{error}` on bad input).
+- Registry map drives chip nav; single self-contained file; no storage APIs; no build step; honest "no verified value" for absent clearances.
 
 ## Gate E2 — code quality
 ```json
-{"gate":"E2","status":"pass","blocking":true,"failed_checks":[],"files_involved":["index.html","tests/calculators.test.mjs"],"return_to":"app-developer","rollback_commit":"ca08f46"}
+{"gate":"E2","status":"pass","blocking":false,"failed_checks":[],"files_involved":["index.html"],"return_to":null,"rollback_commit":"74a39ab"}
 ```
-Readable, no dead code or material duplication; error/empty/failure states present (beam ≤0, no-match, missing clearance); meets SPEC §10 trivially with no bundler temptation.
+- The single badge-bearing primitive survived the design restructure: only `.dim-box` (via `callout()`) and `.val-num` (via `valRow()`) print numerals, and both call `renderBadge()` — **no render path emits a bare number** (the v0.1 bug did not recur).
+- Designer's dead-code removal verified (no `copyBtn`/`.copy-btn` dangles). Error/empty/failure states present. Meets SPEC §10 trivially.
 
-## Nits (non-blocking)
-1. **Temperature default papercut** (`defaultTarget`/`renderConverter`): a bare temperature query (`20 c`) resolves to °C→°C identity instead of °F, because `defaultTarget` finds no alternate unit for Temperature. One-line fix. → routed to app-developer this iteration.
-2. **Registry is convention-driven, not table-driven** (`openModule` if-chain vs a literal `domain→{label,data,renderer}` map). Satisfies the intent (data layer is source of truth; additions bounded) but a literal map would make "nav is data-driven" self-evident. Stylistic — logged as tech debt, not fixed this pass.
+## Nits (non-blocking → addressed in the cleanup pass)
+1. dead `state.expandedBadges`; 2. unused `opts` param on `renderBadge`; 3. comment drift ("badgeOnly()" → `valRow()`); 4. chip-seed if/else ladder could move into `registry[key].seed`. None touch a value, source, or the badge contract.

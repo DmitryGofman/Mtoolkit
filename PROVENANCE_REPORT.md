@@ -1,21 +1,27 @@
 # PROVENANCE_REPORT.md — Provenance-Auditor (Gate G)
 
-Iteration: v0.1 release candidate · 8 render paths checked.
+Iteration: **from-scratch v0.1 build** · 10 render paths checked.
 
 ## Gate G — provenance presence
 ```json
-{"gate":"G","status":"fail","paths_checked":8,"violations":[{"id":"V-G-001","severity":"blocking","description":"Beam tip-deflection value rendered without a provenance badge","location":"index.html renderBeam()/recalc() → callout(sig(r.deflection*1000),'mm','tip deflection δ')","source_available":"yes — beamSource (SRC008) exists but is not rendered on the callout","return_to":"app-developer"}]}
+{"gate":"G","status":"pass","paths_checked":10,"violations":[]}
 ```
 
-**7 / 8 paths pass.** Thread geometry, tap drill, clearance, conversion, beam secondary results (σ, M, I), and both table views all carry visible badges with valid registry `sourceId`s, correct tiers (A only for NIST conversions; B for MH/ISO/ASME/Roark secondary), and inline units. Failure states (out-of-range size, missing clearance) correctly show "No verified value" + references — no silent guess.
+**100% of displayed values carry source + tier + unit. Zero exceptions.** All values route through two badge-bearing primitives — `callout()` (heroes) and `valRow()` (table rows) — both of which call `renderBadge()`.
 
-**The one violation:** the `callout()` helper renders value + unit + label but no badge. For tap drill that's harmless (the same value is re-cited in the grid directly below), but the **beam tip deflection appears only in the callout** — so the module's signature output reaches the user uncited. Blocking under Gate G (zero exceptions). Routed to app-developer.
+| Path | Source | Result |
+|---|---|---|
+| Fastener hero (tap drill ~75%) | SRC004 B | PASS |
+| Geometry rows (major/pitch/pitchØ/minorØ) | SRC004 B | PASS |
+| Tap drill ~50% row | SRC004 B | PASS |
+| Clearance close/normal/loose | SRC006/007 B | PASS |
+| Clearance absent (#4-40, #6-32) | null → "No verified value" + refs | PASS |
+| Thread-search pitchØ column | SRC004 B | PASS |
+| Converter hero output | SRC009 A | PASS |
+| Converter error state | null → message | PASS |
+| Beam deflection hero | SRC008 B | PASS |
+| Beam σ/M/I rows | SRC008 B | PASS |
 
-## Resolution + re-audit (this iteration)
-Fix: `callout()` now accepts an optional provenance argument and renders `badge(prov)`; the beam deflection callout passes `out.source` (SRC008) and the tap-drill signature callout passes `td.source` (SRC004). The provenance-auditor re-ran Gate G against the fixed file:
+**Tier honesty:** only SRC009 (NIST SP 811 conversions) claims tier A / Verified Against Primary; threads/tap/clearance/beam all tier B / Verified Against Secondary — correct. **Failure philosophy:** absent values render "No verified value" + references, never a guess.
 
-```json
-{"gate":"G","status":"pass","paths_checked":10,"violations":[],"v_g_001":"resolved","summary":"callout() renders badge(prov) when given; beam deflection passes out.source, tap-drill signature passes td.source; all 10 render paths carry source+tier+unit; no regression."}
-```
-
-**Gate G now PASSES.** V-G-001 resolved; 10/10 render paths carry source + tier + unit; failure states remain honest "No verified value" with references. Independently confirmed by the orchestrator in headless Chromium (deflection callout badge present, no JS errors).
+**Note:** unlike the v0.1 prototype (which failed Gate G on an uncited beam-deflection callout), this from-scratch build passed Gate G on the first audit — the App-Developer applied the badge-bearing-primitive rule recorded in PROJECT_MEMORY, and the design pass's value-demotion preserved every badge. The factory's memory closed the loop.
