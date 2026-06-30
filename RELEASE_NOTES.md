@@ -10,10 +10,10 @@ The factory's first product: a search-first, source-cited mechanical engineering
 - Every value shows its source + confidence tier + unit; tap the badge for the full citation. Nothing is ever estimated — uncitable values show an honest "no verified value".
 - Works offline after first load; dark mode; mobile-first; no login, no build step.
 
-**How it was built (the factory ran, not just the author)**
-- Planner → FEATURE_PLAN (Gate C2). Sourcer → source map + 5 web-verified values (Gate B).
-- Reviewer → architecture + code (E1/E2). QA-Breaker → behavior + 19/19 value spot-checks at 0.0% discrepancy (F/F2) + interaction baseline (H).
-- Provenance-Auditor caught a real defect — the beam deflection rendered uncited (Gate G fail) — which was routed back, fixed, and re-audited to PASS.
+**How it was built (the factory's build half ran from zero)**
+- Built fresh from the frozen artifacts: Planner → FEATURE_PLAN (C2); Data-Builder → cited data layer (C); App-Developer → calculators + UI + 67 tests (D2); UI/UX-Designer → signature + a11y (D).
+- Verified: Reviewer E1/E2; QA-Breaker F + **F2 0.0% discrepancy across 75+ values incl. all 14 ISO 273 clearance rows** + H baseline; Provenance-Auditor G (10/10 paths cited on the first audit).
+- The factory improved across iterations: the v0.1 prototype's uncited-callout (Gate G) and `#1/4-20` defects did **not** recur — those lessons were carried in PROJECT_MEMORY and applied automatically. One gate escape (beam showcase default opened at 0.0000 mm — a UI mm→m wiring default F2 didn't exercise) was caught in release testing and hotfixed to 0.4000 mm.
 
 **Honesty on tiers:** engineering tables ship at tier B / Verified Against Secondary (Machinery's Handbook 30th, citing the standard numbers); conversions are tier A via public NIST SP 811. Acquiring primary ISO/ASME documents only upgrades badges — it blocks nothing.
 

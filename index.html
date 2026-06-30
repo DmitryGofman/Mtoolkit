@@ -1150,8 +1150,7 @@ const MTK = (function () {
 
   /* ---------- state (in-memory only, no storage APIs) ---------- */
   const state = {
-    dark: false,
-    expandedBadges: Object.create(null) // id -> bool, transient per render
+    dark: false
   };
 
   let badgeSeq = 0;
@@ -1171,11 +1170,11 @@ const MTK = (function () {
    * this map — no special-casing a domain by name elsewhere.
    * ============================================================ */
   const registry = {
-    threads:   { label: 'Threads' },
-    tapDrill:  { label: 'Tap drill' },
-    clearance: { label: 'Clearance' },
-    convert:   { label: 'Convert' },
-    beam:      { label: 'Beam' }
+    threads:   { label: 'Threads', seed: 'M6' },
+    tapDrill:  { label: 'Tap drill', seed: 'M6' },
+    clearance: { label: 'Clearance', seed: 'M6' },
+    convert:   { label: 'Convert', seed: '' },
+    beam:      { label: 'Beam', seed: 'beam' }
   };
 
   /* ============================================================
@@ -1210,15 +1209,14 @@ const MTK = (function () {
 
   /* ============================================================
    * THE single badge-bearing render primitive (Gate G contract).
-   * Every displayed value MUST go through callout() or badgeOnly().
+   * Every displayed value MUST go through callout() or valRow().
    * No other code path may print a bare number.
    * ============================================================ */
 
   // Renders a tier badge. `source` is a Provenance object (or null/undefined).
   // Returns a DOM node. Always shows a letter tier; "no source" renders
   // the honest error badge, never a silently blank one.
-  function renderBadge(source, opts) {
-    opts = opts || {};
+  function renderBadge(source) {
     const wrap = h('span', { class: 'badge-wrap' });
     if (!source) {
       const b = h('button', {
@@ -1348,11 +1346,8 @@ const MTK = (function () {
   Object.keys(registry).forEach(function (key) {
     const chip = h('button', { type: 'button', class: 'chip', 'aria-pressed': 'false' }, registry[key].label);
     chip.addEventListener('click', function () {
-      if (key === 'beam') { searchInput.value = 'beam'; }
-      else if (key === 'convert') { searchInput.value = ''; renderConvertModule(); searchInput.focus(); return; }
-      else if (key === 'threads') { searchInput.value = 'M6'; }
-      else if (key === 'tapDrill') { searchInput.value = 'M6'; }
-      else if (key === 'clearance') { searchInput.value = 'M6'; }
+      searchInput.value = registry[key].seed;
+      if (key === 'convert') { renderConvertModule(); searchInput.focus(); return; }
       runSearch(searchInput.value);
       searchInput.focus();
     });
@@ -1583,28 +1578,28 @@ const MTK = (function () {
     const card = h('div', { class: 'card' });
     card.appendChild(h('h2', null, 'Cantilever beam deflection'));
 
-    const lengthInput = h('input', { type: 'text', inputmode: 'decimal', value: '1', class: 'mono' });
-    const matSelect = h('select');
+    const lengthInput = h('input', { type: 'text', inputmode: 'decimal', value: '1000', class: 'mono', id: 'beamLength' });
+    const matSelect = h('select', { id: 'beamMaterial' });
     MTK.materials.forEach(function (m) { matSelect.appendChild(h('option', { value: m.key }, m.label)); });
     const sectionTypeRow = h('div', { class: 'radio-row' }, [
       h('label', { class: 'radio-chip' }, [h('input', { type: 'radio', name: 'sectionType', value: 'rect', checked: 'checked' }), 'Rectangular']),
       h('label', { class: 'radio-chip' }, [h('input', { type: 'radio', name: 'sectionType', value: 'round' }), 'Round'])
     ]);
-    const bInput = h('input', { type: 'text', inputmode: 'decimal', value: '50', class: 'mono' });
-    const hInput = h('input', { type: 'text', inputmode: 'decimal', value: '100', class: 'mono' });
-    const dInput = h('input', { type: 'text', inputmode: 'decimal', value: '20', class: 'mono' });
+    const bInput = h('input', { type: 'text', inputmode: 'decimal', value: '50', class: 'mono', id: 'beamWidthB' });
+    const hInput = h('input', { type: 'text', inputmode: 'decimal', value: '100', class: 'mono', id: 'beamHeightH' });
+    const dInput = h('input', { type: 'text', inputmode: 'decimal', value: '20', class: 'mono', id: 'beamDiaD' });
     const rectFields = h('div', { class: 'grid-2' }, [
-      h('div', { class: 'field' }, [h('label', null, 'b (mm)'), bInput]),
-      h('div', { class: 'field' }, [h('label', null, 'h (mm)'), hInput])
+      h('div', { class: 'field' }, [h('label', { for: 'beamWidthB' }, 'b (mm)'), bInput]),
+      h('div', { class: 'field' }, [h('label', { for: 'beamHeightH' }, 'h (mm)'), hInput])
     ]);
-    const roundFields = h('div', { class: 'field' }, [h('label', null, 'd (mm)'), dInput]);
+    const roundFields = h('div', { class: 'field' }, [h('label', { for: 'beamDiaD' }, 'd (mm)'), dInput]);
     roundFields.style.display = 'none';
 
     const loadTypeRow = h('div', { class: 'radio-row' }, [
       h('label', { class: 'radio-chip' }, [h('input', { type: 'radio', name: 'loadType', value: 'point', checked: 'checked' }), 'Point (tip)']),
       h('label', { class: 'radio-chip' }, [h('input', { type: 'radio', name: 'loadType', value: 'udl' }), 'UDL (total)'])
     ]);
-    const magInput = h('input', { type: 'text', inputmode: 'decimal', value: '1000', class: 'mono' });
+    const magInput = h('input', { type: 'text', inputmode: 'decimal', value: '1000', class: 'mono', id: 'beamMagnitude' });
 
     sectionTypeRow.addEventListener('change', function () {
       const v = sectionTypeRow.querySelector('input:checked').value;
@@ -1668,13 +1663,13 @@ const MTK = (function () {
       outputWrap.appendChild(h('div', { class: 'formula-box' }, res.formula));
     }
 
-    card.appendChild(h('div', { class: 'field' }, [h('label', null, 'Length (mm)'), lengthInput]));
-    card.appendChild(h('div', { class: 'field' }, [h('label', null, 'Material'), matSelect]));
+    card.appendChild(h('div', { class: 'field' }, [h('label', { for: 'beamLength' }, 'Length (mm)'), lengthInput]));
+    card.appendChild(h('div', { class: 'field' }, [h('label', { for: 'beamMaterial' }, 'Material'), matSelect]));
     card.appendChild(h('div', { class: 'field' }, [h('label', null, 'Section'), sectionTypeRow]));
     card.appendChild(rectFields);
     card.appendChild(roundFields);
     card.appendChild(h('div', { class: 'field' }, [h('label', null, 'Load type'), loadTypeRow]));
-    card.appendChild(h('div', { class: 'field' }, [h('label', null, 'Magnitude (N or N total)'), magInput]));
+    card.appendChild(h('div', { class: 'field' }, [h('label', { for: 'beamMagnitude' }, 'Magnitude (N or N total)'), magInput]));
     card.appendChild(outputWrap);
 
     resultsEl.replaceChildren(card);

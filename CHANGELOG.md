@@ -2,7 +2,25 @@
 
 Why each thing exists + the gates it passed. Newest first.
 
-## v0.1.0 — verified through the factory (RELEASE CANDIDATE)
+## v0.1.0 — rebuilt from scratch by the factory (RELEASE CANDIDATE)
+
+The app was rebuilt from zero to exercise the factory's **build half** end-to-end (the prior RC was preserved in history at 3da0791). The build agents constructed everything from the frozen SPEC + SOURCES + DESIGN_SYSTEM; the gate agents verified it.
+
+**Built by**
+- Data-Builder → pure data layer (40 thread records w/ derived geometry, all 14 ISO 273 clearance rows + ASME subset, NIST conversions, beam materials), every value cited, DOM-free (Gate C).
+- App-Developer → `beam()/parseQuery()/threadsFor()/findUnitCategory()` + full search-as-spine UI through a single badge-bearing render primitive + `tests/calculators.test.mjs` (Gate D2 — 67 tests).
+- UI/UX-Designer (Opus) → restored the signature: one 40px tolerance-callout hero per result, geometry/clearance/σ-M-I demoted to quiet tabular rows; inline copy; a11y/ergonomics (Gate D).
+
+**Gate outcomes (all pass, zero gate failures)**
+- E1/E2 ✅ (badge primitive survived the design restructure) · F ✅ · **F2 ✅ 0.0% discrepancy across 75+ values incl. all 14 fresh-transcribed ISO 273 rows** · G ✅ (10/10 paths cited on the first audit — the v0.1 uncited-callout defect did not recur) · H ✅ baseline.
+
+**Fixed**
+- Cleanup pass (Reviewer/QA nits): removed dead `state.expandedBadges` + unused `renderBadge` param, corrected a stale comment, added `label[for=]` to beam/convert inputs (a11y), moved chip-seed strings into `registry[key].seed`.
+- **Beam default hotfix (gate escape):** the showcase opened at `0.0000 mm` because the default length shipped as 1 mm; the UI converts mm→m correctly, but Gate F2 had verified the pure `beam()` (metres) without exercising the UI wiring, so it missed the bad default. Default length → 1000 mm; hero now reads `0.4000 mm` (matches the Node oracle). Lesson recorded in PROJECT_MEMORY + ITERATION_METRICS.
+
+**All gates A–H pass → release candidate.**
+
+## v0.1.0 — verified through the factory
 
 The factory was run end-to-end as an agent team (orchestrator + specialists), not authored solo. This pass produced the full artifact chain and caught + fixed a real provenance defect through the gates.
 

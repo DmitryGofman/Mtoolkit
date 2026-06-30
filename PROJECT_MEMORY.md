@@ -32,6 +32,11 @@ Read by every agent before it starts. Updated by the Orchestrator after every it
 - Decision: imperial tap drills shown as decimal inch + mm (not number/letter/fraction drill names) to avoid transcription risk; drill-name mapping deferred to v0.2 (in backlog).
 - Decision: imperial clearance limited to #10 + fractional sizes (confident ASME B18.2.8 values); number sizes #4–#8 use the honest "no verified value" path rather than guessed values.
 
+## From-scratch factory build (v0.1 rebuilt from zero, gates A–H)
+- The whole app was rebuilt from zero by the build agents: Data-Builder (data layer, Gate C), App-Developer (calculators+parser+UI+tests, Gate D2/67 tests), UI/UX-Designer (Gate D — restored the single-hero signature, 8 callouts → 1). Then Reviewer/QA/Provenance gated it; all A–H passed.
+- **The factory's memory worked:** Gate G passed on the FIRST audit (no uncited-callout defect like v0.1) and the `#1/4-20` key bug never appeared — because the badge-bearing-primitive rule and key-normalization rule were in this file and the App-Developer applied them. This is the venture thesis (metrics improve) demonstrated.
+- **Recurring bug (gate escape — IMPORTANT):** the beam calculator's pure function is correct in SI metres, but the UI takes section/length inputs in mm and must convert mm→m. The default length shipped as 1 mm → the showcase hero rendered 0.0000 mm. Gate F2 missed it because it tested the pure `beam()` directly, not the UI. RULE: value-correctness checks must include at least one **end-to-end UI render** of the showcase calculator (default + one typed case); a right calculator behind wrong unit-wiring still ships a wrong number. Fix applied: default length 1000 mm → 0.4000 mm.
+
 ## Factory run (v0.1 verified through gates A–H)
 - The factory was run as an agent team: Planner (C2), Sourcer (B), Reviewer (E1/E2), QA-Breaker (F/F2/H), Provenance-Auditor (G), then App-Developer for the routed fix. Reports persisted as REVIEW_REPORT / QA_REPORT / PROVENANCE_REPORT / ITERATION_METRICS / RELEASE_NOTES.
 - Recurring bug (caught by Gate G): a value rendered through the `callout()` signature helper bypassed the badge contract → uncited. FIX/RULE: every displayed value must route through a single badge-bearing primitive (valRow/valRowBadge/callout-with-prov). Don't add a render path that prints a number without provenance.
