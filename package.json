@@ -1,0 +1,11 @@
+{
+  "name": "mechanical-reference",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Search-first, source-cited mechanical engineering reference — single self-contained HTML file.",
+  "type": "module",
+  "scripts": {
+    "test": "node tests/calculators.test.mjs",
+    "start": "echo \"Open index.html in a browser (no build step). Self-test: index.html#selftest\""
+  }
+}
