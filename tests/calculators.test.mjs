@@ -92,5 +92,29 @@ check('parses "10 mm to in" → convert', MTK.parseQuery('10 mm to in').kind ===
 check('parses "beam" → module', MTK.parseQuery('beam').module === 'beam');
 check('empty → empty', MTK.parseQuery('').kind === 'empty');
 
+console.log('\nQuery parser — defect F1 regression (#1/4-20 must not silently fail)');
+const pHash14 = MTK.parseQuery('#1/4-20');
+check('"#1/4-20" parses as fastener', pHash14.kind === 'fastener', pHash14.kind);
+check('"#1/4-20" sizeKey normalizes to "1/4-20"', pHash14.sizeKey === '1/4-20', pHash14.sizeKey);
+check('"#1/4-20" resolves to the 1/4-20 record',
+  MTK.threadsFor(pHash14.sizeKey, pHash14.system).length > 0 &&
+  MTK.threadsFor(pHash14.sizeKey, pHash14.system)[0].label.startsWith('1/4-20'));
+
+const pPlain14 = MTK.parseQuery('1/4-20');
+check('"1/4-20" still resolves', pPlain14.kind === 'fastener' && pPlain14.sizeKey === '1/4-20', pPlain14.sizeKey);
+check('"1/4-20" resolves to the 1/4-20 record',
+  MTK.threadsFor(pPlain14.sizeKey, pPlain14.system).length > 0);
+
+const pHash1024 = MTK.parseQuery('#10-24');
+const pPlain1024 = MTK.parseQuery('10-24');
+check('"#10-24" sizeKey = "#10-24"', pHash1024.sizeKey === '#10-24', pHash1024.sizeKey);
+check('"10-24" sizeKey normalizes to "#10-24"', pPlain1024.sizeKey === '#10-24', pPlain1024.sizeKey);
+check('"#10-24" resolves to the #10-24 record',
+  MTK.threadsFor(pHash1024.sizeKey, pHash1024.system).length > 0 &&
+  MTK.threadsFor(pHash1024.sizeKey, pHash1024.system)[0].label.startsWith('#10-24'));
+check('"10-24" resolves to the same #10-24 record',
+  MTK.threadsFor(pPlain1024.sizeKey, pPlain1024.system).length > 0 &&
+  MTK.threadsFor(pPlain1024.sizeKey, pPlain1024.system)[0].label.startsWith('#10-24'));
+
 console.log('\n' + (fail === 0 ? '✓ ALL ' + pass + ' CHECKS PASS' : '✗ ' + fail + ' FAILED, ' + pass + ' passed'));
 process.exit(fail === 0 ? 0 : 1);

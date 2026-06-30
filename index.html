@@ -73,6 +73,7 @@ button{font-family:inherit; cursor:pointer}
 }
 .callout .dim::before{left:-10px} .callout .dim::after{right:-10px}
 .callout .lbl{font-size:12px; color:var(--graphite); margin-top:4px}
+.callout-prov{margin-top:4px}
 
 /* ── value rows / data grid ── */
 .grid{display:grid; grid-template-columns:1fr auto; gap:1px; background:var(--rule); border-radius:8px; overflow:hidden; border:1px solid var(--rule)}
@@ -376,7 +377,12 @@ const MTK = (function () {
       return {kind:'fastener', system:'metric', dia, pitch, sizeKey:'M'+dia};
     }
     if((m = q.match(reUnified))){
-      return {kind:'fastener', system:'unified', sizeKey:q.replace(/\s/g,'').replace(/^#?/,'#').replace('#','').match(/^\d+\//)?q.replace(/\s/g,''):'#'+q.replace(/\s/g,'').replace(/^#/,''), raw:q};
+      // Normalize to the stored sizeKey: fractions ("1/4-20") have no '#'; plain
+      // numbers ("10-24") always get exactly one '#' ("#10-24"), regardless of
+      // whether the user typed '#', extra spaces, or nothing at all.
+      const token = m[1]+'-'+m[2];
+      const sizeKey = /^\d+\/\d+-\d+$/.test(token) ? token : '#'+token;
+      return {kind:'fastener', system:'unified', sizeKey, raw:q};
     }
     // conversion: a number followed by a known unit token
     if((m = q.match(reConv))){
@@ -452,8 +458,8 @@ const MTK = (function () {
   function copyBtn(text){
     return `<button class="copy" onclick="(function(b){navigator.clipboard&&navigator.clipboard.writeText('${String(text).replace(/'/g,"\\'")}');b.textContent='copied';b.classList.add('copied');setTimeout(function(){b.textContent='copy';b.classList.remove('copied')},1200)})(this)">copy</button>`;
   }
-  function callout(value, unit, label){
-    return `<div class="callout"><div class="dim">${value}<span class="unit"> ${unit}</span></div><div class="lbl">${label}</div></div>`;
+  function callout(value, unit, label, prov){
+    return `<div class="callout"><div class="dim">${value}<span class="unit"> ${unit}</span></div><div class="lbl">${label}</div>${prov?`<div class="callout-prov">${badge(prov)}</div>`:''}</div>`;
   }
 
   /* ── module renderers ── */
@@ -468,7 +474,7 @@ const MTK = (function () {
       <p class="sub">Thread geometry, tap drill, and clearance in one view.</p>`;
 
     // signature callout: the tap drill (the single most-asked value), 75%
-    html += `<div style="text-align:center">${callout(fmt(td.result.pct75, system==='metric'?2:4), td.result.unit, 'tap drill · ~75% engagement')}</div>`;
+    html += `<div style="text-align:center">${callout(fmt(td.result.pct75, system==='metric'?2:4), td.result.unit, 'tap drill · ~75% engagement', td.source)}</div>`;
 
     // thread geometry
     html += `<div class="sectiontitle">Thread — ${esc(primary.label)}</div><div class="grid">`;
@@ -622,7 +628,7 @@ const MTK = (function () {
       if(out.error){ el.innerHTML = `<div class="noval" style="margin-top:10px">${esc(out.error)}</div>`; return; }
       const r = out.result;
       el.innerHTML = `<div class="sectiontitle">Result (E = ${MTK.materials[beamState.matName]/1e9} GPa)</div>
-        <div style="text-align:center">${callout(sig(r.deflection*1000), 'mm', 'tip deflection δ')}</div>
+        <div style="text-align:center">${callout(sig(r.deflection*1000), 'mm', 'tip deflection δ', out.source)}</div>
         <div class="grid">
           ${valRowBadge('Max bending stress σ', sig(r.stress/1e6), 'MPa', out.source)}
           ${valRowBadge('Max moment M', sig(r.moment), 'N·m', out.source)}
@@ -657,6 +663,7 @@ const MTK = (function () {
   }
   function defaultTarget(category, from){
     if(category==='Length') return from==='mm'||from==='cm'||from==='m'?'in':'mm';
+    if(category==='Temperature') return from==='°F'?'°C':(from==='K'?'°C':'°F');
     const u = Object.keys(MTK.categories[category]?.units||{'°C':1});
     return u.find(x=>x!==from)||from;
   }
