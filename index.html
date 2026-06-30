@@ -92,57 +92,93 @@
   .search-wrap {
     max-width: 720px;
     margin: 0 auto;
-    padding: 28px 20px 12px;
+    padding: 30px 20px 14px;
   }
   .search-field {
     position: relative;
   }
+  /* A faint layout-dye index mark on the search field — the "where the
+     thumb lands" anchor, drawn like a gauge graduation, not an icon. */
+  .search-field::before {
+    content: '';
+    position: absolute;
+    left: 18px; top: 50%;
+    width: 3px; height: 26px;
+    margin-top: -13px;
+    border-radius: 2px;
+    background: var(--layout-blue);
+    opacity: 0.85;
+    pointer-events: none;
+  }
   .search-field input {
     width: 100%;
     font-size: 28px;
-    padding: 16px 16px;
+    padding: 16px 18px 16px 34px;
     border-radius: 14px;
     border: 2px solid var(--rule);
     background: var(--panel);
     color: var(--ink);
-    min-height: 64px;
+    min-height: 66px;
+    letter-spacing: -0.01em;
+    transition: border-color var(--motion) ease-out, box-shadow var(--motion) ease-out;
   }
   .search-field input::placeholder {
     color: var(--graphite);
     font-family: var(--sans);
     font-size: 18px;
+    letter-spacing: 0;
   }
+  .search-field input:hover { border-color: color-mix(in srgb, var(--layout-blue) 45%, var(--rule)); }
   .search-field input:focus-visible {
     outline: 2px solid var(--layout-blue);
     outline-offset: 2px;
     border-color: var(--layout-blue);
   }
   .search-hint {
-    margin-top: 8px;
+    margin-top: 10px;
     font-size: 13px;
     color: var(--graphite);
+    line-height: 1.6;
   }
-  .search-hint code { font-family: var(--mono); background: transparent; }
+  .search-hint code {
+    font-family: var(--mono);
+    background: color-mix(in srgb, var(--layout-blue) 8%, transparent);
+    color: var(--layout-blue);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
 
   .chips {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: 16px;
+    margin-top: 18px;
+  }
+  .chips-label {
+    width: 100%;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--graphite);
+    margin-bottom: -2px;
+    font-weight: 600;
   }
   .chip {
     min-height: 44px;
-    padding: 0 16px;
+    padding: 0 18px;
     border-radius: 999px;
     border: 1px solid var(--rule);
     background: var(--panel);
     color: var(--ink);
     font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
+    transition: border-color var(--motion) ease-out, color var(--motion) ease-out, background var(--motion) ease-out;
   }
   .chip:hover, .chip:focus-visible { border-color: var(--layout-blue); color: var(--layout-blue); }
+  .chip:active { background: color-mix(in srgb, var(--layout-blue) 8%, var(--panel)); }
   .chip[aria-pressed="true"] { border-color: var(--layout-blue); color: var(--layout-blue); background: color-mix(in srgb, var(--layout-blue) 10%, var(--panel)); }
 
   main#results {
@@ -156,18 +192,41 @@
     background: var(--panel);
     border: 1px solid var(--rule);
     border-radius: 14px;
-    padding: 18px;
-    margin-bottom: 16px;
+    padding: 20px 22px 22px;
+    margin-bottom: 18px;
   }
   .card h2 {
-    font-size: 14px;
+    font-size: 12px;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     color: var(--graphite);
-    margin: 0 0 12px;
+    margin: 0 0 14px;
+    font-weight: 700;
+  }
+  .module-section > h2 { margin-top: 4px; }
+  .card-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin: 0 0 6px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .card-head .badge-key {
+    color: var(--ink);
+    font-size: 22px;
+    font-family: var(--mono);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+  .card-head .card-series {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--graphite);
     font-weight: 600;
   }
-  .card h2 .badge-key { color: var(--ink); font-size: 18px; text-transform: none; letter-spacing: 0; font-weight: 700; }
 
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   @media (max-width: 480px) { .grid-2 { grid-template-columns: 1fr; } }
@@ -217,7 +276,8 @@
     color: var(--graphite);
     display: flex;
     align-items: center;
-    gap: 6px;
+    flex-wrap: wrap;
+    gap: 8px;
   }
   .callout.callout-error .dim-box { border-color: var(--error); color: var(--error); }
   .callout.callout-error .dim-line::before, .callout.callout-error .dim-line::after { background: var(--error); }
@@ -257,64 +317,181 @@
 
   .callout-row { display: flex; flex-wrap: wrap; gap: 4px 4px; }
 
-  /* ---- Badge (tier + verification) ---- */
-  .badge {
-    display: inline-flex;
+  /* One quiet line per card teaching the chip affordance. */
+  .source-hint {
+    display: flex;
     align-items: center;
-    gap: 4px;
-    min-height: 24px;
-    padding: 2px 8px 2px 6px;
-    border-radius: 999px;
-    font-size: 11px;
-    font-weight: 700;
-    font-family: var(--sans);
-    border: 1px solid transparent;
-    cursor: pointer;
-    background: none;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--graphite);
+    margin: 0 0 14px;
   }
-  .badge.tier-verified { color: var(--valid); border-color: var(--valid); }
-  .badge.tier-secondary { color: var(--graphite); border-color: var(--graphite); }
-  .badge .tier-letter {
+  .source-hint .chip-demo {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 16px; height: 16px;
-    border-radius: 4px;
-    background: currentColor;
-    color: var(--panel);
+    width: 18px; height: 18px;
+    border-radius: 5px;
+    background: var(--layout-blue);
+    color: #fff;
+    font-family: var(--mono);
     font-size: 10px;
+    font-weight: 700;
+    flex: none;
   }
-  .badge:hover, .badge:focus-visible { outline: 2px solid var(--layout-blue); outline-offset: 1px; }
+
+  /* ---- Provenance tier chip (compact) ----
+     The INLINE badge is a single tier letter A–E in a square layout-blue
+     chip — quiet, one per value. Tapping it reveals the full citation in a
+     popover (DESIGN_SYSTEM §8). The full title NEVER renders inline. */
+  .badge-wrap { position: relative; display: inline-flex; vertical-align: middle; }
+  .badge {
+    --chip: var(--layout-blue);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px; height: 22px;
+    padding: 0;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    color: #fff;
+    background: var(--chip);
+    border: 1px solid color-mix(in srgb, var(--chip) 70%, #000 0%);
+    cursor: pointer;
+    position: relative;
+    transition: transform var(--motion) ease-out, box-shadow var(--motion) ease-out;
+  }
+  /* Subtle tappable affordance: a tiny "expand" tick at the corner. */
+  .badge::after {
+    content: '';
+    position: absolute;
+    right: 2px; bottom: 2px;
+    width: 0; height: 0;
+    border-left: 3px solid transparent;
+    border-bottom: 3px solid rgba(255,255,255,0.55);
+  }
+  .badge.tier-verified { --chip: var(--valid); }
+  .badge.tier-secondary { --chip: var(--layout-blue); }
+  .badge.tier-error { --chip: var(--error); }
+  .badge:hover { transform: translateY(-1px); box-shadow: 0 1px 4px color-mix(in srgb, var(--chip) 40%, transparent); }
+  .badge:focus-visible { outline: 2px solid var(--layout-blue); outline-offset: 2px; }
+  .badge[aria-expanded="true"] { box-shadow: 0 0 0 2px color-mix(in srgb, var(--chip) 35%, transparent); }
 
   .source-detail {
-    margin-top: 6px;
-    padding: 10px 12px;
-    border-left: 2px solid var(--layout-blue);
-    background: color-mix(in srgb, var(--layout-blue) 6%, transparent);
-    border-radius: 0 8px 8px 0;
+    position: absolute;
+    z-index: 30;
+    top: calc(100% + 6px);
+    left: 0;
+    width: max-content;
+    max-width: min(320px, 78vw);
+    padding: 12px 14px;
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--layout-blue);
+    background: var(--panel);
+    border-radius: 4px 10px 10px 10px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.16);
     font-size: 13px;
+    line-height: 1.4;
     color: var(--ink);
-    max-width: 100%;
+    text-align: left;
   }
-  .source-detail dt { color: var(--graphite); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 6px; }
+  /* Flip to the right edge when the chip sits late in a row. */
+  .badge-wrap.detail-right .source-detail { left: auto; right: 0; border-radius: 10px 4px 10px 10px; }
+
+  /* Phone-first: on narrow viewports an anchored popover cannot fit beside
+     the chip without clipping. Render it as a fixed, viewport-centered card
+     with guaranteed >=16px side margins, plus a tap-to-close backdrop. The
+     fixed card is positioned relative to the viewport (no ancestor of
+     .source-detail establishes a containing block), so a chip anywhere —
+     left, center, right, first or last row — opens fully on-screen. */
+  .source-detail-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 29;
+    background: rgba(20, 24, 28, 0.28);
+    border: 0;
+  }
+  .source-detail-backdrop[hidden] { display: none; }
+  @media (max-width: 520px) {
+    .source-detail {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      right: auto;
+      transform: translate(-50%, -50%);
+      width: calc(100vw - 32px);
+      max-width: 360px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+      border-radius: 10px;
+      border-left: 3px solid var(--layout-blue);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.32);
+    }
+    /* Neutralize the right-edge flip on phones — the card is centered. */
+    .badge-wrap.detail-right .source-detail {
+      left: 50%; right: auto; transform: translate(-50%, -50%);
+      border-radius: 10px;
+    }
+  }
+  .source-detail dt { color: var(--graphite); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 8px; font-weight: 600; }
   .source-detail dt:first-child { margin-top: 0; }
-  .source-detail dd { margin: 0 0 2px; }
+  .source-detail dd { margin: 2px 0 0; font-family: var(--mono); font-size: 12.5px; }
+  .source-detail dd.dd-prose { font-family: var(--sans); font-size: 12.5px; color: var(--graphite); }
   .source-detail[hidden] { display: none; }
 
-  /* ---- value rows for table-like data ---- */
+  /* ---- value rows for table-like data ----
+     Two columns only: label → value(+unit)+tier chip. The separate
+     SOURCE column is gone; the chip rides the value. */
   .val-table { width: 100%; border-collapse: collapse; }
-  .val-table th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--graphite); padding: 4px 8px 6px 0; border-bottom: 1px solid var(--rule); font-weight: 600; }
-  .val-table td { padding: 8px 8px 8px 0; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+  .val-table th {
+    text-align: left;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--graphite);
+    padding: 0 0 8px 0;
+    border-bottom: 1px solid var(--rule);
+    font-weight: 600;
+  }
+  .val-table th.col-val { text-align: right; }
+  .val-table td {
+    padding: 11px 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: middle;
+  }
+  .val-table td.td-label { color: var(--ink); font-size: 14px; padding-right: 12px; }
+  .val-table td.td-val { text-align: right; white-space: nowrap; }
   .val-table tr:last-child td { border-bottom: none; }
+  .val-table tbody tr { transition: background var(--motion) ease-out; }
+  .val-table tbody tr:hover { background: color-mix(in srgb, var(--layout-blue) 4%, transparent); }
+
+  .val-cell { display: inline-flex; align-items: baseline; gap: 6px; justify-content: flex-end; }
   .val-num { font-size: 16px; font-weight: 700; }
-  .val-unit { font-size: 12px; color: var(--graphite); margin-left: 2px; }
+  .val-unit { font-size: 12px; color: var(--graphite); margin-left: 1px; }
+  .val-cell .badge-wrap { align-self: center; }
 
   .no-value {
     color: var(--error);
     font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+  .no-value-block {
+    color: var(--error);
+    font-size: 13px;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+    padding: 10px 12px;
+    border: 1px dashed var(--error);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--error) 5%, transparent);
   }
 
   /* ---- forms ---- */
@@ -364,38 +541,70 @@
   }
   .empty-state, .nomatch-state {
     text-align: center;
-    padding: 40px 16px;
+    padding: 44px 16px 36px;
     color: var(--graphite);
   }
+  .empty-state .es-mark, .nomatch-state .es-mark {
+    width: 40px; height: 40px;
+    margin: 0 auto 16px;
+    border: 1.5px solid var(--layout-blue);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--layout-blue);
+    font-family: var(--mono);
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .nomatch-state .es-mark { border-color: var(--caution); color: var(--caution); }
+  .empty-state .es-title, .nomatch-state .es-title {
+    font-size: 16px;
+    color: var(--ink);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .empty-state .es-sub, .nomatch-state .es-sub { font-size: 13.5px; }
   .empty-state .examples, .nomatch-state .examples {
-    margin-top: 14px;
+    margin-top: 18px;
     display: flex;
     gap: 8px;
     justify-content: center;
     flex-wrap: wrap;
   }
   .example-btn {
-    min-height: 36px;
-    padding: 0 12px;
+    min-height: 44px;
+    padding: 0 16px;
     border-radius: 8px;
-    border: 1px dashed var(--rule);
+    border: 1px dashed color-mix(in srgb, var(--layout-blue) 50%, var(--rule));
     background: transparent;
     color: var(--layout-blue);
     font-family: var(--mono);
+    font-size: 14px;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    transition: background var(--motion) ease-out, border-color var(--motion) ease-out;
+  }
+  .example-btn:hover, .example-btn:focus-visible {
+    border-style: solid;
+    background: color-mix(in srgb, var(--layout-blue) 9%, transparent);
   }
 
-  .module-section { margin-bottom: 18px; }
+  .module-section { margin-bottom: 22px; }
+  .module-section:last-child { margin-bottom: 0; }
   .formula-box {
     font-family: var(--mono);
-    font-size: 13px;
+    font-size: 12.5px;
+    line-height: 1.55;
     background: var(--surface);
     border: 1px solid var(--rule);
+    border-left: 3px solid color-mix(in srgb, var(--layout-blue) 45%, var(--rule));
     border-radius: 8px;
-    padding: 10px 12px;
+    padding: 11px 13px;
     color: var(--graphite);
     overflow-x: auto;
-    margin-top: 10px;
+    margin-top: 12px;
   }
 
   footer.app-footer {
@@ -406,6 +615,22 @@
     color: var(--graphite);
     text-align: center;
   }
+  footer.app-footer::before {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 1px;
+    background: var(--rule);
+    margin: 0 auto 18px;
+  }
+
+  /* Dark mode: popover/shadows quieter & sharper, not cinematic. */
+  html.dark .source-detail { box-shadow: 0 6px 22px rgba(0,0,0,0.45); }
+  html.dark .source-detail-backdrop { background: rgba(0,0,0,0.5); }
+  @media (max-width: 520px) {
+    html.dark .source-detail { box-shadow: 0 12px 40px rgba(0,0,0,0.6); }
+  }
+  html.dark .card { box-shadow: none; }
 
   .sr-only {
     position: absolute;
@@ -1213,51 +1438,107 @@ const MTK = (function () {
    * No other code path may print a bare number.
    * ============================================================ */
 
-  // Renders a tier badge. `source` is a Provenance object (or null/undefined).
-  // Returns a DOM node. Always shows a letter tier; "no source" renders
-  // the honest error badge, never a silently blank one.
+  // Tracks the one open popover so opening another (or tapping elsewhere)
+  // closes it — keeps the dense tables calm, one source at a time.
+  let openBadge = null;
+  // Shared tap-to-close backdrop, shown only when a popover opens on a
+  // narrow (<=520px) viewport where the popover is a fixed centered card.
+  const NARROW_MQ = window.matchMedia('(max-width: 520px)');
+  let badgeBackdrop = null;
+  function showBackdrop() {
+    if (!NARROW_MQ.matches) return;
+    if (!badgeBackdrop) {
+      badgeBackdrop = h('div', { class: 'source-detail-backdrop' });
+      document.body.appendChild(badgeBackdrop);
+    }
+    badgeBackdrop.removeAttribute('hidden');
+  }
+  function hideBackdrop() {
+    if (badgeBackdrop) badgeBackdrop.setAttribute('hidden', 'hidden');
+  }
+  function closeOpenBadge() {
+    if (openBadge) { openBadge.close(); openBadge = null; }
+    hideBackdrop();
+  }
+  document.addEventListener('click', function (e) {
+    if (openBadge && !openBadge.wrap.contains(e.target)) closeOpenBadge();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && openBadge) { const b = openBadge.btn; closeOpenBadge(); b.focus(); }
+  });
+
+  // Renders a COMPACT tier chip — just the tier letter A–E in the layout-blue
+  // (green when Verified-Against-Primary). The full citation (title · authority
+  // · status · convention · notes) lives ONLY in the tap-expanded popover,
+  // never inline (DESIGN_SYSTEM §8). `source` is a Provenance object or null.
+  // Always shows a letter tier; a missing source renders the honest "!" chip.
   function renderBadge(source) {
     const wrap = h('span', { class: 'badge-wrap' });
-    if (!source) {
-      const b = h('button', {
-        type: 'button',
-        class: 'badge tier-secondary',
-        style: 'color: var(--error); border-color: var(--error);',
-        'aria-expanded': 'false'
-      }, [h('span', { class: 'tier-letter', style: 'background: var(--error);' }, '!'), 'no source']);
-      wrap.appendChild(b);
-      return wrap;
-    }
-    const entry = MTK.sourceRegistry[source.sourceId];
-    const verified = source.verificationStatus === 'Verified Against Primary';
     const id = 'src-detail-' + (++badgeSeq);
-    const badgeBtn = h('button', {
-      type: 'button',
-      class: 'badge ' + (verified ? 'tier-verified' : 'tier-secondary'),
-      'aria-expanded': 'false',
-      'aria-controls': id
-    }, [
-      h('span', { class: 'tier-letter' }, source.confidenceTier || '?'),
-      (entry ? entry.title : source.sourceId)
-    ]);
 
+    let cls, letter, titleAttr;
     const detail = h('dl', { class: 'source-detail', id: id, hidden: 'hidden' });
-    function row(term, value) {
+    function row(term, value, prose) {
       if (!value) return;
       detail.appendChild(h('dt', null, term));
-      detail.appendChild(h('dd', null, String(value)));
+      detail.appendChild(h('dd', prose ? { class: 'dd-prose' } : null, String(value)));
     }
-    row('Source', entry ? (entry.title + ' — ' + entry.authority) : source.sourceId);
-    row('Tier', source.confidenceTier);
-    row('Verification', source.verificationStatus);
-    row('Convention', source.convention);
-    row('Unit system', source.unitSystem);
-    row('Notes', source.notes);
 
-    badgeBtn.addEventListener('click', function () {
-      const isHidden = detail.hasAttribute('hidden');
-      if (isHidden) { detail.removeAttribute('hidden'); badgeBtn.setAttribute('aria-expanded', 'true'); }
-      else { detail.setAttribute('hidden', 'hidden'); badgeBtn.setAttribute('aria-expanded', 'false'); }
+    if (!source) {
+      cls = 'badge tier-error';
+      letter = '!';
+      titleAttr = 'No verified source — tap for detail';
+      row('Source', 'No verified value');
+      row('Why', 'No value is shown here without a cited source (SPEC §6). Tier and source are pending or intentionally omitted.', true);
+    } else {
+      const entry = MTK.sourceRegistry[source.sourceId];
+      const verified = source.verificationStatus === 'Verified Against Primary';
+      cls = 'badge ' + (verified ? 'tier-verified' : 'tier-secondary');
+      letter = source.confidenceTier || '?';
+      titleAttr = (entry ? entry.title : source.sourceId) + ' — tap for source';
+      row('Source', entry ? (entry.title + ' — ' + entry.authority) : source.sourceId);
+      row('Tier', 'Tier ' + (source.confidenceTier || '?'));
+      row('Verification', source.verificationStatus);
+      row('Convention', source.convention, true);
+      row('Unit system', source.unitSystem);
+      row('Notes', source.notes, true);
+    }
+
+    const badgeBtn = h('button', {
+      type: 'button',
+      class: cls,
+      title: titleAttr,
+      'aria-label': titleAttr,
+      'aria-expanded': 'false',
+      'aria-controls': id
+    }, letter);
+
+    function open() {
+      closeOpenBadge();
+      // On phones the popover is a fixed, viewport-centered card (see CSS
+      // @media max-width:520px) — anchoring/edge-flipping does not apply, so
+      // we skip it and raise the tap-to-close backdrop. On wider viewports
+      // the popover stays anchored beside the chip; flip it toward the right
+      // edge when the chip sits past the viewport midline so it never crosses
+      // the right edge (the left edge is covered by the default left:0).
+      if (NARROW_MQ.matches) {
+        wrap.classList.remove('detail-right');
+        showBackdrop();
+      } else {
+        const r = badgeBtn.getBoundingClientRect();
+        wrap.classList.toggle('detail-right', r.left > window.innerWidth * 0.5);
+      }
+      detail.removeAttribute('hidden');
+      badgeBtn.setAttribute('aria-expanded', 'true');
+      openBadge = { wrap: wrap, btn: badgeBtn, close: function () {
+        detail.setAttribute('hidden', 'hidden');
+        badgeBtn.setAttribute('aria-expanded', 'false');
+      } };
+    }
+    badgeBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (detail.hasAttribute('hidden')) open();
+      else closeOpenBadge();
     });
 
     wrap.appendChild(badgeBtn);
@@ -1313,7 +1594,9 @@ const MTK = (function () {
     return btn;
   }
 
-  // Compact inline value-with-badge for table rows (still routes through renderBadge).
+  // Compact inline value-with-chip for table rows. The tier chip rides the
+  // value (one chip per value); there is no separate source column. Still
+  // routes every number through renderBadge() — the Gate G contract.
   function valRow(value, unit, dp, source) {
     const wrap = h('span', { class: 'val-cell' });
     if (value === null || value === undefined) {
@@ -1324,6 +1607,14 @@ const MTK = (function () {
     if (unit) wrap.appendChild(h('span', { class: 'val-unit' }, unit));
     wrap.appendChild(renderBadge(source));
     return wrap;
+  }
+
+  // A one-line, on-brand hint teaching the chip affordance. One per card.
+  function sourceHint() {
+    return h('div', { class: 'source-hint' }, [
+      h('span', { class: 'chip-demo', 'aria-hidden': 'true' }, 'B'),
+      'Tap a tier badge for the source, standard, and verification status.'
+    ]);
   }
 
   /* ============================================================
@@ -1343,6 +1634,7 @@ const MTK = (function () {
   /* ============================================================
    * Module chips (fallback nav, data-driven off `registry`)
    * ============================================================ */
+  chipsEl.appendChild(h('span', { class: 'chips-label' }, 'Or pick a module'));
   Object.keys(registry).forEach(function (key) {
     const chip = h('button', { type: 'button', class: 'chip', 'aria-pressed': 'false' }, registry[key].label);
     chip.addEventListener('click', function () {
@@ -1357,25 +1649,29 @@ const MTK = (function () {
   /* ============================================================
    * Empty / no-match states
    * ============================================================ */
+  function exampleButtons(list) {
+    return h('div', { class: 'examples' }, list.map(function (ex) {
+      const b = h('button', { type: 'button', class: 'example-btn mono' }, ex);
+      b.addEventListener('click', function () { searchInput.value = ex; runSearch(ex); searchInput.focus(); });
+      return b;
+    }));
+  }
+
   function renderEmptyState() {
     resultsEl.replaceChildren(h('div', { class: 'empty-state' }, [
-      h('div', null, 'Type a size — try one of these:'),
-      h('div', { class: 'examples' }, ['M6', '1/4-20', '0.5 in', 'beam'].map(function (ex) {
-        const b = h('button', { type: 'button', class: 'example-btn mono' }, ex);
-        b.addEventListener('click', function () { searchInput.value = ex; runSearch(ex); searchInput.focus(); });
-        return b;
-      }))
+      h('div', { class: 'es-mark', 'aria-hidden': 'true' }, '⌀'),
+      h('div', { class: 'es-title' }, 'What size are you working with?'),
+      h('div', { class: 'es-sub' }, 'Type a thread, a conversion, or a module — every answer is cited.'),
+      exampleButtons(['M6', '1/4-20', '0.5 in', 'beam'])
     ]));
   }
 
   function renderNoMatch(raw) {
     resultsEl.replaceChildren(h('div', { class: 'nomatch-state' }, [
-      h('div', null, 'No match for "' + raw + '". Try a thread size, a conversion, or a module name.'),
-      h('div', { class: 'examples' }, ['M6', '1/4-20', '10 mm to in', 'beam'].map(function (ex) {
-        const b = h('button', { type: 'button', class: 'example-btn mono' }, ex);
-        b.addEventListener('click', function () { searchInput.value = ex; runSearch(ex); searchInput.focus(); });
-        return b;
-      }))
+      h('div', { class: 'es-mark', 'aria-hidden': 'true' }, '?'),
+      h('div', { class: 'es-title' }, 'No match for "' + raw + '"'),
+      h('div', { class: 'es-sub' }, 'Try a thread size, a conversion, or a module name.'),
+      exampleButtons(['M6', '1/4-20', '10 mm to in', 'beam'])
     ]));
   }
 
@@ -1394,7 +1690,11 @@ const MTK = (function () {
       const gdp = thread.unit === 'in' ? 4 : 3; // geometry decimal places
       const tdp = thread.unit === 'in' ? 4 : 2; // tap-drill decimal places
       const card = h('div', { class: 'card' });
-      card.appendChild(h('h2', null, [h('span', { class: 'badge-key' }, thread.label), ' · ' + thread.series]));
+      card.appendChild(h('div', { class: 'card-head' }, [
+        h('span', { class: 'badge-key' }, thread.label),
+        h('span', { class: 'card-series' }, thread.series)
+      ]));
+      card.appendChild(sourceHint());
 
       // HERO: the tap-drill (~75%) is the decision the user came for
       // ("what drill for this tap"). It is the ONE bold callout per card;
@@ -1406,7 +1706,7 @@ const MTK = (function () {
           label: 'Tap drill · ~75% engagement', source: td.source, hero: true
         }));
       } else {
-        card.appendChild(h('div', { class: 'no-value' }, [td.notes || 'No verified value', renderBadge(null)]));
+        card.appendChild(h('div', { class: 'no-value-block' }, [td.notes || 'No verified value', renderBadge(null)]));
       }
 
       // Quiet supporting data: geometry + the ~50% tap drill, as a table.
@@ -1414,14 +1714,13 @@ const MTK = (function () {
       geomSection.appendChild(h('h2', null, 'Thread geometry'));
       const geomTable = h('table', { class: 'val-table' });
       geomTable.appendChild(h('thead', null, h('tr', null, [
-        h('th', null, 'Dimension'), h('th', null, 'Value'), h('th', null, 'Source')
+        h('th', null, 'Dimension'), h('th', { class: 'col-val' }, 'Value')
       ])));
       const geomBody = h('tbody');
       function geomRow(label, value, dp, source) {
         geomBody.appendChild(h('tr', null, [
-          h('td', null, label),
-          h('td', null, valRow(value, thread.unit, dp, source)),
-          h('td', null, renderBadge(source))
+          h('td', { class: 'td-label' }, label),
+          h('td', { class: 'td-val' }, valRow(value, thread.unit, dp, source))
         ]));
       }
       geomRow('Major Ø', thread.majorDia, gdp, thread.provenance);
@@ -1444,20 +1743,19 @@ const MTK = (function () {
         const dp = cl.unit === 'in' ? 3 : 1;
         const clTable = h('table', { class: 'val-table' });
         clTable.appendChild(h('thead', null, h('tr', null, [
-          h('th', null, 'Fit'), h('th', null, 'Hole Ø'), h('th', null, 'Source')
+          h('th', null, 'Fit'), h('th', { class: 'col-val' }, 'Hole Ø')
         ])));
         const clBody = h('tbody');
         [['Close', cl.close], ['Normal', cl.normal], ['Loose', cl.loose]].forEach(function (r) {
           clBody.appendChild(h('tr', null, [
-            h('td', null, r[0]),
-            h('td', null, valRow(r[1], cl.unit, dp, cl.source)),
-            h('td', null, renderBadge(cl.source))
+            h('td', { class: 'td-label' }, r[0]),
+            h('td', { class: 'td-val' }, valRow(r[1], cl.unit, dp, cl.source))
           ]));
         });
         clTable.appendChild(clBody);
         clSection.appendChild(clTable);
       } else {
-        clSection.appendChild(h('div', { class: 'no-value' }, [cl.notes || 'No verified value for this size.', renderBadge(null)]));
+        clSection.appendChild(h('div', { class: 'no-value-block' }, [cl.notes || 'No verified value for this size.', renderBadge(null)]));
       }
       card.appendChild(clSection);
 
@@ -1474,16 +1772,16 @@ const MTK = (function () {
     if (!matches || matches.length === 0) { renderNoMatch(raw); return; }
     const card = h('div', { class: 'card' });
     card.appendChild(h('h2', null, 'Matches for "' + raw + '"'));
+    card.appendChild(sourceHint());
     const table = h('table', { class: 'val-table' });
-    table.appendChild(h('thead', null, h('tr', null, [h('th', null, 'Size'), h('th', null, 'Pitch Ø'), h('th', null, 'Source')])));
+    table.appendChild(h('thead', null, h('tr', null, [h('th', null, 'Size'), h('th', { class: 'col-val' }, 'Pitch Ø')])));
     const tbody = h('tbody');
     matches.slice(0, 12).forEach(function (t) {
       const tr = h('tr');
-      const labelBtn = h('button', { type: 'button', class: 'example-btn mono', style: 'border-style:solid;' }, t.label);
+      const labelBtn = h('button', { type: 'button', class: 'example-btn mono', style: 'border-style:solid; min-height:36px;' }, t.label);
       labelBtn.addEventListener('click', function () { searchInput.value = t.label.replace(' × ', 'x'); runSearch(searchInput.value); });
-      tr.appendChild(h('td', null, labelBtn));
-      tr.appendChild(h('td', null, valRow(t.pitchDia, t.unit, t.unit === 'in' ? 4 : 3, t.provenance)));
-      tr.appendChild(h('td', null, renderBadge(t.provenance)));
+      tr.appendChild(h('td', { class: 'td-label' }, labelBtn));
+      tr.appendChild(h('td', { class: 'td-val' }, valRow(t.pitchDia, t.unit, t.unit === 'in' ? 4 : 3, t.provenance)));
       tbody.appendChild(tr);
     });
     table.appendChild(tbody);
@@ -1497,6 +1795,7 @@ const MTK = (function () {
   function renderConvertModule(prefill) {
     const card = h('div', { class: 'card' });
     card.appendChild(h('h2', null, 'Convert'));
+    card.appendChild(sourceHint());
 
     const catSelect = h('select', { id: 'convCategory' });
     Object.keys(MTK.categories).concat(['temperature']).forEach(function (catKey) {
@@ -1577,6 +1876,7 @@ const MTK = (function () {
   function renderBeamModule() {
     const card = h('div', { class: 'card' });
     card.appendChild(h('h2', null, 'Cantilever beam deflection'));
+    card.appendChild(sourceHint());
 
     const lengthInput = h('input', { type: 'text', inputmode: 'decimal', value: '1000', class: 'mono', id: 'beamLength' });
     const matSelect = h('select', { id: 'beamMaterial' });
@@ -1644,7 +1944,7 @@ const MTK = (function () {
       // Quiet supporting outputs as a table.
       const outTable = h('table', { class: 'val-table' });
       outTable.appendChild(h('thead', null, h('tr', null, [
-        h('th', null, 'Output'), h('th', null, 'Value'), h('th', null, 'Source')
+        h('th', null, 'Output'), h('th', { class: 'col-val' }, 'Value')
       ])));
       const outBody = h('tbody');
       [
@@ -1653,9 +1953,8 @@ const MTK = (function () {
         ['I (second moment)', res.result.I * 1e12, 'mm⁴', 1]
       ].forEach(function (r) {
         outBody.appendChild(h('tr', null, [
-          h('td', null, r[0]),
-          h('td', null, valRow(r[1], r[2], r[3], res.source)),
-          h('td', null, renderBadge(res.source))
+          h('td', { class: 'td-label' }, r[0]),
+          h('td', { class: 'td-val' }, valRow(r[1], r[2], r[3], res.source))
         ]));
       });
       outTable.appendChild(outBody);
