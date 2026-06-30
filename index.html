@@ -1,0 +1,1733 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mtoolkit — Mechanical Reference</title>
+<style>
+  :root {
+    --ink: #13181D;
+    --surface: #F4F2ED;
+    --panel: #FBFAF7;
+    --rule: #CBC9C1;
+    --layout-blue: #1C5D99;
+    --graphite: #6B7077;
+    --valid: #3F7D58;
+    --caution: #B07A2B;
+    --error: #A23B3B;
+    --mono: 'Space Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    --sans: -apple-system, 'Segoe UI', Roboto, system-ui, sans-serif;
+    --motion: 160ms;
+    color-scheme: light;
+  }
+  html.dark {
+    --ink: #E8E9EC;
+    --surface: #15191E;
+    --panel: #1B2026;
+    --rule: #343B43;
+    --layout-blue: #5BA3D9;
+    --graphite: #9AA2AB;
+    --valid: #4F9D6D;
+    --caution: #C99240;
+    --error: #C25656;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--surface);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.45;
+    min-height: 100vh;
+    transition: background var(--motion) ease-out, color var(--motion) ease-out;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+  .mono, .tabular, input, .val-num {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+  }
+  a { color: var(--layout-blue); }
+
+  /* ---- App shell ---- */
+  header.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 16px 20px 0;
+  }
+  .brand {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .brand small {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--graphite);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  button.icon-btn {
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: 10px;
+    border: 1px solid var(--rule);
+    background: var(--panel);
+    color: var(--ink);
+    cursor: pointer;
+    font-size: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  button.icon-btn:hover { border-color: var(--layout-blue); }
+
+  .search-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 28px 20px 12px;
+  }
+  .search-field {
+    position: relative;
+  }
+  .search-field input {
+    width: 100%;
+    font-size: 28px;
+    padding: 16px 16px;
+    border-radius: 14px;
+    border: 2px solid var(--rule);
+    background: var(--panel);
+    color: var(--ink);
+    min-height: 64px;
+  }
+  .search-field input::placeholder {
+    color: var(--graphite);
+    font-family: var(--sans);
+    font-size: 18px;
+  }
+  .search-field input:focus-visible {
+    outline: 2px solid var(--layout-blue);
+    outline-offset: 2px;
+    border-color: var(--layout-blue);
+  }
+  .search-hint {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--graphite);
+  }
+  .search-hint code { font-family: var(--mono); background: transparent; }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .chip {
+    min-height: 44px;
+    padding: 0 16px;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+    background: var(--panel);
+    color: var(--ink);
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+  }
+  .chip:hover, .chip:focus-visible { border-color: var(--layout-blue); color: var(--layout-blue); }
+  .chip[aria-pressed="true"] { border-color: var(--layout-blue); color: var(--layout-blue); background: color-mix(in srgb, var(--layout-blue) 10%, var(--panel)); }
+
+  main#results {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 8px 20px 80px;
+  }
+
+  /* ---- Cards / panels ---- */
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 16px;
+  }
+  .card h2 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--graphite);
+    margin: 0 0 12px;
+    font-weight: 600;
+  }
+  .card h2 .badge-key { color: var(--ink); font-size: 18px; text-transform: none; letter-spacing: 0; font-weight: 700; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 480px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* ---- Tolerance-callout signature element ---- */
+  .callout {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 6px 8px 14px 0;
+  }
+  .callout .dim-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .callout .dim-line::before,
+  .callout .dim-line::after {
+    content: '';
+    width: 14px;
+    height: 1px;
+    background: var(--layout-blue);
+    display: inline-block;
+  }
+  .callout .dim-box {
+    border: 1.5px solid var(--layout-blue);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    background: var(--panel);
+    white-space: nowrap;
+  }
+  .callout .dim-unit {
+    font-size: 13px;
+    color: var(--graphite);
+    font-weight: 400;
+    margin-left: 4px;
+  }
+  .callout .callout-meta {
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--graphite);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .callout.callout-error .dim-box { border-color: var(--error); color: var(--error); }
+  .callout.callout-error .dim-line::before, .callout.callout-error .dim-line::after { background: var(--error); }
+
+  .callout-row { display: flex; flex-wrap: wrap; gap: 4px 4px; }
+
+  /* ---- Badge (tier + verification) ---- */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 24px;
+    padding: 2px 8px 2px 6px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: var(--sans);
+    border: 1px solid transparent;
+    cursor: pointer;
+    background: none;
+  }
+  .badge.tier-verified { color: var(--valid); border-color: var(--valid); }
+  .badge.tier-secondary { color: var(--graphite); border-color: var(--graphite); }
+  .badge .tier-letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px; height: 16px;
+    border-radius: 4px;
+    background: currentColor;
+    color: var(--panel);
+    font-size: 10px;
+  }
+  .badge:hover, .badge:focus-visible { outline: 2px solid var(--layout-blue); outline-offset: 1px; }
+
+  .source-detail {
+    margin-top: 6px;
+    padding: 10px 12px;
+    border-left: 2px solid var(--layout-blue);
+    background: color-mix(in srgb, var(--layout-blue) 6%, transparent);
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    color: var(--ink);
+    max-width: 100%;
+  }
+  .source-detail dt { color: var(--graphite); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 6px; }
+  .source-detail dt:first-child { margin-top: 0; }
+  .source-detail dd { margin: 0 0 2px; }
+  .source-detail[hidden] { display: none; }
+
+  /* ---- value rows for table-like data ---- */
+  .val-table { width: 100%; border-collapse: collapse; }
+  .val-table th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--graphite); padding: 4px 8px 6px 0; border-bottom: 1px solid var(--rule); font-weight: 600; }
+  .val-table td { padding: 8px 8px 8px 0; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+  .val-table tr:last-child td { border-bottom: none; }
+  .val-num { font-size: 16px; font-weight: 700; }
+  .val-unit { font-size: 12px; color: var(--graphite); margin-left: 2px; }
+
+  .no-value {
+    color: var(--error);
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ---- forms ---- */
+  label { display: block; font-size: 13px; color: var(--graphite); margin-bottom: 4px; }
+  select, input[type="text"], input[type="number"] {
+    width: 100%;
+    min-height: 44px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--rule);
+    background: var(--panel);
+    color: var(--ink);
+    font-size: 16px;
+  }
+  select:focus-visible, input:focus-visible {
+    outline: 2px solid var(--layout-blue);
+    outline-offset: 1px;
+  }
+  fieldset { border: none; padding: 0; margin: 0 0 12px; }
+  .field { margin-bottom: 12px; }
+  .radio-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .radio-chip {
+    min-height: 44px;
+    padding: 0 14px;
+    border-radius: 8px;
+    border: 1px solid var(--rule);
+    background: var(--panel);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .radio-chip input { width: auto; min-height: auto; margin: 0; }
+  .radio-chip:has(input:checked) { border-color: var(--layout-blue); color: var(--layout-blue); }
+
+  button.primary {
+    min-height: 48px;
+    padding: 0 18px;
+    border-radius: 10px;
+    border: none;
+    background: var(--layout-blue);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button.copy-btn {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0 14px;
+    border-radius: 8px;
+    border: 1px solid var(--rule);
+    background: var(--panel);
+    color: var(--ink);
+    cursor: pointer;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  button.copy-btn.copied { border-color: var(--valid); color: var(--valid); }
+
+  .empty-state, .nomatch-state {
+    text-align: center;
+    padding: 40px 16px;
+    color: var(--graphite);
+  }
+  .empty-state .examples, .nomatch-state .examples {
+    margin-top: 14px;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .example-btn {
+    min-height: 36px;
+    padding: 0 12px;
+    border-radius: 8px;
+    border: 1px dashed var(--rule);
+    background: transparent;
+    color: var(--layout-blue);
+    font-family: var(--mono);
+    cursor: pointer;
+  }
+
+  .module-section { margin-bottom: 18px; }
+  .formula-box {
+    font-family: var(--mono);
+    font-size: 13px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: var(--graphite);
+    overflow-x: auto;
+    margin-top: 10px;
+  }
+
+  footer.app-footer {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+    font-size: 12px;
+    color: var(--graphite);
+    text-align: center;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  #selftest-out {
+    white-space: pre-wrap;
+    font-family: var(--mono);
+    font-size: 12px;
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 14px;
+  }
+</style>
+</head>
+<body>
+<header class="app-header">
+  <div class="brand">Mtoolkit<small>Mechanical Reference</small></div>
+  <button type="button" class="icon-btn" id="darkToggle" aria-pressed="false" aria-label="Toggle dark mode">&#9789;</button>
+</header>
+<div class="search-wrap">
+  <div class="search-field">
+    <input type="text" id="searchInput" class="mono" autocomplete="off" autocapitalize="off" spellcheck="false"
+      placeholder="Type a size — M6, 1/4-20, 0.5 in, beam"
+      aria-label="Search threads, conversions, or modules">
+  </div>
+  <div class="search-hint">Try <code>M6</code> · <code>1/4-20</code> · <code>10 mm to in</code> · <code>beam</code></div>
+  <nav class="chips" id="moduleChips" aria-label="Modules"></nav>
+</div>
+<main id="results" aria-live="polite"></main>
+<footer class="app-footer">Mtoolkit v<span id="footerVersion"></span> — every value cited. Data offline-after-load, no accounts, no tracking.</footer>
+
+<script>
+/* @pure-start */
+const MTK = (function () {
+  'use strict';
+
+  const dataVersion = '0.1.0';
+
+  /* ============================================================
+   * 1. SOURCE REGISTRY — SOURCES.md §4, verbatim structure.
+   *    Records reference sourceId only; never inline a full title.
+   * ============================================================ */
+  const sourceRegistry = {
+    SRC001: { title: 'ISO 261',       authority: 'ISO',   type: 'Standard', tier: 'A', status: 'Pending Access',      usedBy: ['Threads', 'TapDrill'] },
+    SRC002: { title: 'ISO 965-1',     authority: 'ISO',   type: 'Standard', tier: 'A', status: 'Pending Access',      usedBy: ['Threads'] },
+    SRC003: { title: 'ISO 68-1',      authority: 'ISO',   type: 'Standard', tier: 'A', status: 'Pending Access',      usedBy: ['Threads'] },
+    SRC004: { title: "Machinery's Handbook 30th", authority: 'Industrial Press', type: 'Handbook', tier: 'B', status: 'Available', usedBy: ['Threads', 'TapDrill', 'Clearance', 'Conversion'] },
+    SRC005: { title: 'ASME B1.1',     authority: 'ASME',  type: 'Standard', tier: 'A', status: 'Pending Access',      usedBy: ['Threads'] },
+    SRC006: { title: 'ISO 273',       authority: 'ISO',   type: 'Standard', tier: 'A', status: 'Pending Access',      usedBy: ['Clearance'] },
+    SRC007: { title: 'ASME B18.2.8',  authority: 'ASME',  type: 'Standard', tier: 'A', status: 'Pending Access',      usedBy: ['Clearance'] },
+    SRC008: { title: "Roark's Formulas for Stress and Strain", authority: 'McGraw-Hill', type: 'Reference', tier: 'B', status: 'Available', usedBy: ['BeamCalc'] },
+    SRC009: { title: 'NIST SP 811 (SI units & conversion factors)', authority: 'NIST', type: 'Standard', tier: 'A', status: 'Publicly Available', usedBy: ['Conversion'] }
+  };
+
+  /* ============================================================
+   * 2. PROVENANCE HELPER — SOURCES.md §5 schema.
+   * ============================================================ */
+  function prov(sourceId, confidenceTier, verificationStatus, extra) {
+    const base = { sourceId: sourceId, confidenceTier: confidenceTier, verificationStatus: verificationStatus };
+    if (extra) {
+      for (const k in extra) {
+        if (Object.prototype.hasOwnProperty.call(extra, k)) base[k] = extra[k];
+      }
+    }
+    return base;
+  }
+
+  /* ============================================================
+   * 3. THREAD DATA
+   *    Derived from the ISO 68-1 / ASME B1.1 60°-V basic profile —
+   *    not a copied table (SOURCES §7 licensing rule).
+   *
+   *    pitchDia = majorDia − PITCH_DIA_OFFSET · P
+   *    minorDia = majorDia − MINOR_DIA_OFFSET · P
+   *    (P = thread pitch in the same unit as majorDia; for Unified
+   *    threads P = 1/TPI inches.)
+   *
+   *    These two constants are the basic ISO 68-1 / 60°-V profile
+   *    constants and must be used exactly — a looser/rounded value
+   *    drifts the last digit of derived diameters (PROJECT_MEMORY.md:
+   *    M6 coarse must read pitchDia 5.350 / minorDia 4.917 mm exactly).
+   * ============================================================ */
+  const PITCH_DIA_OFFSET = 0.649519;  // H/2 normalized: 0.649519 * P
+  const MINOR_DIA_OFFSET = 1.082532;  // 5H/8 normalized: 1.082532 * P
+
+  function round(value, dp) {
+    const f = Math.pow(10, dp);
+    return Math.round((value + Number.EPSILON) * f) / f;
+  }
+
+  function threadProv(system) {
+    return prov('SRC004', 'B', 'Verified Against Secondary', {
+      unitSystem: system,
+      convention: system === 'metric'
+        ? 'ISO 261 (sizes) / ISO 965-1 (tolerances) / ISO 68-1 (basic profile); cross-checked against Machinery\'s Handbook 30th'
+        : 'ASME B1.1 (Unified inch screw threads, basic profile); cross-checked against Machinery\'s Handbook 30th',
+      notes: 'Primary standard (' + (system === 'metric' ? 'SRC001/002/003' : 'SRC005') + ') access is pending; values derived from the basic 60°-V profile formula and verified against the secondary handbook, not yet against the primary standard text.'
+    });
+  }
+
+  function makeMetricThread(sizeKey, majorDia, pitch, series) {
+    const p = pitch;
+    return {
+      sizeKey: sizeKey,
+      label: sizeKey + ' × ' + p,
+      system: 'metric',
+      series: series,
+      majorDia: majorDia,
+      pitch: p,
+      pitchDia: round(majorDia - PITCH_DIA_OFFSET * p, 3),
+      minorDia: round(majorDia - MINOR_DIA_OFFSET * p, 3),
+      unit: 'mm',
+      provenance: threadProv('metric')
+    };
+  }
+
+  function makeUnifiedThread(sizeKey, majorDia, tpi, series) {
+    const p = 1 / tpi;
+    return {
+      sizeKey: sizeKey,
+      label: sizeKey,
+      system: 'unified',
+      series: series,
+      majorDia: majorDia,
+      pitch: round(p, 5),
+      tpi: tpi,
+      pitchDia: round(majorDia - PITCH_DIA_OFFSET * p, 4),
+      minorDia: round(majorDia - MINOR_DIA_OFFSET * p, 4),
+      unit: 'in',
+      provenance: threadProv('unified')
+    };
+  }
+
+  const threads = [
+    // --- Metric coarse, M1.6–M24 (SPEC §5.1 band) ---
+    makeMetricThread('M1.6', 1.6, 0.35, 'coarse'),
+    makeMetricThread('M2',   2,   0.4,  'coarse'),
+    makeMetricThread('M2.5', 2.5, 0.45, 'coarse'),
+    makeMetricThread('M3',   3,   0.5,  'coarse'),
+    makeMetricThread('M4',   4,   0.7,  'coarse'),
+    makeMetricThread('M5',   5,   0.8,  'coarse'),
+    makeMetricThread('M6',   6,   1.0,  'coarse'),
+    makeMetricThread('M8',   8,   1.25, 'coarse'),
+    makeMetricThread('M10',  10,  1.5,  'coarse'),
+    makeMetricThread('M12',  12,  1.75, 'coarse'),
+    makeMetricThread('M14',  14,  2.0,  'coarse'),
+    makeMetricThread('M16',  16,  2.0,  'coarse'),
+    makeMetricThread('M20',  20,  2.5,  'coarse'),
+    makeMetricThread('M24',  24,  3.0,  'coarse'),
+
+    // --- Metric fine, common pitches only (SPEC §5.1: "common fine") ---
+    makeMetricThread('M8',  8,  1.0,  'fine'),
+    makeMetricThread('M10', 10, 1.25, 'fine'),
+    makeMetricThread('M10', 10, 1.0,  'fine'),
+    makeMetricThread('M12', 12, 1.25, 'fine'),
+    makeMetricThread('M14', 14, 1.5,  'fine'),
+    makeMetricThread('M16', 16, 1.5,  'fine'),
+    makeMetricThread('M20', 20, 1.5,  'fine'),
+    makeMetricThread('M24', 24, 2.0,  'fine'),
+
+    // --- Unified UNC/UNF, #4–1/2" (SPEC §5.1 band) ---
+    makeUnifiedThread('#4-40',  0.1120, 40, 'UNC'),
+    makeUnifiedThread('#4-48',  0.1120, 48, 'UNF'),
+    makeUnifiedThread('#6-32',  0.1380, 32, 'UNC'),
+    makeUnifiedThread('#6-40',  0.1380, 40, 'UNF'),
+    makeUnifiedThread('#8-32',  0.1640, 32, 'UNC'),
+    makeUnifiedThread('#8-36',  0.1640, 36, 'UNF'),
+    makeUnifiedThread('#10-24', 0.1900, 24, 'UNC'),
+    makeUnifiedThread('#10-32', 0.1900, 32, 'UNF'),
+    makeUnifiedThread('1/4-20', 0.2500, 20, 'UNC'),
+    makeUnifiedThread('1/4-28', 0.2500, 28, 'UNF'),
+    makeUnifiedThread('5/16-18',0.3125, 18, 'UNC'),
+    makeUnifiedThread('5/16-24',0.3125, 24, 'UNF'),
+    makeUnifiedThread('3/8-16', 0.3750, 16, 'UNC'),
+    makeUnifiedThread('3/8-24', 0.3750, 24, 'UNF'),
+    makeUnifiedThread('7/16-14',0.4375, 14, 'UNC'),
+    makeUnifiedThread('7/16-20',0.4375, 20, 'UNF'),
+    makeUnifiedThread('1/2-13', 0.5000, 13, 'UNC'),
+    makeUnifiedThread('1/2-20', 0.5000, 20, 'UNF')
+  ];
+
+  /* ============================================================
+   * 4. TAP DRILL RULE — SPEC §5.2 / SOURCES §6.
+   *    ~75% engagement: drill = majorDia − P
+   *    ~50% engagement: drill = majorDia − PITCH_DIA_OFFSET·P
+   *      (the ~50% hole sits at the theoretical pitch diameter)
+   * ============================================================ */
+  function tapDrill(thread) {
+    if (!thread || typeof thread.majorDia !== 'number' || typeof thread.pitch !== 'number') {
+      return {
+        result: null,
+        formula: null,
+        source: null,
+        notes: 'No verified value: thread record incomplete.'
+      };
+    }
+    const dp = thread.unit === 'in' ? 4 : 2;
+    const pct75 = round(thread.majorDia - thread.pitch, dp);
+    const pct50 = round(thread.majorDia - PITCH_DIA_OFFSET * thread.pitch, dp);
+    return {
+      result: {
+        pct75: pct75,
+        pct50: pct50,
+        unit: thread.unit,
+        sizeKey: thread.sizeKey,
+        series: thread.series
+      },
+      formula: '~75% engagement: drill = majorDia − P  |  ~50% engagement: drill = majorDia − 0.649519·P',
+      source: prov('SRC004', 'B', 'Verified Against Secondary', {
+        unitSystem: thread.system,
+        convention: '~75% and ~50% thread engagement, metric rule per Machinery\'s Handbook 30th',
+        notes: 'Harder materials (e.g. stainless, titanium) should use the ~50% engagement column to reduce tap breakage risk; softer materials (aluminum, brass) commonly tap at ~75%. This is a starting reference, not a substitute for shop practice.'
+      })
+    };
+  }
+
+  /* ============================================================
+   * 5. CLEARANCE HOLES — SPEC §5.3 / SOURCES §6.
+   *    Derived/used values only (not the full standard table),
+   *    per SOURCES §7 licensing rule.
+   * ============================================================ */
+  function clearanceProvMetric() {
+    return prov('SRC006', 'B', 'Verified Against Secondary', {
+      unitSystem: 'metric',
+      convention: 'ISO 273 clearance hole fit classes: close / medium(normal) / coarse(loose); cross-checked against Machinery\'s Handbook 30th',
+      notes: 'Primary standard (SRC006) access is pending; figures verified against the secondary handbook (SRC004), not yet against the primary ISO text.'
+    });
+  }
+
+  function clearanceProvImperial() {
+    return prov('SRC007', 'B', 'Verified Against Secondary', {
+      unitSystem: 'imperial',
+      convention: 'ASME B18.2.8 clearance hole fit classes: close / normal / loose; cross-checked against Machinery\'s Handbook 30th',
+      notes: 'Primary standard (SRC007) access is pending; figures verified against the secondary handbook (SRC004), not yet against the primary ASME text. Number sizes #4–#8 are not yet confidently sourced and are intentionally omitted rather than guessed.'
+    });
+  }
+
+  // ISO 273 subset, mm (close / normal / loose), M1.6–M24
+  const clearanceMetric = {
+    'M1.6': { close: 1.7,  normal: 1.8,  loose: 2.0 },
+    'M2':   { close: 2.2,  normal: 2.4,  loose: 2.6 },
+    'M2.5': { close: 2.7,  normal: 2.9,  loose: 3.1 },
+    'M3':   { close: 3.2,  normal: 3.4,  loose: 3.6 },
+    'M4':   { close: 4.3,  normal: 4.5,  loose: 4.8 },
+    'M5':   { close: 5.3,  normal: 5.5,  loose: 5.8 },
+    'M6':   { close: 6.4,  normal: 6.6,  loose: 7.0 },
+    'M8':   { close: 8.4,  normal: 9.0,  loose: 10.0 },
+    'M10':  { close: 10.5, normal: 11.0, loose: 12.0 },
+    'M12':  { close: 13.0, normal: 13.5, loose: 14.5 },
+    'M14':  { close: 15.0, normal: 15.5, loose: 16.5 },
+    'M16':  { close: 17.0, normal: 17.5, loose: 18.5 },
+    'M20':  { close: 21.0, normal: 22.0, loose: 24.0 },
+    'M24':  { close: 25.0, normal: 26.0, loose: 28.0 }
+  };
+
+  // ASME B18.2.8 subset, decimal inch (close / normal / loose).
+  // Number sizes #4–#8 intentionally absent: not confidently sourced
+  // (SPEC §6 failure philosophy — no verified value, no guess).
+  const clearanceImperial = {
+    '#10': { close: 0.196, normal: 0.201, loose: 0.221 },
+    '1/4': { close: 0.266, normal: 0.281, loose: 0.297 },
+    '5/16':{ close: 0.328, normal: 0.344, loose: 0.359 },
+    '3/8': { close: 0.391, normal: 0.406, loose: 0.422 },
+    '7/16':{ close: 0.453, normal: 0.469, loose: 0.484 },
+    '1/2': { close: 0.531, normal: 0.547, loose: 0.562 }
+  };
+
+  function clearanceFor(sizeKey, system) {
+    const table = system === 'metric' ? clearanceMetric : clearanceImperial;
+    const row = table[sizeKey];
+    if (!row) {
+      return {
+        unit: system === 'metric' ? 'mm' : 'in',
+        close: null, normal: null, loose: null,
+        source: null,
+        notes: 'No verified value for "' + sizeKey + '" (' + system + '). Not guessed — see SPEC §6 failure philosophy.'
+      };
+    }
+    return {
+      unit: system === 'metric' ? 'mm' : 'in',
+      close: row.close,
+      normal: row.normal,
+      loose: row.loose,
+      source: system === 'metric' ? clearanceProvMetric() : clearanceProvImperial()
+    };
+  }
+
+  /* ============================================================
+   * 6. UNIT CONVERSION — SPEC §5.4 / SOURCES §6.
+   *    Factors are exact-by-definition where applicable (tier A,
+   *    Verified Against Primary, SRC009 NIST SP 811). Only the
+   *    conversion factors themselves earn tier A in this dataset.
+   * ============================================================ */
+  function conversionProv(notes) {
+    return prov('SRC009', 'A', 'Verified Against Primary', {
+      unitSystem: 'both',
+      convention: 'SI base-unit conversion factor, exact by definition (NIST SP 811)',
+      notes: notes || 'Cross-checked against Machinery\'s Handbook 30th (SRC004).'
+    });
+  }
+
+  // Each category: { baseUnit, units: { key: { label, toBase (factor to SI base), source } } }
+  const categories = {
+    length: {
+      baseUnit: 'm',
+      units: {
+        m:  { label: 'meter',      toBase: 1,                 source: conversionProv('SI base unit; toBase = 1 by definition.') },
+        mm: { label: 'millimeter', toBase: 0.001,              source: conversionProv('1 mm = 0.001 m, SI prefix, exact by definition.') },
+        cm: { label: 'centimeter', toBase: 0.01,               source: conversionProv('1 cm = 0.01 m, SI prefix, exact by definition.') },
+        in: { label: 'inch',       toBase: 0.0254,             source: conversionProv('1 in = 0.0254 m exactly (international inch, NIST SP 811).') },
+        ft: { label: 'foot',       toBase: 0.3048,             source: conversionProv('1 ft = 0.3048 m exactly (international foot, NIST SP 811).') }
+      }
+    },
+    force: {
+      baseUnit: 'N',
+      units: {
+        N:   { label: 'newton',     toBase: 1,                 source: conversionProv('SI base unit; toBase = 1 by definition.') },
+        kN:  { label: 'kilonewton', toBase: 1000,               source: conversionProv('1 kN = 1000 N, SI prefix, exact by definition.') },
+        lbf: { label: 'pound-force',toBase: 4.4482216152605,    source: conversionProv('1 lbf = 4.4482216152605 N exactly (defined via g_n = 9.80665 m/s^2 and 1 lb = 0.45359237 kg, NIST SP 811).') },
+        kgf: { label: 'kilogram-force', toBase: 9.80665,        source: conversionProv('1 kgf = 9.80665 N exactly (standard gravity g_n, NIST SP 811).') }
+      }
+    },
+    torque: {
+      baseUnit: 'N·m',
+      units: {
+        'N·m':   { label: 'newton-meter',   toBase: 1,             source: conversionProv('SI base unit; toBase = 1 by definition.') },
+        'N·mm':  { label: 'newton-millimeter', toBase: 0.001,      source: conversionProv('1 N·mm = 0.001 N·m, SI prefix, exact by definition.') },
+        'lbf·ft':{ label: 'pound-foot',     toBase: 1.3558179483314004, source: conversionProv('1 lbf·ft = 1 lbf × 1 ft = 4.4482216152605 N × 0.3048 m, exact by definition.') },
+        'lbf·in':{ label: 'pound-inch',     toBase: 0.1129848290276167, source: conversionProv('1 lbf·in = 1 lbf × 1 in = 4.4482216152605 N × 0.0254 m, exact by definition.') }
+      }
+    },
+    pressure: {
+      baseUnit: 'Pa',
+      units: {
+        Pa:  { label: 'pascal',     toBase: 1,                 source: conversionProv('SI base unit; toBase = 1 by definition.') },
+        kPa: { label: 'kilopascal', toBase: 1000,               source: conversionProv('1 kPa = 1000 Pa, SI prefix, exact by definition.') },
+        MPa: { label: 'megapascal', toBase: 1000000,            source: conversionProv('1 MPa = 1,000,000 Pa, SI prefix, exact by definition.') },
+        psi: { label: 'pound-force per sq in', toBase: 6894.757293168, source: conversionProv('1 psi = 1 lbf / 1 in^2 = 4.4482216152605 N / 0.0254^2 m^2, exact by definition (NIST SP 811).') },
+        bar: { label: 'bar',        toBase: 100000,             source: conversionProv('1 bar = 100,000 Pa exactly, by definition (NIST SP 811).') }
+      }
+    },
+    mass: {
+      baseUnit: 'kg',
+      units: {
+        kg: { label: 'kilogram', toBase: 1,                    source: conversionProv('SI base unit; toBase = 1 by definition.') },
+        g:  { label: 'gram',     toBase: 0.001,                 source: conversionProv('1 g = 0.001 kg, SI prefix, exact by definition.') },
+        lb: { label: 'pound (avoirdupois)', toBase: 0.45359237, source: conversionProv('1 lb = 0.45359237 kg exactly (international avoirdupois pound, NIST SP 811).') },
+        oz: { label: 'ounce',    toBase: 0.028349523125,        source: conversionProv('1 oz = 1/16 lb = 0.45359237/16 kg exactly, by definition.') }
+      }
+    }
+  };
+
+  function convert(value, from, to, category) {
+    const cat = categories[category];
+    if (!cat || !cat.units[from] || !cat.units[to]) {
+      return {
+        result: null,
+        source: null,
+        notes: 'No verified value: unknown unit/category combination (' + category + ': ' + from + ' -> ' + to + ').'
+      };
+    }
+    const fromUnit = cat.units[from];
+    const toUnit = cat.units[to];
+    const result = value * fromUnit.toBase / toUnit.toBase;
+    return {
+      result: result,
+      unit: to,
+      formula: 'value × (' + from + '→' + cat.baseUnit + ' factor) ÷ (' + to + '→' + cat.baseUnit + ' factor)',
+      source: toUnit.source
+    };
+  }
+
+  // Temperature is affine, not a pure scale factor — handled separately.
+  function convertTemp(value, from, to) {
+    const valid = { C: 1, F: 1, K: 1 };
+    if (!valid[from] || !valid[to]) {
+      return { result: null, source: null, notes: 'No verified value: unknown temperature unit.' };
+    }
+    // Normalize to Celsius first.
+    let celsius;
+    if (from === 'C') celsius = value;
+    else if (from === 'F') celsius = (value - 32) * (5 / 9);
+    else if (from === 'K') celsius = value - 273.15;
+
+    let result;
+    if (to === 'C') result = celsius;
+    else if (to === 'F') result = celsius * (9 / 5) + 32;
+    else if (to === 'K') result = celsius + 273.15;
+
+    return {
+      result: result,
+      unit: to,
+      formula: 'affine conversion via Celsius: F = C×9/5+32, K = C+273.15',
+      source: conversionProv('Temperature scale relationships are exact by definition (ITS-90 / NIST SP 811): K = °C + 273.15; °F = °C×9/5 + 32.')
+    };
+  }
+
+  /* ============================================================
+   * 7. MATERIALS — Young's modulus library for the beam calc
+   *    (SPEC §5.5). Values per Roark's Formulas for Stress and
+   *    Strain / standard handbook references (SRC008).
+   * ============================================================ */
+  function materialProv(notes) {
+    return prov('SRC008', 'B', 'Verified Against Secondary', {
+      unitSystem: 'both',
+      convention: 'Young\'s modulus (E), representative handbook value for the named material/temper',
+      notes: notes || 'Representative value; real material lots vary — cross-checked against Machinery\'s Handbook 30th (SRC004).'
+    });
+  }
+
+  const materials = [
+    { key: 'steel_structural', label: 'Structural steel',        E: 200e9, unit: 'Pa', source: materialProv('Typical structural/mild carbon steel.') },
+    { key: 'stainless_304',    label: 'Stainless steel 304',     E: 193e9, unit: 'Pa', source: materialProv('Austenitic stainless, annealed.') },
+    { key: 'aluminum_6061',    label: 'Aluminium 6061',          E: 69e9,  unit: 'Pa', source: materialProv('Common wrought aluminum alloy, any temper (E is temper-insensitive).') },
+    { key: 'titanium_ti6al4v', label: 'Titanium Ti-6Al-4V',      E: 114e9, unit: 'Pa', source: materialProv('Grade 5 titanium alloy, mill-annealed.') },
+    { key: 'brass',            label: 'Brass',                   E: 100e9, unit: 'Pa', source: materialProv('Typical wrought brass (Cu-Zn alloy).') },
+    { key: 'cast_iron_grey',   label: 'Cast iron (grey)',        E: 100e9, unit: 'Pa', source: materialProv('Grey cast iron; E varies more with grade than other metals here.') }
+  ];
+
+  // Provenance for the App-Developer's beam() formula result (Euler–Bernoulli, Roark).
+  const beamSource = prov('SRC008', 'B', 'Verified Against Secondary', {
+    unitSystem: 'both',
+    convention: 'Euler–Bernoulli cantilever beam theory, formulas per Roark\'s Formulas for Stress and Strain',
+    notes: 'Standard small-deflection linear beam theory; cross-checked against Machinery\'s Handbook 30th (SRC004). Not valid for large deflections or non-linear material response.'
+  });
+
+  /* ============================================================
+   * 8. BEAM CALCULATOR — cantilever, Euler–Bernoulli (SPEC §5.5).
+   *    Pure function: f(inputs) -> {result, formula, source}|{error}
+   * ============================================================ */
+  function beam(inp) {
+    if (!inp || typeof inp !== 'object') {
+      return { error: 'Invalid input.' };
+    }
+    const length = inp.length;
+    const E = inp.E;
+    const section = inp.section;
+    const load = inp.load;
+    const magnitude = inp.magnitude;
+
+    if (typeof length !== 'number' || !(length > 0)) {
+      return { error: 'Enter a length greater than 0.' };
+    }
+    if (typeof E !== 'number' || !(E > 0)) {
+      return { error: 'Enter a modulus of elasticity (E) greater than 0.' };
+    }
+    if (typeof magnitude !== 'number' || !(magnitude > 0)) {
+      return { error: 'Enter a load magnitude greater than 0.' };
+    }
+    if (load !== 'point' && load !== 'udl') {
+      return { error: 'Choose a load type: point or udl.' };
+    }
+    if (!section || (section.type !== 'rect' && section.type !== 'round')) {
+      return { error: 'Choose a section: rect or round.' };
+    }
+
+    let I, c;
+    if (section.type === 'rect') {
+      const b = section.b, h = section.h;
+      if (typeof b !== 'number' || !(b > 0) || typeof h !== 'number' || !(h > 0)) {
+        return { error: 'Enter rect section b and h greater than 0.' };
+      }
+      I = (b * Math.pow(h, 3)) / 12;
+      c = h / 2;
+    } else {
+      const d = section.d;
+      if (typeof d !== 'number' || !(d > 0)) {
+        return { error: 'Enter round section d greater than 0.' };
+      }
+      I = (Math.PI * Math.pow(d, 4)) / 64;
+      c = d / 2;
+    }
+
+    let deflection, moment, formula;
+    if (load === 'point') {
+      const P = magnitude;
+      deflection = (P * Math.pow(length, 3)) / (3 * E * I);
+      moment = P * length;
+      formula = 'Point load (tip): δ = PL³/3EI, M = PL';
+    } else {
+      const W = magnitude;
+      const w = W / length;
+      deflection = (w * Math.pow(length, 4)) / (8 * E * I);
+      moment = (w * Math.pow(length, 2)) / 2;
+      formula = 'UDL (total W): w = W/L, δ = wL⁴/8EI, M = wL²/2';
+    }
+    const stress = (moment * c) / I;
+
+    return {
+      result: {
+        I: I,
+        c: c,
+        deflection: deflection,
+        moment: moment,
+        stress: stress
+      },
+      formula: formula + '; σ = Mc/I' + (section.type === 'rect' ? ' (I = bh³/12, c = h/2)' : ' (I = πd⁴/64, c = d/2)'),
+      source: beamSource
+    };
+  }
+
+  /* ============================================================
+   * 9. THREAD LOOKUP HELPER — return matching thread records,
+   *    coarse first, optionally filtered by pitch.
+   * ============================================================ */
+  function threadsFor(sizeKey, system, pitch) {
+    if (!sizeKey) return [];
+    let matches = threads.filter(function (t) {
+      if (t.sizeKey !== sizeKey) return false;
+      if (system && t.system !== system) return false;
+      return true;
+    });
+    if (pitch !== undefined && pitch !== null) {
+      matches = matches.filter(function (t) {
+        return Math.abs(t.pitch - pitch) < 1e-6;
+      });
+    }
+    matches.sort(function (a, b) {
+      const aCoarse = a.series === 'coarse' || a.series === 'UNC';
+      const bCoarse = b.series === 'coarse' || b.series === 'UNC';
+      if (aCoarse && !bCoarse) return -1;
+      if (!aCoarse && bCoarse) return 1;
+      return 0;
+    });
+    return matches;
+  }
+
+  /* ============================================================
+   * 10. UNIT TOKEN MAPPING — alias -> {category, canonical}.
+   * ============================================================ */
+  const UNIT_ALIASES = {
+    // length
+    'mm': { category: 'length', canonical: 'mm' },
+    'millimeter': { category: 'length', canonical: 'mm' },
+    'millimeters': { category: 'length', canonical: 'mm' },
+    'millimetre': { category: 'length', canonical: 'mm' },
+    'cm': { category: 'length', canonical: 'cm' },
+    'centimeter': { category: 'length', canonical: 'cm' },
+    'centimeters': { category: 'length', canonical: 'cm' },
+    'm': { category: 'length', canonical: 'm' },
+    'meter': { category: 'length', canonical: 'm' },
+    'meters': { category: 'length', canonical: 'm' },
+    'metre': { category: 'length', canonical: 'm' },
+    'in': { category: 'length', canonical: 'in' },
+    'inch': { category: 'length', canonical: 'in' },
+    'inches': { category: 'length', canonical: 'in' },
+    '"': { category: 'length', canonical: 'in' },
+    "''": { category: 'length', canonical: 'in' },
+    'ft': { category: 'length', canonical: 'ft' },
+    'foot': { category: 'length', canonical: 'ft' },
+    'feet': { category: 'length', canonical: 'ft' },
+    "'": { category: 'length', canonical: 'ft' },
+    // force
+    'n': { category: 'force', canonical: 'N' },
+    'newton': { category: 'force', canonical: 'N' },
+    'newtons': { category: 'force', canonical: 'N' },
+    'kn': { category: 'force', canonical: 'kN' },
+    'kilonewton': { category: 'force', canonical: 'kN' },
+    'lbf': { category: 'force', canonical: 'lbf' },
+    'lb-f': { category: 'force', canonical: 'lbf' },
+    'poundforce': { category: 'force', canonical: 'lbf' },
+    'kgf': { category: 'force', canonical: 'kgf' },
+    // torque
+    'n·m': { category: 'torque', canonical: 'N·m' },
+    'nm': { category: 'torque', canonical: 'N·m' },
+    'n-m': { category: 'torque', canonical: 'N·m' },
+    'n·mm': { category: 'torque', canonical: 'N·mm' },
+    'nmm': { category: 'torque', canonical: 'N·mm' },
+    'lbf·ft': { category: 'torque', canonical: 'lbf·ft' },
+    'lbft': { category: 'torque', canonical: 'lbf·ft' },
+    'ft-lb': { category: 'torque', canonical: 'lbf·ft' },
+    'ft-lbf': { category: 'torque', canonical: 'lbf·ft' },
+    'lbf·in': { category: 'torque', canonical: 'lbf·in' },
+    'lbin': { category: 'torque', canonical: 'lbf·in' },
+    'in-lb': { category: 'torque', canonical: 'lbf·in' },
+    'in-lbf': { category: 'torque', canonical: 'lbf·in' },
+    // pressure
+    'pa': { category: 'pressure', canonical: 'Pa' },
+    'pascal': { category: 'pressure', canonical: 'Pa' },
+    'kpa': { category: 'pressure', canonical: 'kPa' },
+    'mpa': { category: 'pressure', canonical: 'MPa' },
+    'psi': { category: 'pressure', canonical: 'psi' },
+    'ksi': { category: 'pressure', canonical: 'psi', scale: 1000 },
+    'bar': { category: 'pressure', canonical: 'bar' },
+    // mass
+    'kg': { category: 'mass', canonical: 'kg' },
+    'kilogram': { category: 'mass', canonical: 'kg' },
+    'kilograms': { category: 'mass', canonical: 'kg' },
+    'g': { category: 'mass', canonical: 'g' },
+    'gram': { category: 'mass', canonical: 'g' },
+    'grams': { category: 'mass', canonical: 'g' },
+    'lb': { category: 'mass', canonical: 'lb' },
+    'lbs': { category: 'mass', canonical: 'lb' },
+    'pound': { category: 'mass', canonical: 'lb' },
+    'pounds': { category: 'mass', canonical: 'lb' },
+    'oz': { category: 'mass', canonical: 'oz' },
+    'ounce': { category: 'mass', canonical: 'oz' },
+    'ounces': { category: 'mass', canonical: 'oz' },
+    // temperature (separate, affine — not in `categories`)
+    'c': { category: 'temperature', canonical: 'C' },
+    '°c': { category: 'temperature', canonical: 'C' },
+    'celsius': { category: 'temperature', canonical: 'C' },
+    'f': { category: 'temperature', canonical: 'F' },
+    '°f': { category: 'temperature', canonical: 'F' },
+    'fahrenheit': { category: 'temperature', canonical: 'F' },
+    'k': { category: 'temperature', canonical: 'K' },
+    'kelvin': { category: 'temperature', canonical: 'K' }
+  };
+
+  function findUnitCategory(token) {
+    if (!token) return null;
+    const key = String(token).trim().toLowerCase();
+    const entry = UNIT_ALIASES[key];
+    if (!entry) return null;
+    return { category: entry.category, canonical: entry.canonical };
+  }
+
+  /* ============================================================
+   * 11. QUERY PARSER — route a typed string (SPEC §3 / §9.5).
+   *    Canonical key shapes:
+   *      metric:    "M<size>" or "M<size>x<pitch>"  (e.g. M6, M8x1.25)
+   *      unified fractional (no leading #): "1/4-20"
+   *      unified numbered (leading #):      "#10-24"
+   * ============================================================ */
+
+  // Normalize a unified-thread token into the canonical sizeKey shape
+  // used by `threads`: fractional sizes carry no '#', numbered sizes do.
+  function normalizeUnifiedSizeKey(rawSize) {
+    const s = rawSize.trim();
+    // Already has a '#': strip it, then re-decide based on shape.
+    const stripped = s.charAt(0) === '#' ? s.slice(1) : s;
+    // Numbered sizes are bare small integers (1-12 typically, no slash, no leading digit-fraction).
+    // Fractional sizes contain a '/'.
+    if (stripped.indexOf('/') !== -1) {
+      return stripped; // fractional: no '#' prefix
+    }
+    return '#' + stripped; // numbered: '#' prefix
+  }
+
+  function parseQuery(raw) {
+    if (raw === undefined || raw === null) return { kind: 'empty' };
+    const trimmed = String(raw).trim();
+    if (trimmed === '') return { kind: 'empty' };
+
+    // --- Metric thread: M<num>[x<pitch>] ---
+    let m = trimmed.match(/^M\s*(\d+(?:\.\d+)?)\s*(?:[xX×]\s*(\d+(?:\.\d+)?))?$/);
+    if (m) {
+      const sizeKey = 'M' + m[1];
+      const pitch = m[2] !== undefined ? parseFloat(m[2]) : undefined;
+      return { kind: 'thread', system: 'metric', sizeKey: sizeKey, pitch: pitch, raw: trimmed };
+    }
+
+    // --- Unified thread: [#]<size>-<tpi>  where size is N/N fraction or bare integer ---
+    m = trimmed.match(/^#?\s*(\d+\/\d+|\d+)\s*-\s*(\d+)$/);
+    if (m) {
+      const sizeKey = normalizeUnifiedSizeKey(m[1]) + '-' + m[2];
+      return { kind: 'thread', system: 'unified', sizeKey: sizeKey, pitch: undefined, raw: trimmed };
+    }
+
+    // --- Module words ---
+    const lower = trimmed.toLowerCase();
+    if (lower === 'beam') return { kind: 'module', module: 'beam' };
+    if (lower === 'convert' || lower === 'conversion' || lower === 'converter') return { kind: 'module', module: 'convert' };
+    if (lower === 'threads' || lower === 'thread') return { kind: 'module', module: 'threads' };
+    if (lower === 'tap' || lower === 'tapdrill' || lower === 'tap drill') return { kind: 'module', module: 'tapDrill' };
+    if (lower === 'clearance') return { kind: 'module', module: 'clearance' };
+
+    // --- Conversion: "<number> <unit>" or "<number> <unit> to <unit>" ---
+    m = trimmed.match(/^(-?\d+(?:\.\d+)?)\s*(°?[a-zA-Z"'·]+)\s*(?:to|->|=)\s*(°?[a-zA-Z"'·]+)$/);
+    if (m) {
+      const value = parseFloat(m[1]);
+      const fromCat = findUnitCategory(m[2]);
+      const toCat = findUnitCategory(m[3]);
+      if (fromCat && toCat && fromCat.category === toCat.category) {
+        return { kind: 'convert', value: value, from: fromCat.canonical, to: toCat.canonical, category: fromCat.category, raw: trimmed };
+      }
+      return { kind: 'convert', value: value, from: fromCat ? fromCat.canonical : m[2], to: toCat ? toCat.canonical : m[3], category: fromCat ? fromCat.category : null, raw: trimmed, error: 'Units must be in the same category.' };
+    }
+    // --- Conversion: "<number> <unit>" (no explicit target — caller picks default target) ---
+    m = trimmed.match(/^(-?\d+(?:\.\d+)?)\s*(°?[a-zA-Z"'·]+)$/);
+    if (m) {
+      const value = parseFloat(m[1]);
+      const cat = findUnitCategory(m[2]);
+      if (cat) {
+        return { kind: 'convert', value: value, from: cat.canonical, to: null, category: cat.category, raw: trimmed };
+      }
+    }
+
+    // --- Fallback: substring match on thread labels ---
+    const needle = lower;
+    const candidates = threads.filter(function (t) {
+      return t.label.toLowerCase().indexOf(needle) !== -1 || t.sizeKey.toLowerCase().indexOf(needle) !== -1;
+    });
+    if (candidates.length > 0) {
+      return { kind: 'threadSearch', matches: candidates, raw: trimmed };
+    }
+
+    return { kind: 'none', raw: trimmed };
+  }
+
+  return {
+    dataVersion: dataVersion,
+    sourceRegistry: sourceRegistry,
+    prov: prov,
+    PITCH_DIA_OFFSET: PITCH_DIA_OFFSET,
+    MINOR_DIA_OFFSET: MINOR_DIA_OFFSET,
+    threads: threads,
+    tapDrill: tapDrill,
+    clearanceMetric: clearanceMetric,
+    clearanceImperial: clearanceImperial,
+    clearanceFor: clearanceFor,
+    categories: categories,
+    convert: convert,
+    convertTemp: convertTemp,
+    materials: materials,
+    beamSource: beamSource,
+    beam: beam,
+    threadsFor: threadsFor,
+    findUnitCategory: findUnitCategory,
+    parseQuery: parseQuery
+  };
+})();
+/* @pure-end */
+</script>
+
+<script>
+/* ============================================================
+ * UI LAYER — DOM-only IIFE. Consumes MTK exclusively. No data
+ * values or provenance objects are defined here; everything
+ * routes through the pure block.
+ * ============================================================ */
+(function () {
+  'use strict';
+
+  /* ---------- state (in-memory only, no storage APIs) ---------- */
+  const state = {
+    dark: false,
+    expandedBadges: Object.create(null) // id -> bool, transient per render
+  };
+
+  let badgeSeq = 0;
+
+  /* ---------- DOM refs ---------- */
+  const searchInput = document.getElementById('searchInput');
+  const resultsEl = document.getElementById('results');
+  const chipsEl = document.getElementById('moduleChips');
+  const darkToggle = document.getElementById('darkToggle');
+  const footerVersion = document.getElementById('footerVersion');
+
+  footerVersion.textContent = MTK.dataVersion;
+
+  /* ============================================================
+   * Registry pattern: domain -> {label, render}
+   * The search-as-spine and module chips are both data-driven off
+   * this map — no special-casing a domain by name elsewhere.
+   * ============================================================ */
+  const registry = {
+    threads:   { label: 'Threads' },
+    tapDrill:  { label: 'Tap drill' },
+    clearance: { label: 'Clearance' },
+    convert:   { label: 'Convert' },
+    beam:      { label: 'Beam' }
+  };
+
+  /* ============================================================
+   * Small DOM helpers
+   * ============================================================ */
+  function h(tag, attrs, children) {
+    const el = document.createElement(tag);
+    if (attrs) {
+      for (const k in attrs) {
+        if (!Object.prototype.hasOwnProperty.call(attrs, k)) continue;
+        if (k === 'class') el.className = attrs[k];
+        else if (k === 'html') el.innerHTML = attrs[k];
+        else if (k.indexOf('on') === 0 && typeof attrs[k] === 'function') el.addEventListener(k.slice(2), attrs[k]);
+        else el.setAttribute(k, attrs[k]);
+      }
+    }
+    if (children) {
+      (Array.isArray(children) ? children : [children]).forEach(function (c) {
+        if (c === null || c === undefined) return;
+        if (typeof c === 'string') el.appendChild(document.createTextNode(c));
+        else el.appendChild(c);
+      });
+    }
+    return el;
+  }
+
+  function fmtNum(n, dp) {
+    if (typeof n !== 'number' || !isFinite(n)) return '—';
+    if (dp === undefined) return String(n);
+    return n.toFixed(dp);
+  }
+
+  /* ============================================================
+   * THE single badge-bearing render primitive (Gate G contract).
+   * Every displayed value MUST go through callout() or badgeOnly().
+   * No other code path may print a bare number.
+   * ============================================================ */
+
+  // Renders a tier badge. `source` is a Provenance object (or null/undefined).
+  // Returns a DOM node. Always shows a letter tier; "no source" renders
+  // the honest error badge, never a silently blank one.
+  function renderBadge(source, opts) {
+    opts = opts || {};
+    const wrap = h('span', { class: 'badge-wrap' });
+    if (!source) {
+      const b = h('button', {
+        type: 'button',
+        class: 'badge tier-secondary',
+        style: 'color: var(--error); border-color: var(--error);',
+        'aria-expanded': 'false'
+      }, [h('span', { class: 'tier-letter', style: 'background: var(--error);' }, '!'), 'no source']);
+      wrap.appendChild(b);
+      return wrap;
+    }
+    const entry = MTK.sourceRegistry[source.sourceId];
+    const verified = source.verificationStatus === 'Verified Against Primary';
+    const id = 'src-detail-' + (++badgeSeq);
+    const badgeBtn = h('button', {
+      type: 'button',
+      class: 'badge ' + (verified ? 'tier-verified' : 'tier-secondary'),
+      'aria-expanded': 'false',
+      'aria-controls': id
+    }, [
+      h('span', { class: 'tier-letter' }, source.confidenceTier || '?'),
+      (entry ? entry.title : source.sourceId)
+    ]);
+
+    const detail = h('dl', { class: 'source-detail', id: id, hidden: 'hidden' });
+    function row(term, value) {
+      if (!value) return;
+      detail.appendChild(h('dt', null, term));
+      detail.appendChild(h('dd', null, String(value)));
+    }
+    row('Source', entry ? (entry.title + ' — ' + entry.authority) : source.sourceId);
+    row('Tier', source.confidenceTier);
+    row('Verification', source.verificationStatus);
+    row('Convention', source.convention);
+    row('Unit system', source.unitSystem);
+    row('Notes', source.notes);
+
+    badgeBtn.addEventListener('click', function () {
+      const isHidden = detail.hasAttribute('hidden');
+      if (isHidden) { detail.removeAttribute('hidden'); badgeBtn.setAttribute('aria-expanded', 'true'); }
+      else { detail.setAttribute('hidden', 'hidden'); badgeBtn.setAttribute('aria-expanded', 'false'); }
+    });
+
+    wrap.appendChild(badgeBtn);
+    wrap.appendChild(detail);
+    return wrap;
+  }
+
+  // The tolerance-callout signature element. EVERY primary value in the
+  // app renders through this (or the inline valRow() below for table
+  // cells) — both call renderBadge() internally, so there is exactly
+  // one path from "a number" to "a number with a source badge".
+  function callout(opts) {
+    // opts: { value, unit, label, source, dp, errorText }
+    const wrap = h('div', { class: 'callout' + (opts.errorText ? ' callout-error' : '') });
+    const dimLine = h('div', { class: 'dim-line' });
+    const box = h('span', { class: 'dim-box' });
+    if (opts.errorText) {
+      box.textContent = opts.errorText;
+    } else {
+      box.appendChild(document.createTextNode(fmtNum(opts.value, opts.dp)));
+      if (opts.unit) box.appendChild(h('span', { class: 'dim-unit' }, opts.unit));
+    }
+    dimLine.appendChild(box);
+    wrap.appendChild(dimLine);
+
+    const meta = h('div', { class: 'callout-meta' });
+    if (opts.label) meta.appendChild(h('span', null, opts.label));
+    if (!opts.errorText) meta.appendChild(renderBadge(opts.source));
+    else meta.appendChild(renderBadge(null));
+    wrap.appendChild(meta);
+    return wrap;
+  }
+
+  // Compact inline value-with-badge for table rows (still routes through renderBadge).
+  function valRow(value, unit, dp, source) {
+    const wrap = h('span', { class: 'val-cell' });
+    if (value === null || value === undefined) {
+      wrap.appendChild(h('span', { class: 'no-value' }, ['No verified value', renderBadge(null)]));
+      return wrap;
+    }
+    wrap.appendChild(h('span', { class: 'val-num' }, fmtNum(value, dp)));
+    if (unit) wrap.appendChild(h('span', { class: 'val-unit' }, unit));
+    wrap.appendChild(renderBadge(source));
+    return wrap;
+  }
+
+  /* ============================================================
+   * Dark mode (in-memory only — token swap via class on <html>)
+   * ============================================================ */
+  function applyDark() {
+    document.documentElement.classList.toggle('dark', state.dark);
+    darkToggle.setAttribute('aria-pressed', String(state.dark));
+    darkToggle.textContent = state.dark ? '☀' : '☽';
+  }
+  darkToggle.addEventListener('click', function () {
+    state.dark = !state.dark;
+    applyDark();
+  });
+  applyDark();
+
+  /* ============================================================
+   * Module chips (fallback nav, data-driven off `registry`)
+   * ============================================================ */
+  Object.keys(registry).forEach(function (key) {
+    const chip = h('button', { type: 'button', class: 'chip', 'aria-pressed': 'false' }, registry[key].label);
+    chip.addEventListener('click', function () {
+      if (key === 'beam') { searchInput.value = 'beam'; }
+      else if (key === 'convert') { searchInput.value = ''; renderConvertModule(); searchInput.focus(); return; }
+      else if (key === 'threads') { searchInput.value = 'M6'; }
+      else if (key === 'tapDrill') { searchInput.value = 'M6'; }
+      else if (key === 'clearance') { searchInput.value = 'M6'; }
+      runSearch(searchInput.value);
+      searchInput.focus();
+    });
+    chipsEl.appendChild(chip);
+  });
+
+  /* ============================================================
+   * Copy-to-clipboard microinteraction
+   * ============================================================ */
+  function copyBtn(text) {
+    const btn = h('button', { type: 'button', class: 'copy-btn' }, 'Copy');
+    btn.addEventListener('click', function () {
+      const done = function () {
+        btn.textContent = 'Copied';
+        btn.classList.add('copied');
+        setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1200);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, done);
+      } else {
+        done();
+      }
+    });
+    return btn;
+  }
+
+  /* ============================================================
+   * Empty / no-match states
+   * ============================================================ */
+  function renderEmptyState() {
+    resultsEl.replaceChildren(h('div', { class: 'empty-state' }, [
+      h('div', null, 'Type a size — try one of these:'),
+      h('div', { class: 'examples' }, ['M6', '1/4-20', '0.5 in', 'beam'].map(function (ex) {
+        const b = h('button', { type: 'button', class: 'example-btn mono' }, ex);
+        b.addEventListener('click', function () { searchInput.value = ex; runSearch(ex); searchInput.focus(); });
+        return b;
+      }))
+    ]));
+  }
+
+  function renderNoMatch(raw) {
+    resultsEl.replaceChildren(h('div', { class: 'nomatch-state' }, [
+      h('div', null, 'No match for "' + raw + '". Try a thread size, a conversion, or a module name.'),
+      h('div', { class: 'examples' }, ['M6', '1/4-20', '10 mm to in', 'beam'].map(function (ex) {
+        const b = h('button', { type: 'button', class: 'example-btn mono' }, ex);
+        b.addEventListener('click', function () { searchInput.value = ex; runSearch(ex); searchInput.focus(); });
+        return b;
+      }))
+    ]));
+  }
+
+  /* ============================================================
+   * Combined fastener card (F-001): thread + tap drill + clearance
+   * ============================================================ */
+  function renderFastenerCard(sizeKey, system, pitch) {
+    const matches = MTK.threadsFor(sizeKey, system, pitch);
+    if (matches.length === 0) {
+      renderNoMatch(sizeKey);
+      return;
+    }
+    const frag = document.createDocumentFragment();
+
+    matches.forEach(function (thread) {
+      const card = h('div', { class: 'card' });
+      card.appendChild(h('h2', null, [h('span', { class: 'badge-key' }, thread.label), ' · ' + thread.series]));
+
+      // Geometry
+      const geomSection = h('div', { class: 'module-section' });
+      geomSection.appendChild(h('div', { class: 'callout-row' }, [
+        callout({ value: thread.majorDia, unit: thread.unit, dp: thread.unit === 'in' ? 4 : 3, label: 'Major Ø', source: thread.provenance }),
+        callout({ value: thread.pitchDia, unit: thread.unit, dp: thread.unit === 'in' ? 4 : 3, label: 'Pitch Ø', source: thread.provenance }),
+        callout({ value: thread.minorDia, unit: thread.unit, dp: thread.unit === 'in' ? 4 : 3, label: 'Minor Ø', source: thread.provenance })
+      ]));
+      card.appendChild(geomSection);
+
+      // Tap drill
+      const td = MTK.tapDrill(thread);
+      const tdSection = h('div', { class: 'module-section' });
+      tdSection.appendChild(h('h2', null, 'Tap drill'));
+      if (td.result) {
+        tdSection.appendChild(h('div', { class: 'callout-row' }, [
+          callout({ value: td.result.pct75, unit: thread.unit, dp: thread.unit === 'in' ? 4 : 2, label: '~75% engagement', source: td.source }),
+          callout({ value: td.result.pct50, unit: thread.unit, dp: thread.unit === 'in' ? 4 : 2, label: '~50% engagement', source: td.source })
+        ]));
+        if (td.source && td.source.notes) tdSection.appendChild(h('div', { class: 'formula-box' }, td.source.notes));
+      } else {
+        tdSection.appendChild(h('div', { class: 'no-value' }, [td.notes || 'No verified value', renderBadge(null)]));
+      }
+      card.appendChild(tdSection);
+
+      // Clearance
+      const clSection = h('div', { class: 'module-section' });
+      clSection.appendChild(h('h2', null, 'Clearance hole'));
+      const cl = MTK.clearanceFor(thread.sizeKey, thread.system === 'metric' ? 'metric' : 'imperial');
+      if (cl.close !== null) {
+        const dp = cl.unit === 'in' ? 3 : 1;
+        clSection.appendChild(h('div', { class: 'callout-row' }, [
+          callout({ value: cl.close, unit: cl.unit, dp: dp, label: 'Close', source: cl.source }),
+          callout({ value: cl.normal, unit: cl.unit, dp: dp, label: 'Normal', source: cl.source }),
+          callout({ value: cl.loose, unit: cl.unit, dp: dp, label: 'Loose', source: cl.source })
+        ]));
+      } else {
+        clSection.appendChild(h('div', { class: 'no-value' }, [cl.notes || 'No verified value for this size.', renderBadge(null)]));
+      }
+      card.appendChild(clSection);
+
+      frag.appendChild(card);
+    });
+
+    resultsEl.replaceChildren(frag);
+  }
+
+  /* ============================================================
+   * Thread substring search results (fallback match)
+   * ============================================================ */
+  function renderThreadSearch(matches, raw) {
+    if (!matches || matches.length === 0) { renderNoMatch(raw); return; }
+    const card = h('div', { class: 'card' });
+    card.appendChild(h('h2', null, 'Matches for "' + raw + '"'));
+    const table = h('table', { class: 'val-table' });
+    table.appendChild(h('thead', null, h('tr', null, [h('th', null, 'Size'), h('th', null, 'Pitch Ø'), h('th', null, 'Source')])));
+    const tbody = h('tbody');
+    matches.slice(0, 12).forEach(function (t) {
+      const tr = h('tr');
+      const labelBtn = h('button', { type: 'button', class: 'example-btn mono', style: 'border-style:solid;' }, t.label);
+      labelBtn.addEventListener('click', function () { searchInput.value = t.label.replace(' × ', 'x'); runSearch(searchInput.value); });
+      tr.appendChild(h('td', null, labelBtn));
+      tr.appendChild(h('td', null, valRow(t.pitchDia, t.unit, t.unit === 'in' ? 4 : 3, t.provenance)));
+      tr.appendChild(h('td', null, renderBadge(t.provenance)));
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    card.appendChild(table);
+    resultsEl.replaceChildren(card);
+  }
+
+  /* ============================================================
+   * Converter module (live, no submit)
+   * ============================================================ */
+  function renderConvertModule(prefill) {
+    const card = h('div', { class: 'card' });
+    card.appendChild(h('h2', null, 'Convert'));
+
+    const catSelect = h('select', { id: 'convCategory' });
+    Object.keys(MTK.categories).concat(['temperature']).forEach(function (catKey) {
+      catSelect.appendChild(h('option', { value: catKey }, catKey.charAt(0).toUpperCase() + catKey.slice(1)));
+    });
+
+    const fromSelect = h('select', { id: 'convFrom' });
+    const toSelect = h('select', { id: 'convTo' });
+    const valueInput = h('input', { type: 'text', inputmode: 'decimal', id: 'convValue', value: '1', class: 'mono' });
+
+    function unitsFor(catKey) {
+      if (catKey === 'temperature') return ['C', 'F', 'K'];
+      return Object.keys(MTK.categories[catKey].units);
+    }
+
+    function populateUnits(catKey, fromDefault, toDefault) {
+      const units = unitsFor(catKey);
+      fromSelect.replaceChildren.apply(fromSelect, units.map(function (u) { return h('option', { value: u }, u); }));
+      toSelect.replaceChildren.apply(toSelect, units.map(function (u) { return h('option', { value: u }, u); }));
+      fromSelect.value = fromDefault && units.indexOf(fromDefault) !== -1 ? fromDefault : units[0];
+      toSelect.value = toDefault && units.indexOf(toDefault) !== -1 ? toDefault : (units[1] || units[0]);
+    }
+
+    const initCat = (prefill && prefill.category) || 'length';
+    catSelect.value = initCat;
+    populateUnits(initCat, prefill && prefill.from, prefill && prefill.to);
+    if (prefill && typeof prefill.value === 'number') valueInput.value = String(prefill.value);
+
+    const outputWrap = h('div', { id: 'convOutput' });
+
+    function recompute() {
+      const catKey = catSelect.value;
+      const from = fromSelect.value;
+      const to = toSelect.value;
+      const raw = valueInput.value.trim();
+      const value = raw === '' ? NaN : parseFloat(raw);
+      outputWrap.replaceChildren();
+      if (isNaN(value)) {
+        outputWrap.appendChild(callout({ errorText: 'Enter a number', label: 'Result' }));
+        return;
+      }
+      let res;
+      if (catKey === 'temperature') {
+        res = MTK.convertTemp(value, from, to);
+      } else {
+        res = MTK.convert(value, from, to, catKey);
+      }
+      if (res.result === null) {
+        outputWrap.appendChild(callout({ errorText: 'No verified value', label: res.notes || '' }));
+        return;
+      }
+      const dp = catKey === 'temperature' ? 2 : 6;
+      const out = callout({ value: res.result, unit: to, dp: dp, label: from + ' → ' + to, source: res.source });
+      outputWrap.appendChild(out);
+      const copy = copyBtn(fmtNum(res.result, dp) + ' ' + to);
+      outputWrap.appendChild(copy);
+      if (res.formula) outputWrap.appendChild(h('div', { class: 'formula-box' }, res.formula));
+    }
+
+    catSelect.addEventListener('change', function () { populateUnits(catSelect.value); recompute(); });
+    fromSelect.addEventListener('change', recompute);
+    toSelect.addEventListener('change', recompute);
+    valueInput.addEventListener('input', recompute);
+
+    const grid = h('div', { class: 'grid-2' }, [
+      h('div', { class: 'field' }, [h('label', { for: 'convCategory' }, 'Category'), catSelect]),
+      h('div', { class: 'field' }, [h('label', { for: 'convValue' }, 'Value'), valueInput]),
+      h('div', { class: 'field' }, [h('label', { for: 'convFrom' }, 'From'), fromSelect]),
+      h('div', { class: 'field' }, [h('label', { for: 'convTo' }, 'To'), toSelect])
+    ]);
+    card.appendChild(grid);
+    card.appendChild(outputWrap);
+    resultsEl.replaceChildren(card);
+    recompute();
+  }
+
+  /* ============================================================
+   * Beam calculator module (interactive)
+   * ============================================================ */
+  function renderBeamModule() {
+    const card = h('div', { class: 'card' });
+    card.appendChild(h('h2', null, 'Cantilever beam deflection'));
+
+    const lengthInput = h('input', { type: 'text', inputmode: 'decimal', value: '1', class: 'mono' });
+    const matSelect = h('select');
+    MTK.materials.forEach(function (m) { matSelect.appendChild(h('option', { value: m.key }, m.label)); });
+    const sectionTypeRow = h('div', { class: 'radio-row' }, [
+      h('label', { class: 'radio-chip' }, [h('input', { type: 'radio', name: 'sectionType', value: 'rect', checked: 'checked' }), 'Rectangular']),
+      h('label', { class: 'radio-chip' }, [h('input', { type: 'radio', name: 'sectionType', value: 'round' }), 'Round'])
+    ]);
+    const bInput = h('input', { type: 'text', inputmode: 'decimal', value: '50', class: 'mono' });
+    const hInput = h('input', { type: 'text', inputmode: 'decimal', value: '100', class: 'mono' });
+    const dInput = h('input', { type: 'text', inputmode: 'decimal', value: '20', class: 'mono' });
+    const rectFields = h('div', { class: 'grid-2' }, [
+      h('div', { class: 'field' }, [h('label', null, 'b (mm)'), bInput]),
+      h('div', { class: 'field' }, [h('label', null, 'h (mm)'), hInput])
+    ]);
+    const roundFields = h('div', { class: 'field' }, [h('label', null, 'd (mm)'), dInput]);
+    roundFields.style.display = 'none';
+
+    const loadTypeRow = h('div', { class: 'radio-row' }, [
+      h('label', { class: 'radio-chip' }, [h('input', { type: 'radio', name: 'loadType', value: 'point', checked: 'checked' }), 'Point (tip)']),
+      h('label', { class: 'radio-chip' }, [h('input', { type: 'radio', name: 'loadType', value: 'udl' }), 'UDL (total)'])
+    ]);
+    const magInput = h('input', { type: 'text', inputmode: 'decimal', value: '1000', class: 'mono' });
+
+    sectionTypeRow.addEventListener('change', function () {
+      const v = sectionTypeRow.querySelector('input:checked').value;
+      rectFields.style.display = v === 'rect' ? '' : 'none';
+      roundFields.style.display = v === 'round' ? '' : 'none';
+      recompute();
+    });
+    [lengthInput, matSelect, bInput, hInput, dInput, magInput].forEach(function (el) {
+      el.addEventListener('input', recompute);
+      el.addEventListener('change', recompute);
+    });
+    loadTypeRow.addEventListener('change', recompute);
+
+    const outputWrap = h('div', { id: 'beamOutput' });
+
+    function recompute() {
+      const length = parseFloat(lengthInput.value) / 1000; // mm -> m
+      const matKey = matSelect.value;
+      const mat = MTK.materials.find(function (m) { return m.key === matKey; });
+      const sectionType = sectionTypeRow.querySelector('input:checked').value;
+      const loadType = loadTypeRow.querySelector('input:checked').value;
+      const magnitude = parseFloat(magInput.value);
+
+      let section;
+      if (sectionType === 'rect') {
+        section = { type: 'rect', b: parseFloat(bInput.value) / 1000, h: parseFloat(hInput.value) / 1000 };
+      } else {
+        section = { type: 'round', d: parseFloat(dInput.value) / 1000 };
+      }
+
+      const res = MTK.beam({ length: length, E: mat ? mat.E : NaN, section: section, load: loadType, magnitude: magnitude });
+      outputWrap.replaceChildren();
+      if (res.error) {
+        outputWrap.appendChild(callout({ errorText: res.error, label: 'Deflection' }));
+        return;
+      }
+      outputWrap.appendChild(h('div', { class: 'callout-row' }, [
+        callout({ value: res.result.deflection * 1000, unit: 'mm', dp: 4, label: 'Tip deflection', source: res.source }),
+        callout({ value: res.result.stress / 1e6, unit: 'MPa', dp: 3, label: 'Max bending stress', source: res.source }),
+        callout({ value: res.result.moment, unit: 'N·m', dp: 3, label: 'Moment', source: res.source }),
+        callout({ value: res.result.I * 1e12, unit: 'mm⁴', dp: 1, label: 'I (second moment)', source: res.source })
+      ]));
+      outputWrap.appendChild(h('div', { class: 'formula-box' }, res.formula));
+    }
+
+    card.appendChild(h('div', { class: 'field' }, [h('label', null, 'Length (mm)'), lengthInput]));
+    card.appendChild(h('div', { class: 'field' }, [h('label', null, 'Material'), matSelect]));
+    card.appendChild(h('div', { class: 'field' }, [h('label', null, 'Section'), sectionTypeRow]));
+    card.appendChild(rectFields);
+    card.appendChild(roundFields);
+    card.appendChild(h('div', { class: 'field' }, [h('label', null, 'Load type'), loadTypeRow]));
+    card.appendChild(h('div', { class: 'field' }, [h('label', null, 'Magnitude (N or N total)'), magInput]));
+    card.appendChild(outputWrap);
+
+    resultsEl.replaceChildren(card);
+    recompute();
+  }
+
+  /* ============================================================
+   * Search routing — runSearch() is the single entry point that
+   * drives the home-screen "type and see" interaction (SPEC §3).
+   * ============================================================ */
+  function runSearch(raw) {
+    const q = MTK.parseQuery(raw);
+    switch (q.kind) {
+      case 'empty':
+        renderEmptyState();
+        break;
+      case 'thread':
+        renderFastenerCard(q.sizeKey, q.system, q.pitch);
+        break;
+      case 'threadSearch':
+        renderThreadSearch(q.matches, q.raw);
+        break;
+      case 'convert':
+        renderConvertModule({ category: q.category, from: q.from, to: q.to, value: q.value });
+        break;
+      case 'module':
+        if (q.module === 'beam') renderBeamModule();
+        else if (q.module === 'convert') renderConvertModule();
+        else renderEmptyState();
+        break;
+      case 'none':
+      default:
+        renderNoMatch(q.raw || raw);
+        break;
+    }
+  }
+
+  searchInput.addEventListener('input', function () {
+    runSearch(searchInput.value);
+  });
+
+  /* ============================================================
+   * In-browser self-test, mirrors tests/calculators.test.mjs.
+   * Reachable at #selftest. Per PROJECT_MEMORY: hash-only nav does
+   * not re-run scripts, so this also runs on load if the hash is
+   * already present, and exposes a manual re-run button.
+   * ============================================================ */
+  function runSelfTest() {
+    const lines = [];
+    let pass = 0, fail = 0;
+    function ok(cond, msg) {
+      if (cond) { pass++; } else { fail++; lines.push('FAIL: ' + msg); }
+    }
+    const m6 = MTK.threads.find(function (t) { return t.sizeKey === 'M6' && t.pitch === 1.0 && t.system === 'metric'; });
+    ok(m6 && m6.pitchDia === 5.350, 'M6 pitchDia 5.350');
+    ok(m6 && m6.minorDia === 4.917, 'M6 minorDia 4.917');
+    const td = MTK.tapDrill(m6);
+    ok(td.result.pct75 === 5.0, 'M6 tap drill 75% = 5.0');
+    ok(td.result.pct50 === 5.35, 'M6 tap drill 50% = 5.35');
+    const cl = MTK.clearanceFor('M6', 'metric');
+    ok(cl.close === 6.4 && cl.normal === 6.6 && cl.loose === 7.0, 'M6 clearance 6.4/6.6/7.0');
+    const conv = MTK.convert(1, 'in', 'mm', 'length');
+    ok(Math.abs(conv.result - 25.4) < 1e-9, '1 in = 25.4 mm');
+    ok(conv.source.confidenceTier === 'A', 'conversion is tier A');
+    const beamRes = MTK.beam({ length: 1, E: 200e9, section: { type: 'rect', b: 0.05, h: 0.1 }, load: 'point', magnitude: 1000 });
+    ok(!beamRes.error && Math.abs(beamRes.result.deflection - 0.0004) < 0.00002, 'beam deflection approx 0.4mm');
+    ok(!!beamRes.source, 'beam result carries provenance');
+    const badBeam = MTK.beam({ length: 0, E: 200e9, section: { type: 'round', d: 0.01 }, load: 'point', magnitude: 10 });
+    ok(!!badBeam.error, 'beam rejects length <= 0');
+    const p1 = MTK.parseQuery('M6');
+    ok(p1.kind === 'thread' && p1.sizeKey === 'M6', 'parseQuery M6');
+    const p2 = MTK.parseQuery('#10-24').sizeKey === MTK.parseQuery('10-24').sizeKey;
+    ok(p2, '#10-24 and 10-24 resolve to same key');
+    const p3 = MTK.parseQuery('1/4-20').sizeKey === MTK.parseQuery('#1/4-20').sizeKey;
+    ok(p3, '1/4-20 and #1/4-20 resolve to same key');
+    ok(MTK.parseQuery('').kind === 'empty', 'empty query -> empty kind');
+    ok(MTK.parseQuery('beam').kind === 'module', '"beam" -> module kind');
+    ok(MTK.parseQuery('10 mm to in').kind === 'convert', '"10 mm to in" -> convert kind');
+
+    const summary = pass + ' passing, ' + fail + ' failing';
+    const out = document.getElementById('selftest-out');
+    if (out) out.textContent = summary + (lines.length ? '\n\n' + lines.join('\n') : '\n\nAll tests passed.');
+    return { pass: pass, fail: fail, lines: lines };
+  }
+
+  function renderSelfTestPage() {
+    const card = h('div', { class: 'card' });
+    card.appendChild(h('h2', null, 'In-browser self-test'));
+    const rerunBtn = h('button', { type: 'button', class: 'primary' }, 'Re-run tests');
+    const out = h('pre', { id: 'selftest-out' }, 'Running...');
+    rerunBtn.addEventListener('click', runSelfTest);
+    card.appendChild(rerunBtn);
+    card.appendChild(out);
+    resultsEl.replaceChildren(card);
+    runSelfTest();
+  }
+
+  function handleHash() {
+    if (window.location.hash === '#selftest') {
+      searchInput.value = '';
+      renderSelfTestPage();
+    }
+  }
+  window.addEventListener('hashchange', handleHash);
+
+  /* ============================================================
+   * Initial render
+   * ============================================================ */
+  if (window.location.hash === '#selftest') {
+    renderSelfTestPage();
+  } else {
+    renderEmptyState();
+  }
+  searchInput.focus();
+})();
+</script>
+</body>
+</html>
