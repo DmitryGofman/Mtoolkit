@@ -2,6 +2,16 @@
 
 Why each thing exists + the gates it passed. Newest first.
 
+## v0.1.1 — interactive visuals + delight (subject-grounded)
+
+Made the UI livelier without betraying the "trustworthy engineering tool" identity — delight that *confirms understanding*, on the workshop/blueprint theme.
+
+- **Animated cantilever beam diagram** — the beam module draws an SVG that bends to the real cantilever curve shape (point: x²(3−x); UDL: x²(6−4x+x²)), normalized so the deflection is always visibly ~12% of span; hatched fixed support, load arrow (point/UDL), `L`/`δ`/`P` symbol labels; tweens smoothly (~250ms) when inputs change. Shape math is a pure `beamShape()` helper in the `@pure-start` block (tested).
+- **Thread cross-section schematic** — a 60°-V profile with `d`/`d₂`/`d₁`/`P` dimension leaders in the fastener card, reinforcing the tolerance-callout identity.
+- **Result-reveal motion** — dimension lines draw in (stroke), the hero value counts up (~250ms), and the empty/home state gained a blueprint grid + caliper motif with dashed quick-start chips ("What size are you working with?").
+- **Provenance-safe:** the SVGs carry symbols only, no uncited numbers — every real value still routes through the badged chip primitive (Gate G intact). All new motion is disabled under `prefers-reduced-motion` (JS rAF loops gated on `matchMedia`; CSS covered by the global reduce rule).
+- Tests: added `beamShape` pure-function checks → **78 passing**. Headless verified (beam reshapes on input, thread schematic present, no JS errors, `#selftest` green).
+
 ## v0.1.0 — rebuilt from scratch by the factory (RELEASE CANDIDATE)
 
 The app was rebuilt from zero to exercise the factory's **build half** end-to-end (the prior RC was preserved in history at 3da0791). The build agents constructed everything from the frozen SPEC + SOURCES + DESIGN_SYSTEM; the gate agents verified it.

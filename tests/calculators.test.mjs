@@ -195,6 +195,45 @@ function findThread(sizeKey, pitch, system) {
 }
 
 // ---------------------------------------------------------------
+// 5b. Beam shape helper (pure geometry for the diagram — DOM-free,
+//     never a cited engineering value; the real deflection above
+//     stays the single source of truth for the number).
+// ---------------------------------------------------------------
+{
+  const pt = MTK.beamShape('point', 20);
+  assertEqual(pt.length, 21, 'beamShape returns n+1 points');
+  assertApprox(pt[0][0], 0, 1e-12, 'beamShape point x[0] = 0 (wall)');
+  assertApprox(pt[0][1], 0, 1e-12, 'beamShape point y[0] = 0 (no deflection at wall)');
+  assertApprox(pt[pt.length - 1][0], 1, 1e-12, 'beamShape point x[last] = 1 (tip)');
+  assertApprox(pt[pt.length - 1][1], 1, 1e-12, 'beamShape point y[last] = 1 (normalized tip = max)');
+  // Monotonic non-decreasing deflection from wall to tip (real cantilever shape).
+  let monotonic = true;
+  for (let i = 1; i < pt.length; i++) {
+    if (pt[i][1] < pt[i - 1][1] - 1e-12) { monotonic = false; break; }
+  }
+  assert(monotonic, 'beamShape point-load curve is monotonic non-decreasing');
+
+  const udl = MTK.beamShape('udl', 20);
+  assertApprox(udl[0][1], 0, 1e-12, 'beamShape udl y[0] = 0 (no deflection at wall)');
+  assertApprox(udl[udl.length - 1][1], 1, 1e-12, 'beamShape udl y[last] = 1 (normalized tip = max)');
+  let udlMonotonic = true;
+  for (let i = 1; i < udl.length; i++) {
+    if (udl[i][1] < udl[i - 1][1] - 1e-12) { udlMonotonic = false; break; }
+  }
+  assert(udlMonotonic, 'beamShape udl curve is monotonic non-decreasing');
+
+  // Point-load and UDL curves must differ mid-span (distinct real shapes,
+  // per Roark: x²(3L−x) vs x²(6L²−4Lx+x²) — this is what the diagram animates between).
+  const midPt = MTK.beamShape('point', 2)[1][1];
+  const midUdl = MTK.beamShape('udl', 2)[1][1];
+  assert(Math.abs(midPt - midUdl) > 1e-6, 'point and udl normalized curves differ mid-span');
+
+  // Default step count when n omitted.
+  const defaultShape = MTK.beamShape('point');
+  assert(defaultShape.length > 1, 'beamShape has a sane default step count');
+}
+
+// ---------------------------------------------------------------
 // 6. Provenance presence
 // ---------------------------------------------------------------
 {

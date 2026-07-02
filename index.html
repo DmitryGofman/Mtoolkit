@@ -251,6 +251,17 @@
     height: 1px;
     background: var(--layout-blue);
     display: inline-block;
+    animation: dimDraw 250ms ease-out;
+  }
+  /* Dimension lines "draw in" from the value outward — a drawing-tool
+     flourish that confirms a fresh result, not decoration for its own
+     sake. Disabled globally under prefers-reduced-motion (see rule at
+     top of stylesheet, which zeroes all animation/transition). */
+  .callout .dim-line::before { transform-origin: right center; }
+  .callout .dim-line::after { transform-origin: left center; }
+  @keyframes dimDraw {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
   }
   .callout .dim-box {
     border: 1.5px solid var(--layout-blue);
@@ -544,6 +555,19 @@
     padding: 44px 16px 36px;
     color: var(--graphite);
   }
+  /* Blueprint-grid texture on the home/empty state only — a faint
+     drafting-table graduation, not a pattern for its own sake.
+     Static (no animation) so it costs nothing under reduced motion. */
+  .empty-state {
+    border-radius: 14px;
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--layout-blue) 7%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--layout-blue) 7%, transparent) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: center top;
+  }
+  .caliper-motif-wrap { width: 148px; margin: 0 auto 14px; }
+  .caliper-motif { width: 100%; height: auto; display: block; }
   .empty-state .es-mark, .nomatch-state .es-mark {
     width: 40px; height: 40px;
     margin: 0 auto 16px;
@@ -593,6 +617,23 @@
 
   .module-section { margin-bottom: 22px; }
   .module-section:last-child { margin-bottom: 0; }
+
+  /* ---- Beam diagram (headline motion feature) ----
+     Symbols only (L, δ, P/w) — the real cited deflection stays in the
+     badged hero callout / table. The path bend is animated in JS
+     (rAF), not CSS, so it can tween between differently-shaped curves;
+     everything else here is static SVG styling. */
+  .beam-diagram { margin: 2px 0 16px; max-width: 420px; }
+  .beam-diagram .beam-svg { width: 100%; height: auto; display: block; }
+  .beam-symbol { font-family: var(--mono); font-weight: 700; }
+
+  /* ---- Thread cross-section schematic ----
+     A small 60°-V thread-profile diagram reinforcing the tolerance-
+     callout identity. Dimension labels are symbols (d, d₂, d₁, P)
+     only — no uncited numbers ever render inside this SVG. */
+  .thread-schematic { margin: 2px 0 16px; max-width: 280px; }
+  .thread-schematic .thread-svg { width: 100%; height: auto; display: block; }
+  .thread-symbol { font-family: var(--mono); font-weight: 700; }
   .formula-box {
     font-family: var(--mono);
     font-size: 12.5px;
@@ -1141,6 +1182,41 @@ const MTK = (function () {
   }
 
   /* ============================================================
+   * 8b. BEAM SHAPE HELPER — pure geometry, DOM-free.
+   *    Returns the NORMALIZED cantilever deflection curve as an
+   *    array of [x, y] points, x and y both in 0..1 (fraction of
+   *    length / fraction of max deflection). This is a shape
+   *    helper for the visual diagram only — it carries no engineering
+   *    value and is never rendered as a cited number. The real,
+   *    cited deflection continues to come from beam() above.
+   *
+   *    Point load (tip):  y(x) ∝ x²(3L − x)
+   *    UDL (total):       y(x) ∝ x²(6L² − 4Lx + x²)
+   *    (L = 1 here; normalized so y(1) = 1, i.e. the tip is always
+   *    the visual maximum — the caller scales that to a fixed
+   *    fraction of the drawn beam length so the bend stays visible
+   *    regardless of the true magnitude.)
+   * ============================================================ */
+  function beamShapeRaw(load, x) {
+    return load === 'udl'
+      ? x * x * (6 - 4 * x + x * x)
+      : x * x * (3 - x);
+  }
+
+  function beamShape(load, n) {
+    const steps = (typeof n === 'number' && n > 0) ? Math.round(n) : 24;
+    const kind = load === 'udl' ? 'udl' : 'point';
+    const maxRaw = beamShapeRaw(kind, 1);
+    const pts = [];
+    for (let i = 0; i <= steps; i++) {
+      const x = i / steps;
+      const y = maxRaw > 0 ? beamShapeRaw(kind, x) / maxRaw : 0;
+      pts.push([x, y]);
+    }
+    return pts;
+  }
+
+  /* ============================================================
    * 9. THREAD LOOKUP HELPER — return matching thread records,
    *    coarse first, optionally filtered by pitch.
    * ============================================================ */
@@ -1356,6 +1432,7 @@ const MTK = (function () {
     materials: materials,
     beamSource: beamSource,
     beam: beam,
+    beamShape: beamShape,
     threadsFor: threadsFor,
     findUnitCategory: findUnitCategory,
     parseQuery: parseQuery
@@ -1430,6 +1507,29 @@ const MTK = (function () {
     if (typeof n !== 'number' || !isFinite(n)) return '—';
     if (dp === undefined) return String(n);
     return n.toFixed(dp);
+  }
+
+  // Shared reduced-motion query: every JS-driven animation (rAF loops —
+  // CSS transitions/keyframes are already zeroed globally by the
+  // prefers-reduced-motion stylesheet rule) checks this and jumps
+  // straight to the final frame when it matches.
+  const REDUCE_MOTION_MQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  // Minimal SVG element builder — the decorative/schematic diagrams
+  // (beam bend, thread profile, caliper motif) are inline SVG built
+  // with this, never data-bearing: no engineering value is ever set
+  // as text inside an SVG built here without also being routed
+  // through callout()/valRow() elsewhere on the card.
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  function se(tag, attrs, text) {
+    const el = document.createElementNS(SVG_NS, tag);
+    if (attrs) {
+      for (const k in attrs) {
+        if (Object.prototype.hasOwnProperty.call(attrs, k)) el.setAttribute(k, attrs[k]);
+      }
+    }
+    if (text !== undefined) el.textContent = text;
+    return el;
   }
 
   /* ============================================================
@@ -1560,8 +1660,16 @@ const MTK = (function () {
     if (opts.errorText) {
       box.textContent = opts.errorText;
     } else {
-      box.appendChild(document.createTextNode(fmtNum(opts.value, opts.dp)));
+      const numText = document.createTextNode(fmtNum(opts.value, opts.dp));
+      box.appendChild(numText);
       if (opts.unit) box.appendChild(h('span', { class: 'dim-unit' }, opts.unit));
+      // Hero count-up: a brief (~250ms) odometer confirming a fresh
+      // result. The FINAL frame always matches fmtNum(value, dp) exactly
+      // — this is presentation-only motion on a value that is already
+      // rendered in full precision; it never substitutes for it.
+      if (opts.hero && typeof opts.value === 'number' && isFinite(opts.value)) {
+        countUp(numText, opts.value, opts.dp);
+      }
     }
     dimLine.appendChild(box);
     wrap.appendChild(dimLine);
@@ -1575,6 +1683,24 @@ const MTK = (function () {
     }
     wrap.appendChild(meta);
     return wrap;
+  }
+
+  // Brief odometer count-up for the hero callout value (~250ms, eased).
+  // Disabled under prefers-reduced-motion — the final value is set
+  // immediately, no intermediate frames.
+  function countUp(textNode, target, dp) {
+    if (REDUCE_MOTION_MQ.matches) { textNode.nodeValue = fmtNum(target, dp); return; }
+    const start = 0;
+    const t0 = performance.now();
+    const dur = 250;
+    function frame(now) {
+      const t = Math.min(1, (now - t0) / dur);
+      const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
+      textNode.nodeValue = fmtNum(start + (target - start) * eased, dp);
+      if (t < 1) requestAnimationFrame(frame);
+      else textNode.nodeValue = fmtNum(target, dp);
+    }
+    requestAnimationFrame(frame);
   }
 
   // Compact copy affordance for the hero callout (confirms understanding,
@@ -1657,8 +1783,24 @@ const MTK = (function () {
     }));
   }
 
+  // Decorative-only caliper/gauge motif for the home state — purely a
+  // "this tool is alive" flourish, aria-hidden, never carries a value.
+  function caliperMotifSvg() {
+    const svg = se('svg', { viewBox: '0 0 120 40', class: 'caliper-motif', 'aria-hidden': 'true', focusable: 'false' });
+    svg.appendChild(se('line', { x1: 6, y1: 30, x2: 114, y2: 30, stroke: 'var(--rule)', 'stroke-width': 2 }));
+    for (let i = 0; i <= 11; i++) {
+      const x = 6 + i * 9.8;
+      svg.appendChild(se('line', { x1: x, y1: 23, x2: x, y2: 30, stroke: 'var(--rule)', 'stroke-width': (i % 2 === 0) ? 1.5 : 1 }));
+    }
+    svg.appendChild(se('line', { x1: 16, y1: 6, x2: 16, y2: 30, stroke: 'var(--layout-blue)', 'stroke-width': 2.5 }));
+    svg.appendChild(se('rect', { x: 62, y: 8, width: 18, height: 9, rx: 1.5, fill: 'none', stroke: 'var(--layout-blue)', 'stroke-width': 1.5 }));
+    svg.appendChild(se('line', { x1: 71, y1: 17, x2: 71, y2: 30, stroke: 'var(--layout-blue)', 'stroke-width': 2.5 }));
+    return svg;
+  }
+
   function renderEmptyState() {
     resultsEl.replaceChildren(h('div', { class: 'empty-state' }, [
+      h('div', { class: 'caliper-motif-wrap' }, caliperMotifSvg()),
       h('div', { class: 'es-mark', 'aria-hidden': 'true' }, '⌀'),
       h('div', { class: 'es-title' }, 'What size are you working with?'),
       h('div', { class: 'es-sub' }, 'Type a thread, a conversion, or a module — every answer is cited.'),
@@ -1673,6 +1815,57 @@ const MTK = (function () {
       h('div', { class: 'es-sub' }, 'Try a thread size, a conversion, or a module name.'),
       exampleButtons(['M6', '1/4-20', '10 mm to in', 'beam'])
     ]));
+  }
+
+  /* ============================================================
+   * Thread cross-section schematic — a couple of 60°-V thread teeth
+   * with dimension leaders to major/pitch/minor Ø and pitch P.
+   * Symbols only (d, d₂, d₁, P); the real cited numbers stay in the
+   * badged callout/table below. Same schematic for every thread —
+   * it is not parametrized by the record, so it never needs its own
+   * source (there is no value here to cite).
+   * ============================================================ */
+  function threadSchematicSvg() {
+    const svg = se('svg', {
+      viewBox: '0 0 260 118', class: 'thread-svg', role: 'img',
+      'aria-label': 'Thread profile schematic: major, pitch, and minor diameter with pitch P'
+    });
+    const leftX = 74, toothW = 30, periods = 6;
+    const majorY = 16, pitchY = 44, minorY = 72;
+    const rightX = leftX + toothW * periods;
+
+    // reference lines (major / pitch / minor), dashed and quiet.
+    svg.appendChild(se('line', { x1: leftX - 16, y1: majorY, x2: rightX + 12, y2: majorY, stroke: 'var(--rule)', 'stroke-width': 1, 'stroke-dasharray': '2,2' }));
+    svg.appendChild(se('line', { x1: leftX - 16, y1: pitchY, x2: rightX + 12, y2: pitchY, stroke: 'var(--layout-blue)', 'stroke-width': 1, 'stroke-dasharray': '3,2' }));
+    svg.appendChild(se('line', { x1: leftX - 16, y1: minorY, x2: rightX + 12, y2: minorY, stroke: 'var(--rule)', 'stroke-width': 1, 'stroke-dasharray': '2,2' }));
+
+    // 60°-V thread teeth zigzag, major (peak) to minor (root).
+    let d = 'M ' + leftX + ' ' + majorY;
+    for (let i = 0; i < periods; i++) {
+      const x = leftX + i * toothW;
+      d += ' L ' + (x + toothW / 2).toFixed(1) + ' ' + minorY;
+      d += ' L ' + (x + toothW).toFixed(1) + ' ' + majorY;
+    }
+    svg.appendChild(se('path', { d: d, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 2, 'stroke-linejoin': 'round' }));
+
+    // dimension leaders + symbol labels, left side.
+    function dimLabel(y, label) {
+      svg.appendChild(se('line', { x1: 22, y1: y, x2: leftX - 20, y2: y, stroke: 'var(--graphite)', 'stroke-width': 1 }));
+      svg.appendChild(se('line', { x1: 22, y1: y - 4, x2: 22, y2: y + 4, stroke: 'var(--graphite)', 'stroke-width': 1 }));
+      svg.appendChild(se('text', { x: 8, y: y + 4, class: 'thread-symbol', 'font-size': 13, fill: 'var(--graphite)' }, label));
+    }
+    dimLabel(majorY, 'd');
+    dimLabel(pitchY, 'd₂');
+    dimLabel(minorY, 'd₁');
+
+    // pitch P dimension between two adjacent crests, bottom.
+    const pY = minorY + 22, p1 = leftX, p2 = leftX + toothW;
+    svg.appendChild(se('line', { x1: p1, y1: pY, x2: p2, y2: pY, stroke: 'var(--layout-blue)', 'stroke-width': 1 }));
+    svg.appendChild(se('line', { x1: p1, y1: pY - 4, x2: p1, y2: pY + 4, stroke: 'var(--layout-blue)', 'stroke-width': 1 }));
+    svg.appendChild(se('line', { x1: p2, y1: pY - 4, x2: p2, y2: pY + 4, stroke: 'var(--layout-blue)', 'stroke-width': 1 }));
+    svg.appendChild(se('text', { x: (p1 + p2) / 2, y: pY + 15, 'text-anchor': 'middle', class: 'thread-symbol', 'font-size': 13, fill: 'var(--layout-blue)' }, 'P'));
+
+    return svg;
   }
 
   /* ============================================================
@@ -1695,6 +1888,7 @@ const MTK = (function () {
         h('span', { class: 'card-series' }, thread.series)
       ]));
       card.appendChild(sourceHint());
+      card.appendChild(h('div', { class: 'thread-schematic' }, threadSchematicSvg()));
 
       // HERO: the tap-drill (~75%) is the decision the user came for
       // ("what drill for this tap"). It is the ONE bold callout per card;
@@ -1871,6 +2065,136 @@ const MTK = (function () {
   }
 
   /* ============================================================
+   * Beam diagram — animated cantilever SVG (headline motion feature).
+   * Draws the fixed wall (hatched), the beam bent to the REAL
+   * cantilever curve shape from MTK.beamShape() — normalized so the
+   * visual tip deflection is always ~12% of the drawn beam length,
+   * regardless of the true computed magnitude — and a load indicator
+   * (arrow for point, distributed band for UDL). Symbols only (L, δ,
+   * P/w); the real cited deflection stays in the badged hero callout
+   * below. The bend tweens over ~250ms via requestAnimationFrame
+   * (not CSS) so curves of different shape can interpolate smoothly;
+   * disabled under prefers-reduced-motion (final shape drawn instantly).
+   * ============================================================ */
+  function beamDiagramBuilder() {
+    const W = 320, H = 150;
+    const wallX = 34, baseY = 62, beamLen = 246, N = 28;
+    const tipDroopFrac = 0.12; // fixed fraction of drawn length — always visible
+    const tipDroop = beamLen * tipDroopFrac;
+
+    const svg = se('svg', { viewBox: '0 0 ' + W + ' ' + H, class: 'beam-svg', role: 'img' });
+
+    // Fixed-support hatching, left edge.
+    const wallG = se('g', { 'aria-hidden': 'true' });
+    wallG.appendChild(se('line', { x1: wallX, y1: baseY - 34, x2: wallX, y2: baseY + 34, stroke: 'var(--ink)', 'stroke-width': 2 }));
+    for (let i = -3; i <= 3; i++) {
+      const y = baseY + i * 10;
+      wallG.appendChild(se('line', { x1: wallX - 10, y1: y + 10, x2: wallX, y2: y, stroke: 'var(--rule)', 'stroke-width': 1.5 }));
+    }
+    svg.appendChild(wallG);
+
+    // L dimension line, under the beam.
+    const dimY = baseY + 46;
+    const dimG = se('g', { 'aria-hidden': 'true' });
+    dimG.appendChild(se('line', { x1: wallX, y1: dimY, x2: wallX + beamLen, y2: dimY, stroke: 'var(--rule)', 'stroke-width': 1 }));
+    dimG.appendChild(se('line', { x1: wallX, y1: dimY - 5, x2: wallX, y2: dimY + 5, stroke: 'var(--rule)', 'stroke-width': 1 }));
+    dimG.appendChild(se('line', { x1: wallX + beamLen, y1: dimY - 5, x2: wallX + beamLen, y2: dimY + 5, stroke: 'var(--rule)', 'stroke-width': 1 }));
+    dimG.appendChild(se('text', { x: wallX + beamLen / 2, y: dimY + 15, 'text-anchor': 'middle', class: 'beam-symbol', 'font-size': 12, fill: 'var(--graphite)' }, 'L'));
+    svg.appendChild(dimG);
+
+    // Load indicator group — rebuilt when load type changes.
+    const loadG = se('g', { 'aria-hidden': 'true' });
+    svg.appendChild(loadG);
+
+    function arrow(x1, y1, x2, y2, color) {
+      const g = se('g');
+      g.appendChild(se('line', { x1: x1, y1: y1, x2: x2, y2: y2, stroke: color, 'stroke-width': 1.5 }));
+      g.appendChild(se('path', { d: 'M ' + (x2 - 3) + ' ' + (y2 - 5) + ' L ' + x2 + ' ' + y2 + ' L ' + (x2 + 3) + ' ' + (y2 - 5), fill: 'none', stroke: color, 'stroke-width': 1.5, 'stroke-linecap': 'round' }));
+      return g;
+    }
+
+    function buildLoadIndicator(loadType) {
+      loadG.replaceChildren();
+      if (loadType === 'udl') {
+        const bandY = baseY - 28;
+        loadG.appendChild(se('line', { x1: wallX, y1: bandY, x2: wallX + beamLen, y2: bandY, stroke: 'var(--caution)', 'stroke-width': 1.5 }));
+        const count = 6;
+        for (let i = 0; i <= count; i++) {
+          const x = wallX + (beamLen * i) / count;
+          loadG.appendChild(arrow(x, bandY, x, baseY - 6, 'var(--caution)'));
+        }
+        loadG.appendChild(se('text', { x: wallX + beamLen / 2, y: bandY - 7, 'text-anchor': 'middle', class: 'beam-symbol', 'font-size': 12, fill: 'var(--caution)' }, 'w'));
+      } else {
+        const x = wallX + beamLen;
+        loadG.appendChild(arrow(x, baseY - 40, x, baseY - 6, 'var(--caution)'));
+        loadG.appendChild(se('text', { x: x + 6, y: baseY - 34, class: 'beam-symbol', 'font-size': 12, fill: 'var(--caution)' }, 'P'));
+      }
+    }
+
+    // Animated beam curve (path) + tip marker/leader for the δ label.
+    const beamPath = se('path', { class: 'beam-curve', fill: 'none', stroke: 'var(--layout-blue)', 'stroke-width': 3, 'stroke-linecap': 'round' });
+    svg.appendChild(beamPath);
+    const tipDot = se('circle', { r: 3, fill: 'var(--layout-blue)' });
+    svg.appendChild(tipDot);
+    const tipLeader = se('line', { stroke: 'var(--graphite)', 'stroke-width': 1, 'stroke-dasharray': '2,2' });
+    svg.appendChild(tipLeader);
+    const tipLabel = se('text', { class: 'beam-symbol', 'font-size': 13, fill: 'var(--graphite)' }, 'δ');
+    svg.appendChild(tipLabel);
+
+    function pointsToPath(pts) {
+      return pts.map(function (p, i) { return (i === 0 ? 'M ' : 'L ') + p[0].toFixed(2) + ' ' + p[1].toFixed(2); }).join(' ');
+    }
+    function pixelPointsFor(loadType) {
+      return MTK.beamShape(loadType, N).map(function (p) {
+        return [wallX + p[0] * beamLen, baseY + p[1] * tipDroop];
+      });
+    }
+    function renderAt(pts) {
+      beamPath.setAttribute('d', pointsToPath(pts));
+      const tip = pts[pts.length - 1];
+      tipDot.setAttribute('cx', tip[0]);
+      tipDot.setAttribute('cy', tip[1]);
+      tipLeader.setAttribute('x1', tip[0]);
+      tipLeader.setAttribute('y1', tip[1]);
+      tipLeader.setAttribute('x2', tip[0] + 12);
+      tipLeader.setAttribute('y2', tip[1] - 16);
+      tipLabel.setAttribute('x', tip[0] + 14);
+      tipLabel.setAttribute('y', tip[1] - 18);
+    }
+
+    let currentPts = null;
+    let rafId = null;
+
+    function update(loadType) {
+      const kind = loadType === 'udl' ? 'udl' : 'point';
+      svg.setAttribute('aria-label', 'Cantilever beam, schematic — ' + (kind === 'udl' ? 'uniformly distributed load w' : 'point load P at the tip') + '; symbols only, see the cited value below.');
+      buildLoadIndicator(kind);
+      const target = pixelPointsFor(kind);
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+      if (!currentPts || REDUCE_MOTION_MQ.matches) {
+        currentPts = target;
+        renderAt(currentPts);
+        return;
+      }
+      const start = currentPts.map(function (p) { return p.slice(); });
+      const t0 = performance.now();
+      const dur = 250;
+      function frame(now) {
+        const t = Math.min(1, (now - t0) / dur);
+        const eased = 1 - Math.pow(1 - t, 3);
+        renderAt(start.map(function (p, i) {
+          return [p[0] + (target[i][0] - p[0]) * eased, p[1] + (target[i][1] - p[1]) * eased];
+        }));
+        if (t < 1) { rafId = requestAnimationFrame(frame); }
+        else { currentPts = target; rafId = null; }
+      }
+      rafId = requestAnimationFrame(frame);
+    }
+
+    return { svg: svg, update: update };
+  }
+
+  /* ============================================================
    * Beam calculator module (interactive)
    * ============================================================ */
   function renderBeamModule() {
@@ -1914,6 +2238,10 @@ const MTK = (function () {
     loadTypeRow.addEventListener('change', recompute);
 
     const outputWrap = h('div', { id: 'beamOutput' });
+    // Headline diagram sits above the result — built once and updated
+    // in place (not recreated) each recompute so the bend can tween.
+    const beamDiagram = beamDiagramBuilder();
+    const diagramWrap = h('div', { class: 'beam-diagram' }, beamDiagram.svg);
 
     function recompute() {
       const length = parseFloat(lengthInput.value) / 1000; // mm -> m
@@ -1922,6 +2250,8 @@ const MTK = (function () {
       const sectionType = sectionTypeRow.querySelector('input:checked').value;
       const loadType = loadTypeRow.querySelector('input:checked').value;
       const magnitude = parseFloat(magInput.value);
+
+      beamDiagram.update(loadType);
 
       let section;
       if (sectionType === 'rect') {
@@ -1969,6 +2299,7 @@ const MTK = (function () {
     card.appendChild(roundFields);
     card.appendChild(h('div', { class: 'field' }, [h('label', null, 'Load type'), loadTypeRow]));
     card.appendChild(h('div', { class: 'field' }, [h('label', { for: 'beamMagnitude' }, 'Magnitude (N or N total)'), magInput]));
+    card.appendChild(diagramWrap);
     card.appendChild(outputWrap);
 
     resultsEl.replaceChildren(card);
