@@ -1,0 +1,3 @@
+# Throwaway review/verification artifacts (screenshots emitted by prototypes/agents)
+prototypes/_*.png
+_shot-*.png
