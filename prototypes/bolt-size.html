@@ -97,6 +97,10 @@
   }
   .drawing .tag{position:absolute;top:8px;left:11px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
   .drawing svg{display:block;width:100%;height:auto;}
+  .drawnote{
+    margin:2px 6px 4px;font-family:var(--mono);font-size:10px;line-height:1.5;
+    color:#5a6570;letter-spacing:.02em;min-height:0;
+  }
 
   /* ---------- pickers ---------- */
   .pickers{
@@ -168,6 +172,7 @@
   <div class="drawing">
     <span class="tag">Side view &mdash; not to scale</span>
     <div id="boltHolder"></div>
+    <div class="drawnote" id="drawNote"></div>
   </div>
 
   <section class="pickers" id="pickers" aria-label="Bolt selector">
@@ -223,6 +228,45 @@ const MAJOR = { M3:3, M4:4, M5:5, M6:6, M8:8, M10:10, M12:12 };
 const PITCHES = { M3:[0.5], M4:[0.7], M5:[0.8], M6:[1.0], M8:[1.25,1.0], M10:[1.5,1.25,1.0], M12:[1.75,1.25] };
 // MTK clearanceMetric 'normal' column (ISO 273)
 const CLEAR_NORMAL = { M3:3.4, M4:4.5, M5:5.5, M6:6.6, M8:9.0, M10:11.0, M12:13.5 };
+
+/* ---- Head dimensions (VERIFIED, tier C, verified against fastener catalogs) ----
+   Values in mm. Do not invent entries not listed. Provenance shown in footnote. */
+// ISO 4762 socket head cap screw: dk head Ø max / k head height max / s hex socket AF / t key engagement min
+const SOCKET_CAP = {
+  M3:{dk:5.5,  k:3.0,  s:2.5, t:1.3},
+  M4:{dk:7.0,  k:4.0,  s:3,   t:2.0},
+  M5:{dk:8.5,  k:5.0,  s:4,   t:2.5},
+  M6:{dk:10.0, k:6.0,  s:5,   t:3.0},
+  M8:{dk:13.0, k:8.0,  s:6,   t:4.0},
+  M10:{dk:16.0,k:10.0, s:8,   t:5.0},
+  M12:{dk:18.0,k:12.0, s:10,  t:6.0}
+};
+// ISO 4014/4017 hex head: s across-flats (spanner) / k head height. e (across corners) NOT verified.
+const HEX_HEAD = {
+  M3:{s:5.5, k:2.0},
+  M4:{s:7.0, k:2.8},
+  M5:{s:8.0, k:3.5},
+  M6:{s:10.0,k:4.0},
+  M8:{s:13.0,k:5.3},
+  M10:{s:16.0,k:6.4},
+  M12:{s:18.0,k:7.5}
+};
+// ISO 10642 socket countersunk: dk head Ø (theoretical/max) / k head height max, 90° head.
+const CSK_HEAD = {
+  M3:{dk:6.72, k:1.86},
+  M4:{dk:8.96, k:2.48},
+  M5:{dk:11.20,k:3.10},
+  M6:{dk:13.44,k:3.72},
+  M8:{dk:17.92,k:4.96},
+  M10:{dk:22.40,k:6.20},
+  M12:{dk:26.88,k:7.44}
+};
+function headDimsFor(headType, size){
+  if (headType === 'Socket cap')   return { std:'ISO 4762',  d:SOCKET_CAP[size] };
+  if (headType === 'Hex')          return { std:'ISO 4014',  d:HEX_HEAD[size] };
+  if (headType === 'Countersunk')  return { std:'ISO 10642', d:CSK_HEAD[size] };
+  return null;
+}
 
 const HEADS = ['Hex','Socket cap','Countersunk','Pan/Button','Set screw'];
 const GRADES = ['8.8','10.9','12.9','A2-70','A4-80'];
@@ -342,10 +386,14 @@ function makePicker(rootEl, opts){
    BOLT DRAWING (SVG) — technical side view, head-type aware.
    Reference LETTERS on leaders; numeric values live in the tiles.
    ================================================================ */
-const SVG_W = 360, SVG_H = 262, CY = 132;
+const SVG_W = 420, SVG_H = 300, CY = 150;
 
-function esc(){ }
-
+// numeric label for a dimension leader, unit-aware, no unit suffix (tiles carry units)
+function dnum(vmm, dp){
+  if (vmm === undefined || vmm === null) return '';
+  if (state.us) return round(vmm / MM_PER_IN, 3).toFixed(3);
+  return round(vmm, dp).toFixed(dp);
+}
 function dimLine(x1,y1,x2,y2){
   return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" class="dim" marker-start="url(#a)" marker-end="url(#a)"/>';
 }
@@ -355,25 +403,68 @@ function extLine(x1,y1,x2,y2){
 function letter(x,y,ch){
   return '<text x="'+x+'" y="'+y+'" class="dl">'+ch+'</text>';
 }
+// reference letter + optional small verified value beside it
+function letterVal(x,y,ch,val){
+  const v = (val !== undefined && val !== null && val !== '')
+    ? '<tspan dx="3" class="dv">'+val+'</tspan>' : '';
+  return '<text x="'+x+'" y="'+y+'" class="dl">'+ch+v+'</text>';
+}
 
-function buildBolt(headType, dia){
-  const r = 15 + (dia - 3) * 2.6;      // visual shank radius
+// small hexagon end-view inset (socket = the key; hex = the head across-flats/corners)
+function endView(cx, cy, R, opts){
+  let g = '';
+  const pts = [];
+  for (let k = 0; k < 6; k++){ const a = k * Math.PI / 3; pts.push([cx + R*Math.cos(a), cy + R*Math.sin(a)]); }
+  g += '<polygon class="ol" points="'+pts.map(p => p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')+'"/>';
+  const topY = cy - R*0.866, botY = cy + R*0.866;
+  // s = across flats (vertical), dim on the right
+  if (opts.showS){
+    const sx = cx + R + 6;
+    g += extLine(cx + R*0.5, topY, sx+2, topY) + extLine(cx + R*0.5, botY, sx+2, botY);
+    g += dimLine(sx, topY, sx, botY);
+    g += letterVal(sx+4, cy+3, 's', opts.s);
+  }
+  // e = across corners (horizontal), letter only — honest gap, no value
+  if (opts.showE){
+    const ey = topY - 11;
+    g += extLine(cx - R, cy, cx - R, ey) + extLine(cx + R, cy, cx + R, ey);
+    g += dimLine(cx - R, ey, cx + R, ey) + letter(cx - 4, ey - 4, 'e');
+  }
+  g += '<text x="'+cx+'" y="'+(botY+13)+'" class="cap" text-anchor="middle">END VIEW</text>';
+  return g;
+}
+
+function buildBolt(headType, size, d){
+  const dia = d.major;
+  const r = 12 + (dia - 3) * 2.2;      // visual shank (major) radius
   const rMin = r * 0.80;               // minor-dia radius
-  const shankEnd = 322;
+  const shankEnd = 348;
+  const headLeft = 62;
   const pxPitch = 12;                  // crest spacing (visual)
-  let shankStart, headSvg = '', headDims = '';
-  const headLeft = 40;
+  const hd = headDimsFor(headType, size);   // verified head dims (or null)
+  const hv = hd ? hd.d : null;
+  let shankStart, headSvg = '', headDims = '', inset = '';
+
+  // vertical head-Ø/across-flats dim on the far left
+  function leftVDim(yTop, yBot, ch, val){
+    return extLine(headLeft, yTop, 28, yTop) + extLine(headLeft, yBot, 28, yBot) +
+      dimLine(32, yTop, 32, yBot) + letterVal(3, (yTop+yBot)/2+3, ch, val);
+  }
+  // horizontal head-height (k) dim above the head
+  function kDim(hx0, hx1, yTopL, yTopR, val){
+    return extLine(hx0, yTopL, hx0, 46) + extLine(hx1, yTopR, hx1, 46) +
+      dimLine(hx0, 48, hx1, 48) + letterVal((hx0+hx1)/2 - 6, 42, 'k', val);
+  }
 
   if (headType === 'Set screw'){
-    shankStart = 44;
-    // hex socket hint at the left end of the threaded body
+    shankStart = 62;
     const sx = shankStart + 6, sr = rMin * 0.55;
     headSvg =
       '<line x1="'+shankStart+'" y1="'+(CY-r)+'" x2="'+shankStart+'" y2="'+(CY+r)+'" class="ol"/>' +
       '<line x1="'+sx+'" y1="'+(CY-sr)+'" x2="'+sx+'" y2="'+(CY+sr)+'" class="thin"/>' +
       '<polygon points="'+(shankStart)+','+(CY-sr)+' '+(sx)+','+(CY-sr)+' '+(sx)+','+(CY+sr)+' '+(shankStart)+','+(CY+sr)+'" class="socket"/>';
   } else if (headType === 'Hex'){
-    const kLen = Math.max(r*1.25, 22), hh = r*1.5, ch = 6;
+    const kLen = Math.max(r*1.15, 22), hh = r*1.55, ch = 6;
     const hx0 = headLeft, hx1 = headLeft + kLen;
     shankStart = hx1;
     headSvg =
@@ -383,60 +474,66 @@ function buildBolt(headType, dia){
         (hx0)+','+(CY+hh-ch)+' '+(hx0)+','+(CY-hh+ch)+'"/>' +
       '<line x1="'+hx0+'" y1="'+(CY-hh+ch)+'" x2="'+hx1+'" y2="'+(CY-hh+ch)+'" class="thin"/>' +
       '<line x1="'+hx0+'" y1="'+(CY+hh-ch)+'" x2="'+hx1+'" y2="'+(CY+hh-ch)+'" class="thin"/>';
-    // s = across flats, k = head height
     headDims =
-      extLine(hx0,CY-hh,20,CY-hh) + extLine(hx0,CY+hh,20,CY+hh) +
-      dimLine(24,CY-hh,24,CY+hh) + letter(11,CY+5,'s') +
-      dimLine(hx0,26,hx1,26) + letter((hx0+hx1)/2-4,20,'k');
+      leftVDim(CY-hh, CY+hh, 's', dnum(hv && hv.s, 1)) +
+      kDim(hx0, hx1, CY-hh, CY-hh, dnum(hv && hv.k, 1));
+    // end-view: hex head across-flats (s, value) + across-corners (e, letter only)
+    inset = endView(SVG_W-46, 116, 16, { showS:true, s:dnum(hv && hv.s, 1), showE:true });
   } else if (headType === 'Socket cap'){
     const kLen = Math.max(r*1.4, 24), hR = r*1.5;
     const hx0 = headLeft, hx1 = headLeft + kLen;
+    const socketX = hx0 + kLen*0.46;   // hex-socket bottom (key engagement depth t)
     shankStart = hx1;
     headSvg =
       '<rect x="'+hx0+'" y="'+(CY-hR)+'" width="'+kLen+'" height="'+(2*hR)+'" rx="2" class="ol"/>' +
-      // hex socket recess indicated at the top face
-      '<line x1="'+(hx0+kLen*0.42)+'" y1="'+(CY-hR*0.55)+'" x2="'+(hx0+kLen*0.42)+'" y2="'+(CY+hR*0.55)+'" class="thin"/>' +
-      '<line x1="'+hx0+'" y1="'+(CY-hR*0.55)+'" x2="'+(hx0+kLen*0.42)+'" y2="'+(CY-hR*0.55)+'" class="thin"/>' +
-      '<line x1="'+hx0+'" y1="'+(CY+hR*0.55)+'" x2="'+(hx0+kLen*0.42)+'" y2="'+(CY+hR*0.55)+'" class="thin"/>' +
-      '<polygon points="'+hx0+','+(CY-hR*0.55)+' '+(hx0+kLen*0.20)+','+(CY-hR*0.55)+' '+(hx0+kLen*0.20)+','+(CY+hR*0.55)+' '+hx0+','+(CY+hR*0.55)+'" class="socket"/>';
+      '<line x1="'+socketX+'" y1="'+(CY-hR*0.55)+'" x2="'+socketX+'" y2="'+(CY+hR*0.55)+'" class="thin"/>' +
+      '<line x1="'+hx0+'" y1="'+(CY-hR*0.55)+'" x2="'+socketX+'" y2="'+(CY-hR*0.55)+'" class="thin"/>' +
+      '<line x1="'+hx0+'" y1="'+(CY+hR*0.55)+'" x2="'+socketX+'" y2="'+(CY+hR*0.55)+'" class="thin"/>' +
+      '<polygon points="'+hx0+','+(CY-hR*0.55)+' '+socketX+','+(CY-hR*0.55)+' '+socketX+','+(CY+hR*0.55)+' '+hx0+','+(CY+hR*0.55)+'" class="socket"/>';
     headDims =
-      extLine(hx0,CY-hR,20,CY-hR) + extLine(hx0,CY+hR,20,CY+hR) +
-      dimLine(24,CY-hR,24,CY+hR) + letter(6,CY+4,'dₖ') +
-      dimLine(hx0,26,hx1,26) + letter((hx0+hx1)/2-4,20,'k');
+      leftVDim(CY-hR, CY+hR, 'dₖ', dnum(hv && hv.dk, 1)) +
+      kDim(hx0, hx1, CY-hR, CY-hR, dnum(hv && hv.k, 1)) +
+      // t = key engagement depth, under the head
+      extLine(hx0, CY+hR, hx0, CY+hR+16) + extLine(socketX, CY+hR*0.55, socketX, CY+hR+16) +
+      dimLine(hx0, CY+hR+14, socketX, CY+hR+14) + letterVal((hx0+socketX)/2 - 6, CY+hR+27, 't', dnum(hv && hv.t, 1));
+    // end-view: hex socket across-flats (s, value)
+    inset = endView(SVG_W-46, 116, 15, { showS:true, s:dnum(hv && hv.s, 1), showE:false });
   } else if (headType === 'Countersunk'){
-    const kLen = Math.max(r*1.15, 20), hR = r*2.0;
+    const kLen = Math.max(r*1.05, 18), hR = r*1.95;
     const hx0 = headLeft, hx1 = headLeft + kLen;
     shankStart = hx1;
     headSvg =
       '<polygon class="ol" points="'+hx0+','+(CY-hR)+' '+hx1+','+(CY-r)+' '+hx1+','+(CY+r)+' '+hx0+','+(CY+hR)+'"/>' +
       '<line x1="'+hx0+'" y1="'+(CY-hR*0.5)+'" x2="'+(hx0+kLen*0.5)+'" y2="'+(CY-r*0.5)+'" class="thin"/>' +
-      '<line x1="'+hx0+'" y1="'+(CY+hR*0.5)+'" x2="'+(hx0+kLen*0.5)+'" y2="'+(CY+r*0.5)+'" class="thin"/>';
+      '<line x1="'+hx0+'" y1="'+(CY+hR*0.5)+'" x2="'+(hx0+kLen*0.5)+'" y2="'+(CY+r*0.5)+'" class="thin"/>' +
+      // 90° included-angle annotation
+      '<path d="M '+(hx0+13)+' '+(CY-13)+' A 18 18 0 0 1 '+(hx0+13)+' '+(CY+13)+'" class="thin"/>' +
+      '<text x="'+(hx0+20)+'" y="'+(CY+4)+'" class="ang">90°</text>';
     headDims =
-      extLine(hx0,CY-hR,20,CY-hR) + extLine(hx0,CY+hR,20,CY+hR) +
-      dimLine(24,CY-hR,24,CY+hR) + letter(6,CY+4,'dₖ') +
-      dimLine(hx0,26,hx1,26) + letter((hx0+hx1)/2-4,20,'k');
+      leftVDim(CY-hR, CY+hR, 'dₖ', dnum(hv && hv.dk, 2)) +
+      kDim(hx0, hx1, CY-hR, CY-r, dnum(hv && hv.k, 2));
+    // countersunk (socket) — s letter only, value not verified for this profile
+    inset = endView(SVG_W-46, 116, 15, { showS:true, s:'', showE:false });
   } else { // Pan / Button
-    const kLen = Math.max(r*1.15, 20), hR = r*1.5;
+    const kLen = Math.max(r*1.05, 18), hR = r*1.5;
     const hx0 = headLeft, hx1 = headLeft + kLen;
     shankStart = hx1;
     headSvg =
       '<path class="ol" d="M '+hx1+' '+(CY-hR)+' C '+(hx0-8)+' '+(CY-hR)+' '+(hx0-8)+' '+(CY+hR)+' '+hx1+' '+(CY+hR)+' Z"/>' +
       '<line x1="'+(hx1-2)+'" y1="'+(CY-hR*0.55)+'" x2="'+(hx0+4)+'" y2="'+(CY-hR*0.4)+'" class="thin"/>';
     headDims =
-      extLine(hx0-8,CY-hR,20,CY-hR) + extLine(hx0-8,CY+hR,20,CY+hR) +
-      dimLine(24,CY-hR,24,CY+hR) + letter(6,CY+4,'dₖ') +
-      dimLine(hx0-8,26,hx1,26) + letter((hx0+hx1)/2-6,20,'k');
+      extLine(hx0-8, CY-hR, 28, CY-hR) + extLine(hx0-8, CY+hR, 28, CY+hR) +
+      dimLine(32, CY-hR, 32, CY+hR) + letter(3, CY+4, 'dₖ') +
+      extLine(hx0-8, CY-hR, hx0-8, 46) + extLine(hx1, CY-hR, hx1, 46) +
+      dimLine(hx0-8, 48, hx1, 48) + letter((hx0+hx1)/2 - 6, 42, 'k');
   }
 
   // ---- threaded shank ----
   let shank = '';
-  // outer (major) boundary
   shank += '<line x1="'+shankStart+'" y1="'+(CY-r)+'" x2="'+shankEnd+'" y2="'+(CY-r)+'" class="ol"/>';
   shank += '<line x1="'+shankStart+'" y1="'+(CY+r)+'" x2="'+shankEnd+'" y2="'+(CY+r)+'" class="ol"/>';
-  // minor (root) boundary — dashed
   shank += '<line x1="'+shankStart+'" y1="'+(CY-rMin)+'" x2="'+shankEnd+'" y2="'+(CY-rMin)+'" class="root"/>';
   shank += '<line x1="'+shankStart+'" y1="'+(CY+rMin)+'" x2="'+shankEnd+'" y2="'+(CY+rMin)+'" class="root"/>';
-  // crest lines (simplified thread convention)
   const crests = [];
   for (let x = shankStart + pxPitch; x < shankEnd - 2; x += pxPitch){
     crests.push(x);
@@ -447,28 +544,36 @@ function buildBolt(headType, dia){
   shank += '<line x1="'+shankEnd+'" y1="'+(CY+r)+'" x2="'+(shankEnd-5)+'" y2="'+(CY+rMin)+'" class="ol"/>';
   shank += '<line x1="'+shankEnd+'" y1="'+(CY-r)+'" x2="'+shankEnd+'" y2="'+(CY+r)+'" class="ol"/>';
 
-  // ---- shared dimensions: L, d, d1, P ----
+  // ---- shared dimensions: L, L_T/b, d, d1, P ----
   let dims = '';
   const leftMost = (headType === 'Set screw') ? shankStart : (headType === 'Pan/Button' ? headLeft-8 : headLeft);
-  // L across the top
-  dims += extLine(leftMost, CY, leftMost, 44) + extLine(shankEnd, CY-r, shankEnd, 44);
-  dims += dimLine(leftMost, 40, shankEnd, 40) + letter((leftMost+shankEnd)/2-4, 34, 'L');
-  // d (major) — vertical near the right, to the right side
-  const dX = shankEnd - 30;
-  dims += dimLine(dX, CY-r, dX, CY+r) + letter(dX+6, CY-r-4, 'd');
-  // d1 (minor) — vertical dashed near the left of shank
-  const d1X = shankStart + 22;
+  // L across the top (overall length — user/stock dependent, letter only)
+  dims += extLine(leftMost, CY, leftMost, 26) + extLine(shankEnd, CY-r, shankEnd, 26);
+  dims += dimLine(leftMost, 24, shankEnd, 24) + letter((leftMost+shankEnd)/2 - 4, 18, 'L');
+  // d (major) — vertical near the right. Value = nominal Ø (verified).
+  const dX = shankEnd - 26;
+  dims += dimLine(dX, CY-r, dX, CY+r) + letterVal(dX+5, CY-r-3, 'd', dnum(d.major, state.us?3:1));
+  // d1 (minor) — dashed vertical near left of shank. Value = minor Ø (real: M6→4.917).
+  const d1X = shankStart + 20;
   dims += '<line x1="'+d1X+'" y1="'+(CY-rMin)+'" x2="'+d1X+'" y2="'+(CY+rMin)+'" class="dim" marker-start="url(#a)" marker-end="url(#a)"/>';
-  dims += letter(d1X+5, CY+rMin+13, 'd₁');
-  // P — between two adjacent crests, below the shank
+  dims += letterVal(d1X+5, CY+rMin+14, 'd₁', dnum(d.minorDia, state.us?3:3));
+  // P — between two adjacent crests, below the shank. Value = pitch (verified).
   if (crests.length >= 3){
     const c0 = crests[Math.max(1, crests.length-4)], c1 = c0 + pxPitch;
-    const py = CY + r + 20;
+    const py = CY + r + 18;
     dims += extLine(c0, CY+r, c0, py) + extLine(c1, CY+r, c1, py);
-    dims += dimLine(c0, py-4, c1, py-4) + letter((c0+c1)/2-4, py+11, 'P');
+    dims += dimLine(c0, py-4, c1, py-4) + letterVal((c0+c1)/2 - 6, py+11, 'P', dnum(d.pitch, state.us?3:2));
+  }
+  // L_T / b (thread length — user/stock dependent, letter only) along the bottom
+  if (headType !== 'Set screw'){
+    const yb = CY + r + 40;
+    const ltLetter = (headType === 'Countersunk') ? 'b' : '<tspan>L</tspan><tspan dy="3" font-size="9">T</tspan>';
+    dims += extLine(shankStart, CY+r, shankStart, yb) + extLine(shankEnd, CY+rMin, shankEnd, yb);
+    dims += dimLine(shankStart, yb-4, shankEnd, yb-4) +
+      '<text x="'+((shankStart+shankEnd)/2 - 8)+'" y="'+(yb+11)+'" class="dl">'+ltLetter+'</text>';
   }
 
-  return '<svg viewBox="0 0 '+SVG_W+' '+SVG_H+'" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="'+headType+' bolt side view">' +
+  return '<svg viewBox="0 0 '+SVG_W+' '+SVG_H+'" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="'+headType+' bolt side view with dimensions">' +
     '<defs><marker id="a" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">' +
       '<path d="M0,0 L7,3.5 L0,7 Z" fill="#3a78c2"/></marker></defs>' +
     '<style>' +
@@ -479,10 +584,28 @@ function buildBolt(headType, dia){
       '.dim{stroke:#3a78c2;stroke-width:0.9;fill:none;}' +
       '.ext{stroke:#2f4c66;stroke-width:0.7;fill:none;stroke-dasharray:2 2;}' +
       '.dl{fill:#9fb4c8;font-family:'+"'"+'ui-monospace,monospace'+"'"+';font-size:12px;font-style:italic;font-weight:600;}' +
+      '.dv{fill:#c69a4a;font-size:9.5px;font-style:normal;font-weight:600;}' +
+      '.ang{fill:#8b97a3;font-family:'+"'"+'ui-monospace,monospace'+"'"+';font-size:9px;}' +
+      '.cap{fill:#5d6c78;font-family:'+"'"+'ui-monospace,monospace'+"'"+';font-size:7.5px;letter-spacing:.08em;}' +
     '</style>' +
     '<line x1="'+(leftMost-4)+'" y1="'+CY+'" x2="'+(shankEnd+6)+'" y2="'+CY+'" stroke="#243441" stroke-width="0.6" stroke-dasharray="6 3 1 3"/>' +
-    headSvg + shank + headDims + dims +
+    headSvg + shank + headDims + dims + inset +
     '</svg>';
+}
+
+// small caveat line under the drawing (head-type specific)
+function drawNoteFor(headType, size){
+  const hv = headDimsFor(headType, size);
+  if (headType === 'Hex'){
+    return '<span class="t">s</span> = ISO 4014 across-flats. Legacy DIN 931/933 differ at M10 (17) &middot; M12 (19). <span class="t">e</span> (across corners) not verified — letter shown, no value.';
+  }
+  if (headType === 'Socket cap' && hv){
+    return 'dₖ head &Oslash; &middot; k height &middot; s hex socket &middot; t key depth &mdash; ISO 4762. L &middot; Lᴛ stock-dependent (letters only).';
+  }
+  if (headType === 'Countersunk' && hv){
+    return 'dₖ theoretical head &Oslash; &middot; k height &middot; 90° head &mdash; ISO 10642. s socket &amp; b thread length: letters only (not verified here).';
+  }
+  return 'Reference letters on leaders; verified values shown small beside each letter. Lengths (L, Lᴛ) are stock-dependent.';
 }
 
 /* ================================================================
@@ -493,7 +616,8 @@ const els = {
   meta: document.getElementById('calloutMeta'),
   tiles: document.getElementById('tiles'),
   cite: document.getElementById('cite'),
-  bolt: document.getElementById('boltHolder')
+  bolt: document.getElementById('boltHolder'),
+  drawNote: document.getElementById('drawNote')
 };
 
 function fmt(vmm, dpMetric){
@@ -525,7 +649,7 @@ function render(){
     '<span>Grade <b class="mono">'+grade+'</b></span>' +
     '<span>Series <b class="mono">coarse/fine</b></span>';
 
-  els.tiles.innerHTML =
+  let tiles =
     tileHTML('Major &Oslash;', 'd',  d.major,     state.us?4:1) +
     tileHTML('Minor &Oslash;', 'd₁', d.minorDia, state.us?4:3) +
     tileHTML('Pitch &Oslash;', 'd₂', d.pitchDia, state.us?4:3) +
@@ -533,10 +657,31 @@ function render(){
     tileHTML('Tap ~50%', '',   d.tap50,    state.us?4:2) +
     tileHTML('Clearance &middot; normal', '', d.clearance, state.us?4:1);
 
+  // head-dimension tiles (tier C, per head type) — appended beside thread tiles
+  const hd = headDimsFor(head, size);
+  if (hd){
+    const h = hd.d;
+    if (head === 'Socket cap'){
+      tiles += tileHTML('Head &Oslash;', 'dₖ', h.dk, state.us?4:1) +
+               tileHTML('Head height', 'k', h.k, state.us?4:1) +
+               tileHTML('Socket AF', 's', h.s, state.us?4:1) +
+               tileHTML('Key depth', 't', h.t, state.us?4:1);
+    } else if (head === 'Hex'){
+      tiles += tileHTML('Across flats', 's', h.s, state.us?4:1) +
+               tileHTML('Head height', 'k', h.k, state.us?4:1);
+    } else if (head === 'Countersunk'){
+      tiles += tileHTML('Head &Oslash;', 'dₖ', h.dk, state.us?4:2) +
+               tileHTML('Head height', 'k', h.k, state.us?4:2);
+    }
+  }
+  els.tiles.innerHTML = tiles;
+
   els.cite.innerHTML = '<span class="t">Source</span> &nbsp; ISO 261 &middot; ISO 965-1 &middot; ISO 68-1 &middot; ISO 273 &middot; Machinery’s Handbook 30th &middot; tier B' +
+    ' &nbsp;·&nbsp; <span class="t">Head</span> ISO 4762 &middot; ISO 4014 &middot; ISO 10642 &middot; tier C, verified against fastener catalogs' +
     (state.us ? ' &middot; mm→in via NIST SP 811 (25.4, exact)' : '');
 
-  els.bolt.innerHTML = buildBolt(head, d.major);
+  els.bolt.innerHTML = buildBolt(head, size, d);
+  els.drawNote.innerHTML = drawNoteFor(head, size);
 }
 
 /* ================================================================
