@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Bolt sizes — visual-direction prototype</title>
+<style>
+  /* ============================================================
+     mechalc-style dark technical instrument tokens
+     ============================================================ */
+  :root{
+    --bg:#0b1015;
+    --panel:#141c22;
+    --raised:#1f2a33;
+    --hair:#2a3540;
+    --txt:#e8edf1;
+    --txt2:#8b97a3;
+    --muted:#6b7884;
+    --amber:#d9a441;
+    --blue:#3a78c2;
+    --blue-lt:#9fb4c8;
+    --err:#d65c5c;
+    --ok:#5fa86f;
+    --ui:-apple-system,'Segoe UI',Roboto,system-ui,sans-serif;
+    --mono:ui-monospace,'SF Mono',SFMono-Regular,Menlo,Consolas,monospace;
+    --r:5px;
+    /* wheel geometry — kept in sync with JS ITEM_H / WHEEL_H */
+    --item-h:38px;
+    --wheel-h:190px;
+    --wheel-pad:76px; /* (wheel-h - item-h)/2 */
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--txt);
+    font-family:var(--ui);
+    font-size:15px;
+    line-height:1.4;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:24px;
+  }
+  .app{max-width:460px;margin:0 auto;padding:0 14px;}
+
+  /* ---------- header ---------- */
+  header.bar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 2px 10px;
+  }
+  .brand{display:flex;align-items:baseline;gap:9px;}
+  .brand h1{font-size:16px;font-weight:600;letter-spacing:.02em;margin:0;}
+  .brand .sub{font-size:11px;color:var(--muted);font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;}
+
+  /* segmented US/Metric toggle */
+  .seg{display:inline-flex;background:var(--panel);border:1px solid var(--hair);border-radius:var(--r);padding:2px;gap:2px;}
+  .seg button{
+    font-family:var(--mono);font-size:12px;letter-spacing:.04em;
+    color:var(--txt2);background:transparent;border:0;cursor:pointer;
+    padding:6px 11px;border-radius:3px;min-height:32px;
+  }
+  .seg button[aria-pressed="true"]{background:var(--raised);color:var(--amber);box-shadow:inset 0 0 0 1px var(--hair);}
+  .seg button:focus-visible{outline:2px solid var(--blue);outline-offset:1px;}
+
+  /* ---------- callout title ---------- */
+  .callout{padding:6px 2px 12px;}
+  .callout .title{
+    font-family:var(--mono);font-size:30px;font-weight:600;letter-spacing:.01em;
+    color:var(--amber);font-variant-numeric:tabular-nums;line-height:1;
+  }
+  .callout .meta{margin-top:6px;font-size:12.5px;color:var(--txt2);display:flex;gap:10px;flex-wrap:wrap;}
+  .callout .meta b{color:var(--txt);font-weight:600;}
+  .callout .meta .mono{font-family:var(--mono);color:var(--blue-lt);}
+
+  /* ---------- value tiles ---------- */
+  .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+  .tile{
+    background:var(--panel);border:1px solid var(--hair);border-radius:var(--r);
+    padding:9px 10px 10px;min-height:64px;display:flex;flex-direction:column;justify-content:space-between;
+  }
+  .tile .lab{font-size:10.5px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;display:flex;align-items:center;gap:5px;}
+  .tile .lab i{font-family:var(--mono);font-style:italic;color:var(--blue-lt);text-transform:none;font-size:11px;letter-spacing:0;}
+  .tile .val{font-family:var(--mono);font-size:20px;color:var(--amber);font-variant-numeric:tabular-nums;font-weight:600;line-height:1.05;}
+  .tile .val .u{font-size:11px;color:var(--txt2);font-weight:400;margin-left:3px;}
+  .tile.dim-none .val{color:var(--err);font-size:13px;}
+
+  /* quiet footnote citation */
+  .cite{
+    margin:10px 2px 4px;font-family:var(--mono);font-size:10px;line-height:1.5;
+    color:#4d5862;letter-spacing:.02em;
+  }
+  .cite .t{color:var(--muted);}
+
+  /* ---------- bolt drawing ---------- */
+  .drawing{
+    margin:12px 0 6px;background:linear-gradient(180deg,#0f161c,#0c1217);
+    border:1px solid var(--hair);border-radius:var(--r);padding:6px 4px 2px;position:relative;
+  }
+  .drawing .tag{position:absolute;top:8px;left:11px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
+  .drawing svg{display:block;width:100%;height:auto;}
+  .drawnote{
+    margin:2px 6px 4px;font-family:var(--mono);font-size:10px;line-height:1.5;
+    color:#5a6570;letter-spacing:.02em;min-height:0;
+  }
+
+  /* ---------- pickers ---------- */
+  .pickers{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px;
+    background:var(--panel);border:1px solid var(--hair);border-radius:var(--r);padding:10px 8px 12px;
+  }
+  .picker{display:flex;flex-direction:column;align-items:stretch;min-width:0;}
+  .picker-label{
+    text-align:center;font-size:10px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:6px;font-weight:600;
+  }
+  .wheel-wrap{position:relative;height:var(--wheel-h);}
+  .wheel{
+    height:var(--wheel-h);overflow-y:scroll;scroll-snap-type:y mandatory;
+    -ms-overflow-style:none;scrollbar-width:none;outline:none;
+    -webkit-overflow-scrolling:touch;position:relative;z-index:1;
+  }
+  .wheel::-webkit-scrollbar{display:none;}
+  .wheel:focus-visible{box-shadow:0 0 0 2px var(--blue) inset;border-radius:4px;}
+  .wheel-track{padding:var(--wheel-pad) 0;}
+  .wheel-item{
+    height:var(--item-h);scroll-snap-align:center;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:16px;color:var(--txt2);
+    font-variant-numeric:tabular-nums;cursor:pointer;user-select:none;
+    will-change:transform,opacity;transition:color .12s ease;white-space:nowrap;
+  }
+  .wheel-item.sel{color:var(--amber);}
+  /* center selection band */
+  .wheel-band{
+    position:absolute;left:2px;right:2px;top:var(--wheel-pad);height:var(--item-h);
+    border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+    background:rgba(217,164,65,.05);pointer-events:none;z-index:2;border-radius:2px;
+  }
+  .wheel-fade{position:absolute;left:0;right:0;height:66px;pointer-events:none;z-index:3;}
+  .wheel-fade.top{top:0;background:linear-gradient(180deg,var(--panel),rgba(20,28,34,0));}
+  .wheel-fade.bottom{bottom:0;background:linear-gradient(0deg,var(--panel),rgba(20,28,34,0));}
+
+  .hint{margin:14px 2px 0;font-size:11.5px;color:var(--muted);text-align:center;}
+
+  @media (prefers-reduced-motion:reduce){
+    .wheel-item{transition:none;}
+    *{scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="bar">
+    <div class="brand">
+      <h1>Bolt sizes</h1>
+      <span class="sub">M&middot;toolkit</span>
+    </div>
+    <div class="seg" role="group" aria-label="Unit system">
+      <button id="u-metric" aria-pressed="true">Metric</button>
+      <button id="u-us" aria-pressed="false">US</button>
+    </div>
+  </header>
+
+  <section class="callout" aria-live="polite">
+    <div class="title" id="calloutTitle">M6 &times; 1.0</div>
+    <div class="meta" id="calloutMeta"></div>
+  </section>
+
+  <section class="tiles" id="tiles" aria-live="polite"></section>
+
+  <div class="cite" id="cite"></div>
+
+  <div class="drawing">
+    <span class="tag">Side view &mdash; not to scale</span>
+    <div id="boltHolder"></div>
+    <div class="drawnote" id="drawNote"></div>
+  </div>
+
+  <section class="pickers" id="pickers" aria-label="Bolt selector">
+    <div class="picker" data-key="dia">
+      <div class="picker-label">Diameter</div>
+      <div class="wheel-wrap">
+        <div class="wheel" tabindex="0" role="listbox" aria-label="Diameter"><div class="wheel-track"></div></div>
+        <div class="wheel-band"></div><div class="wheel-fade top"></div><div class="wheel-fade bottom"></div>
+      </div>
+    </div>
+    <div class="picker" data-key="pitch">
+      <div class="picker-label">Pitch</div>
+      <div class="wheel-wrap">
+        <div class="wheel" tabindex="0" role="listbox" aria-label="Pitch"><div class="wheel-track"></div></div>
+        <div class="wheel-band"></div><div class="wheel-fade top"></div><div class="wheel-fade bottom"></div>
+      </div>
+    </div>
+    <div class="picker" data-key="head">
+      <div class="picker-label">Head</div>
+      <div class="wheel-wrap">
+        <div class="wheel" tabindex="0" role="listbox" aria-label="Head"><div class="wheel-track"></div></div>
+        <div class="wheel-band"></div><div class="wheel-fade top"></div><div class="wheel-fade bottom"></div>
+      </div>
+    </div>
+    <div class="picker" data-key="grade">
+      <div class="picker-label">Grade</div>
+      <div class="wheel-wrap">
+        <div class="wheel" tabindex="0" role="listbox" aria-label="Grade"><div class="wheel-track"></div></div>
+        <div class="wheel-band"></div><div class="wheel-fade top"></div><div class="wheel-fade bottom"></div>
+      </div>
+    </div>
+  </section>
+
+  <p class="hint">Flick a wheel &mdash; it snaps to the centred value.</p>
+</div>
+
+<script>
+/* ================================================================
+   DATA — real values reused from index.html MTK pure block.
+   Base sizes + pitches + clearance are the MTK table verbatim;
+   pitchDia / minorDia / tap-drill are recomputed here with the
+   SAME MTK constants + rounding so outputs are identical to MTK.
+   ================================================================ */
+const OFF_P = 0.649519;    // MTK PITCH_DIA_OFFSET
+const OFF_MIN = 1.082532;  // MTK MINOR_DIA_OFFSET
+const MM_PER_IN = 25.4;    // MTK SRC009, exact by definition
+
+function round(v, dp){ const f = Math.pow(10, dp); return Math.round((v + Number.EPSILON) * f) / f; }
+
+const SIZES = ['M3','M4','M5','M6','M8','M10','M12'];
+const MAJOR = { M3:3, M4:4, M5:5, M6:6, M8:8, M10:10, M12:12 };
+// pitches present in MTK's thread list for these sizes (coarse first)
+const PITCHES = { M3:[0.5], M4:[0.7], M5:[0.8], M6:[1.0], M8:[1.25,1.0], M10:[1.5,1.25,1.0], M12:[1.75,1.25] };
+// MTK clearanceMetric 'normal' column (ISO 273)
+const CLEAR_NORMAL = { M3:3.4, M4:4.5, M5:5.5, M6:6.6, M8:9.0, M10:11.0, M12:13.5 };
+
+/* ---- Head dimensions (VERIFIED, tier C, verified against fastener catalogs) ----
+   Values in mm. Do not invent entries not listed. Provenance shown in footnote. */
+// ISO 4762 socket head cap screw: dk head Ø max / k head height max / s hex socket AF / t key engagement min
+const SOCKET_CAP = {
+  M3:{dk:5.5,  k:3.0,  s:2.5, t:1.3},
+  M4:{dk:7.0,  k:4.0,  s:3,   t:2.0},
+  M5:{dk:8.5,  k:5.0,  s:4,   t:2.5},
+  M6:{dk:10.0, k:6.0,  s:5,   t:3.0},
+  M8:{dk:13.0, k:8.0,  s:6,   t:4.0},
+  M10:{dk:16.0,k:10.0, s:8,   t:5.0},
+  M12:{dk:18.0,k:12.0, s:10,  t:6.0}
+};
+// ISO 4014/4017 hex head: s across-flats (spanner) / k head height. e (across corners) NOT verified.
+const HEX_HEAD = {
+  M3:{s:5.5, k:2.0},
+  M4:{s:7.0, k:2.8},
+  M5:{s:8.0, k:3.5},
+  M6:{s:10.0,k:4.0},
+  M8:{s:13.0,k:5.3},
+  M10:{s:16.0,k:6.4},
+  M12:{s:18.0,k:7.5}
+};
+// ISO 10642 socket countersunk: dk head Ø (theoretical/max) / k head height max, 90° head.
+const CSK_HEAD = {
+  M3:{dk:6.72, k:1.86},
+  M4:{dk:8.96, k:2.48},
+  M5:{dk:11.20,k:3.10},
+  M6:{dk:13.44,k:3.72},
+  M8:{dk:17.92,k:4.96},
+  M10:{dk:22.40,k:6.20},
+  M12:{dk:26.88,k:7.44}
+};
+function headDimsFor(headType, size){
+  if (headType === 'Socket cap')   return { std:'ISO 4762',  d:SOCKET_CAP[size] };
+  if (headType === 'Hex')          return { std:'ISO 4014',  d:HEX_HEAD[size] };
+  if (headType === 'Countersunk')  return { std:'ISO 10642', d:CSK_HEAD[size] };
+  return null;
+}
+
+const HEADS = ['Hex','Socket cap','Countersunk','Pan/Button','Set screw'];
+const GRADES = ['8.8','10.9','12.9','A2-70','A4-80'];
+
+// pure calculator: identical formulas/rounding to MTK
+function derive(size, pitch){
+  const major = MAJOR[size];
+  return {
+    major: major,
+    pitch: pitch,
+    pitchDia: round(major - OFF_P * pitch, 3),
+    minorDia: round(major - OFF_MIN * pitch, 3),
+    tap75: round(major - pitch, 2),
+    tap50: round(major - OFF_P * pitch, 2),
+    clearance: CLEAR_NORMAL[size]
+  };
+}
+
+/* ================================================================
+   STATE
+   ================================================================ */
+const state = { diaIdx:3 /*M6*/, pitchIdx:0, headIdx:0, gradeIdx:0, us:false };
+
+/* ================================================================
+   ROLLING WHEEL PICKER
+   ================================================================ */
+const ITEM_H = 38;
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function makePicker(rootEl, opts){
+  const wheel = rootEl.querySelector('.wheel');
+  const track = rootEl.querySelector('.wheel-track');
+  let items = [];
+  let committed = 0;
+  let settleTimer = null;
+  let rafPending = false;
+
+  function renderItems(labels){
+    track.innerHTML = '';
+    items = labels.map((lab, i) => {
+      const d = document.createElement('div');
+      d.className = 'wheel-item';
+      d.textContent = lab;
+      d.setAttribute('role','option');
+      d.dataset.index = i;
+      d.addEventListener('click', () => setIndex(i, true));
+      track.appendChild(d);
+      return d;
+    });
+  }
+
+  function paint(){
+    rafPending = false;
+    const center = wheel.scrollTop / ITEM_H; // fractional index at band centre
+    for (let i = 0; i < items.length; i++){
+      const el = items[i];
+      const dist = i - center;
+      const ad = Math.abs(dist);
+      if (reduceMotion){
+        el.style.transform = '';
+        el.style.opacity = ad < 0.5 ? '1' : '0.5';
+      } else {
+        const scale = Math.max(0.62, 1 - ad * 0.16);
+        const opacity = Math.max(0.18, 1 - ad * 0.34);
+        // subtle curved-wheel tilt via translateZ-like squash
+        el.style.transform = 'scale(' + scale.toFixed(3) + ')';
+        el.style.opacity = opacity.toFixed(3);
+      }
+      el.classList.toggle('sel', ad < 0.5);
+      el.setAttribute('aria-selected', ad < 0.5 ? 'true' : 'false');
+    }
+  }
+
+  function onScroll(){
+    if (!rafPending){ rafPending = true; requestAnimationFrame(paint); }
+    if (settleTimer) clearTimeout(settleTimer);
+    settleTimer = setTimeout(commit, 110);
+  }
+
+  function commit(){
+    const idx = Math.max(0, Math.min(items.length - 1, Math.round(wheel.scrollTop / ITEM_H)));
+    if (idx !== committed){
+      committed = idx;
+      opts.onChange(idx);
+    } else {
+      paint();
+    }
+  }
+
+  function setIndex(i, smooth){
+    i = Math.max(0, Math.min(items.length - 1, i));
+    wheel.scrollTo({ top: i * ITEM_H, behavior: (smooth && !reduceMotion) ? 'smooth' : 'auto' });
+    if (!smooth){ committed = i; paint(); }
+  }
+
+  wheel.addEventListener('scroll', onScroll, { passive:true });
+  wheel.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown'){ e.preventDefault(); setIndex(committed + 1, true); }
+    else if (e.key === 'ArrowUp'){ e.preventDefault(); setIndex(committed - 1, true); }
+    else if (e.key === 'Home'){ e.preventDefault(); setIndex(0, true); }
+    else if (e.key === 'End'){ e.preventDefault(); setIndex(items.length - 1, true); }
+  });
+
+  return {
+    setItems(labels, index){
+      renderItems(labels);
+      committed = Math.max(0, Math.min(labels.length - 1, index || 0));
+      // position without animation after layout
+      requestAnimationFrame(() => { wheel.scrollTop = committed * ITEM_H; paint(); });
+    },
+    setIndex,
+    get index(){ return committed; }
+  };
+}
+
+/* ================================================================
+   BOLT DRAWING (SVG) — technical side view, head-type aware.
+   Reference LETTERS on leaders; numeric values live in the tiles.
+   ================================================================ */
+const SVG_W = 420, SVG_H = 300, CY = 150;
+
+// numeric label for a dimension leader, unit-aware, no unit suffix (tiles carry units)
+function dnum(vmm, dp){
+  if (vmm === undefined || vmm === null) return '';
+  if (state.us) return round(vmm / MM_PER_IN, 3).toFixed(3);
+  return round(vmm, dp).toFixed(dp);
+}
+function dimLine(x1,y1,x2,y2){
+  return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" class="dim" marker-start="url(#a)" marker-end="url(#a)"/>';
+}
+function extLine(x1,y1,x2,y2){
+  return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" class="ext"/>';
+}
+function letter(x,y,ch){
+  return '<text x="'+x+'" y="'+y+'" class="dl">'+ch+'</text>';
+}
+// reference letter + optional small verified value beside it
+function letterVal(x,y,ch,val){
+  const v = (val !== undefined && val !== null && val !== '')
+    ? '<tspan dx="3" class="dv">'+val+'</tspan>' : '';
+  return '<text x="'+x+'" y="'+y+'" class="dl">'+ch+v+'</text>';
+}
+
+// small hexagon end-view inset (socket = the key; hex = the head across-flats/corners)
+function endView(cx, cy, R, opts){
+  let g = '';
+  const pts = [];
+  for (let k = 0; k < 6; k++){ const a = k * Math.PI / 3; pts.push([cx + R*Math.cos(a), cy + R*Math.sin(a)]); }
+  g += '<polygon class="ol" points="'+pts.map(p => p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')+'"/>';
+  const topY = cy - R*0.866, botY = cy + R*0.866;
+  // s = across flats (vertical), dim on the right
+  if (opts.showS){
+    const sx = cx + R + 6;
+    g += extLine(cx + R*0.5, topY, sx+2, topY) + extLine(cx + R*0.5, botY, sx+2, botY);
+    g += dimLine(sx, topY, sx, botY);
+    g += letterVal(sx+4, cy+3, 's', opts.s);
+  }
+  // e = across corners (horizontal), letter only — honest gap, no value
+  if (opts.showE){
+    const ey = topY - 11;
+    g += extLine(cx - R, cy, cx - R, ey) + extLine(cx + R, cy, cx + R, ey);
+    g += dimLine(cx - R, ey, cx + R, ey) + letter(cx - 4, ey - 4, 'e');
+  }
+  g += '<text x="'+cx+'" y="'+(botY+13)+'" class="cap" text-anchor="middle">END VIEW</text>';
+  return g;
+}
+
+function buildBolt(headType, size, d){
+  const dia = d.major;
+  const r = 12 + (dia - 3) * 2.2;      // visual shank (major) radius
+  const rMin = r * 0.80;               // minor-dia radius
+  const shankEnd = 348;
+  const headLeft = 62;
+  const pxPitch = 12;                  // crest spacing (visual)
+  const hd = headDimsFor(headType, size);   // verified head dims (or null)
+  const hv = hd ? hd.d : null;
+  let shankStart, headSvg = '', headDims = '', inset = '';
+
+  // vertical head-Ø/across-flats dim on the far left
+  function leftVDim(yTop, yBot, ch, val){
+    return extLine(headLeft, yTop, 28, yTop) + extLine(headLeft, yBot, 28, yBot) +
+      dimLine(32, yTop, 32, yBot) + letterVal(3, (yTop+yBot)/2+3, ch, val);
+  }
+  // horizontal head-height (k) dim above the head
+  function kDim(hx0, hx1, yTopL, yTopR, val){
+    return extLine(hx0, yTopL, hx0, 46) + extLine(hx1, yTopR, hx1, 46) +
+      dimLine(hx0, 48, hx1, 48) + letterVal((hx0+hx1)/2 - 6, 42, 'k', val);
+  }
+
+  if (headType === 'Set screw'){
+    shankStart = 62;
+    const sx = shankStart + 6, sr = rMin * 0.55;
+    headSvg =
+      '<line x1="'+shankStart+'" y1="'+(CY-r)+'" x2="'+shankStart+'" y2="'+(CY+r)+'" class="ol"/>' +
+      '<line x1="'+sx+'" y1="'+(CY-sr)+'" x2="'+sx+'" y2="'+(CY+sr)+'" class="thin"/>' +
+      '<polygon points="'+(shankStart)+','+(CY-sr)+' '+(sx)+','+(CY-sr)+' '+(sx)+','+(CY+sr)+' '+(shankStart)+','+(CY+sr)+'" class="socket"/>';
+  } else if (headType === 'Hex'){
+    const kLen = Math.max(r*1.15, 22), hh = r*1.55, ch = 6;
+    const hx0 = headLeft, hx1 = headLeft + kLen;
+    shankStart = hx1;
+    headSvg =
+      '<polygon class="ol" points="'+
+        (hx0+ch)+','+(CY-hh)+' '+(hx1-ch)+','+(CY-hh)+' '+(hx1)+','+(CY-hh+ch)+' '+
+        (hx1)+','+(CY+hh-ch)+' '+(hx1-ch)+','+(CY+hh)+' '+(hx0+ch)+','+(CY+hh)+' '+
+        (hx0)+','+(CY+hh-ch)+' '+(hx0)+','+(CY-hh+ch)+'"/>' +
+      '<line x1="'+hx0+'" y1="'+(CY-hh+ch)+'" x2="'+hx1+'" y2="'+(CY-hh+ch)+'" class="thin"/>' +
+      '<line x1="'+hx0+'" y1="'+(CY+hh-ch)+'" x2="'+hx1+'" y2="'+(CY+hh-ch)+'" class="thin"/>';
+    headDims =
+      leftVDim(CY-hh, CY+hh, 's', dnum(hv && hv.s, 1)) +
+      kDim(hx0, hx1, CY-hh, CY-hh, dnum(hv && hv.k, 1));
+    // end-view: hex head across-flats (s, value) + across-corners (e, letter only)
+    inset = endView(SVG_W-46, 116, 16, { showS:true, s:dnum(hv && hv.s, 1), showE:true });
+  } else if (headType === 'Socket cap'){
+    const kLen = Math.max(r*1.4, 24), hR = r*1.5;
+    const hx0 = headLeft, hx1 = headLeft + kLen;
+    const socketX = hx0 + kLen*0.46;   // hex-socket bottom (key engagement depth t)
+    shankStart = hx1;
+    headSvg =
+      '<rect x="'+hx0+'" y="'+(CY-hR)+'" width="'+kLen+'" height="'+(2*hR)+'" rx="2" class="ol"/>' +
+      '<line x1="'+socketX+'" y1="'+(CY-hR*0.55)+'" x2="'+socketX+'" y2="'+(CY+hR*0.55)+'" class="thin"/>' +
+      '<line x1="'+hx0+'" y1="'+(CY-hR*0.55)+'" x2="'+socketX+'" y2="'+(CY-hR*0.55)+'" class="thin"/>' +
+      '<line x1="'+hx0+'" y1="'+(CY+hR*0.55)+'" x2="'+socketX+'" y2="'+(CY+hR*0.55)+'" class="thin"/>' +
+      '<polygon points="'+hx0+','+(CY-hR*0.55)+' '+socketX+','+(CY-hR*0.55)+' '+socketX+','+(CY+hR*0.55)+' '+hx0+','+(CY+hR*0.55)+'" class="socket"/>';
+    headDims =
+      leftVDim(CY-hR, CY+hR, 'dₖ', dnum(hv && hv.dk, 1)) +
+      kDim(hx0, hx1, CY-hR, CY-hR, dnum(hv && hv.k, 1)) +
+      // t = key engagement depth, under the head
+      extLine(hx0, CY+hR, hx0, CY+hR+16) + extLine(socketX, CY+hR*0.55, socketX, CY+hR+16) +
+      dimLine(hx0, CY+hR+14, socketX, CY+hR+14) + letterVal((hx0+socketX)/2 - 6, CY+hR+27, 't', dnum(hv && hv.t, 1));
+    // end-view: hex socket across-flats (s, value)
+    inset = endView(SVG_W-46, 116, 15, { showS:true, s:dnum(hv && hv.s, 1), showE:false });
+  } else if (headType === 'Countersunk'){
+    const kLen = Math.max(r*1.05, 18), hR = r*1.95;
+    const hx0 = headLeft, hx1 = headLeft + kLen;
+    shankStart = hx1;
+    headSvg =
+      '<polygon class="ol" points="'+hx0+','+(CY-hR)+' '+hx1+','+(CY-r)+' '+hx1+','+(CY+r)+' '+hx0+','+(CY+hR)+'"/>' +
+      '<line x1="'+hx0+'" y1="'+(CY-hR*0.5)+'" x2="'+(hx0+kLen*0.5)+'" y2="'+(CY-r*0.5)+'" class="thin"/>' +
+      '<line x1="'+hx0+'" y1="'+(CY+hR*0.5)+'" x2="'+(hx0+kLen*0.5)+'" y2="'+(CY+r*0.5)+'" class="thin"/>' +
+      // 90° included-angle annotation
+      '<path d="M '+(hx0+13)+' '+(CY-13)+' A 18 18 0 0 1 '+(hx0+13)+' '+(CY+13)+'" class="thin"/>' +
+      '<text x="'+(hx0+20)+'" y="'+(CY+4)+'" class="ang">90°</text>';
+    headDims =
+      leftVDim(CY-hR, CY+hR, 'dₖ', dnum(hv && hv.dk, 2)) +
+      kDim(hx0, hx1, CY-hR, CY-r, dnum(hv && hv.k, 2));
+    // countersunk (socket) — s letter only, value not verified for this profile
+    inset = endView(SVG_W-46, 116, 15, { showS:true, s:'', showE:false });
+  } else { // Pan / Button
+    const kLen = Math.max(r*1.05, 18), hR = r*1.5;
+    const hx0 = headLeft, hx1 = headLeft + kLen;
+    shankStart = hx1;
+    headSvg =
+      '<path class="ol" d="M '+hx1+' '+(CY-hR)+' C '+(hx0-8)+' '+(CY-hR)+' '+(hx0-8)+' '+(CY+hR)+' '+hx1+' '+(CY+hR)+' Z"/>' +
+      '<line x1="'+(hx1-2)+'" y1="'+(CY-hR*0.55)+'" x2="'+(hx0+4)+'" y2="'+(CY-hR*0.4)+'" class="thin"/>';
+    headDims =
+      extLine(hx0-8, CY-hR, 28, CY-hR) + extLine(hx0-8, CY+hR, 28, CY+hR) +
+      dimLine(32, CY-hR, 32, CY+hR) + letter(3, CY+4, 'dₖ') +
+      extLine(hx0-8, CY-hR, hx0-8, 46) + extLine(hx1, CY-hR, hx1, 46) +
+      dimLine(hx0-8, 48, hx1, 48) + letter((hx0+hx1)/2 - 6, 42, 'k');
+  }
+
+  // ---- threaded shank ----
+  let shank = '';
+  shank += '<line x1="'+shankStart+'" y1="'+(CY-r)+'" x2="'+shankEnd+'" y2="'+(CY-r)+'" class="ol"/>';
+  shank += '<line x1="'+shankStart+'" y1="'+(CY+r)+'" x2="'+shankEnd+'" y2="'+(CY+r)+'" class="ol"/>';
+  shank += '<line x1="'+shankStart+'" y1="'+(CY-rMin)+'" x2="'+shankEnd+'" y2="'+(CY-rMin)+'" class="root"/>';
+  shank += '<line x1="'+shankStart+'" y1="'+(CY+rMin)+'" x2="'+shankEnd+'" y2="'+(CY+rMin)+'" class="root"/>';
+  const crests = [];
+  for (let x = shankStart + pxPitch; x < shankEnd - 2; x += pxPitch){
+    crests.push(x);
+    shank += '<line x1="'+x+'" y1="'+(CY-r)+'" x2="'+x+'" y2="'+(CY+r)+'" class="thin"/>';
+  }
+  // chamfered end
+  shank += '<line x1="'+shankEnd+'" y1="'+(CY-r)+'" x2="'+(shankEnd-5)+'" y2="'+(CY-rMin)+'" class="ol"/>';
+  shank += '<line x1="'+shankEnd+'" y1="'+(CY+r)+'" x2="'+(shankEnd-5)+'" y2="'+(CY+rMin)+'" class="ol"/>';
+  shank += '<line x1="'+shankEnd+'" y1="'+(CY-r)+'" x2="'+shankEnd+'" y2="'+(CY+r)+'" class="ol"/>';
+
+  // ---- shared dimensions: L, L_T/b, d, d1, P ----
+  let dims = '';
+  const leftMost = (headType === 'Set screw') ? shankStart : (headType === 'Pan/Button' ? headLeft-8 : headLeft);
+  // L across the top (overall length — user/stock dependent, letter only)
+  dims += extLine(leftMost, CY, leftMost, 26) + extLine(shankEnd, CY-r, shankEnd, 26);
+  dims += dimLine(leftMost, 24, shankEnd, 24) + letter((leftMost+shankEnd)/2 - 4, 18, 'L');
+  // d (major) — vertical near the right. Value = nominal Ø (verified).
+  const dX = shankEnd - 26;
+  dims += dimLine(dX, CY-r, dX, CY+r) + letterVal(dX+5, CY-r-3, 'd', dnum(d.major, state.us?3:1));
+  // d1 (minor) — dashed vertical near left of shank. Value = minor Ø (real: M6→4.917).
+  const d1X = shankStart + 20;
+  dims += '<line x1="'+d1X+'" y1="'+(CY-rMin)+'" x2="'+d1X+'" y2="'+(CY+rMin)+'" class="dim" marker-start="url(#a)" marker-end="url(#a)"/>';
+  dims += letterVal(d1X+5, CY+rMin+14, 'd₁', dnum(d.minorDia, state.us?3:3));
+  // P — between two adjacent crests, below the shank. Value = pitch (verified).
+  if (crests.length >= 3){
+    const c0 = crests[Math.max(1, crests.length-4)], c1 = c0 + pxPitch;
+    const py = CY + r + 18;
+    dims += extLine(c0, CY+r, c0, py) + extLine(c1, CY+r, c1, py);
+    dims += dimLine(c0, py-4, c1, py-4) + letterVal((c0+c1)/2 - 6, py+11, 'P', dnum(d.pitch, state.us?3:2));
+  }
+  // L_T / b (thread length — user/stock dependent, letter only) along the bottom
+  if (headType !== 'Set screw'){
+    const yb = CY + r + 40;
+    const ltLetter = (headType === 'Countersunk') ? 'b' : '<tspan>L</tspan><tspan dy="3" font-size="9">T</tspan>';
+    dims += extLine(shankStart, CY+r, shankStart, yb) + extLine(shankEnd, CY+rMin, shankEnd, yb);
+    dims += dimLine(shankStart, yb-4, shankEnd, yb-4) +
+      '<text x="'+((shankStart+shankEnd)/2 - 8)+'" y="'+(yb+11)+'" class="dl">'+ltLetter+'</text>';
+  }
+
+  return '<svg viewBox="0 0 '+SVG_W+' '+SVG_H+'" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="'+headType+' bolt side view with dimensions">' +
+    '<defs><marker id="a" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">' +
+      '<path d="M0,0 L7,3.5 L0,7 Z" fill="#3a78c2"/></marker></defs>' +
+    '<style>' +
+      '.ol{stroke:#9aa8b4;stroke-width:1.4;fill:none;stroke-linejoin:round;}' +
+      '.thin{stroke:#5d6c78;stroke-width:0.8;fill:none;}' +
+      '.root{stroke:#4a5560;stroke-width:0.8;fill:none;stroke-dasharray:4 3;}' +
+      '.socket{fill:#0c1217;stroke:#5d6c78;stroke-width:0.7;}' +
+      '.dim{stroke:#3a78c2;stroke-width:0.9;fill:none;}' +
+      '.ext{stroke:#2f4c66;stroke-width:0.7;fill:none;stroke-dasharray:2 2;}' +
+      '.dl{fill:#9fb4c8;font-family:'+"'"+'ui-monospace,monospace'+"'"+';font-size:12px;font-style:italic;font-weight:600;}' +
+      '.dv{fill:#c69a4a;font-size:9.5px;font-style:normal;font-weight:600;}' +
+      '.ang{fill:#8b97a3;font-family:'+"'"+'ui-monospace,monospace'+"'"+';font-size:9px;}' +
+      '.cap{fill:#5d6c78;font-family:'+"'"+'ui-monospace,monospace'+"'"+';font-size:7.5px;letter-spacing:.08em;}' +
+    '</style>' +
+    '<line x1="'+(leftMost-4)+'" y1="'+CY+'" x2="'+(shankEnd+6)+'" y2="'+CY+'" stroke="#243441" stroke-width="0.6" stroke-dasharray="6 3 1 3"/>' +
+    headSvg + shank + headDims + dims + inset +
+    '</svg>';
+}
+
+// small caveat line under the drawing (head-type specific)
+function drawNoteFor(headType, size){
+  const hv = headDimsFor(headType, size);
+  if (headType === 'Hex'){
+    return '<span class="t">s</span> = ISO 4014 across-flats. Legacy DIN 931/933 differ at M10 (17) &middot; M12 (19). <span class="t">e</span> (across corners) not verified — letter shown, no value.';
+  }
+  if (headType === 'Socket cap' && hv){
+    return 'dₖ head &Oslash; &middot; k height &middot; s hex socket &middot; t key depth &mdash; ISO 4762. L &middot; Lᴛ stock-dependent (letters only).';
+  }
+  if (headType === 'Countersunk' && hv){
+    return 'dₖ theoretical head &Oslash; &middot; k height &middot; 90° head &mdash; ISO 10642. s socket &amp; b thread length: letters only (not verified here).';
+  }
+  return 'Reference letters on leaders; verified values shown small beside each letter. Lengths (L, Lᴛ) are stock-dependent.';
+}
+
+/* ================================================================
+   RENDER
+   ================================================================ */
+const els = {
+  title: document.getElementById('calloutTitle'),
+  meta: document.getElementById('calloutMeta'),
+  tiles: document.getElementById('tiles'),
+  cite: document.getElementById('cite'),
+  bolt: document.getElementById('boltHolder'),
+  drawNote: document.getElementById('drawNote')
+};
+
+function fmt(vmm, dpMetric){
+  if (state.us){
+    return { v: round(vmm / MM_PER_IN, 4).toFixed(4), u: 'in' };
+  }
+  return { v: (Math.round(vmm*Math.pow(10,dpMetric))/Math.pow(10,dpMetric)).toFixed(dpMetric), u: 'mm' };
+}
+
+function tileHTML(label, letterCh, vmm, dpMetric){
+  const f = fmt(vmm, dpMetric);
+  const lt = letterCh ? '<i>'+letterCh+'</i>' : '';
+  return '<div class="tile"><div class="lab">'+label+lt+'</div>' +
+    '<div class="val">'+f.v+'<span class="u">'+f.u+'</span></div></div>';
+}
+
+function render(){
+  const size = SIZES[state.diaIdx];
+  const pitches = PITCHES[size];
+  if (state.pitchIdx >= pitches.length) state.pitchIdx = 0;
+  const pitch = pitches[state.pitchIdx];
+  const head = HEADS[state.headIdx];
+  const grade = GRADES[state.gradeIdx];
+  const d = derive(size, pitch);
+
+  els.title.textContent = size + ' × ' + pitch.toFixed(pitch % 1 === 0 ? 1 : 2);
+  els.meta.innerHTML =
+    '<span>Head <b>'+head+'</b></span>' +
+    '<span>Grade <b class="mono">'+grade+'</b></span>' +
+    '<span>Series <b class="mono">coarse/fine</b></span>';
+
+  let tiles =
+    tileHTML('Major &Oslash;', 'd',  d.major,     state.us?4:1) +
+    tileHTML('Minor &Oslash;', 'd₁', d.minorDia, state.us?4:3) +
+    tileHTML('Pitch &Oslash;', 'd₂', d.pitchDia, state.us?4:3) +
+    tileHTML('Tap ~75%', '',   d.tap75,    state.us?4:2) +
+    tileHTML('Tap ~50%', '',   d.tap50,    state.us?4:2) +
+    tileHTML('Clearance &middot; normal', '', d.clearance, state.us?4:1);
+
+  // head-dimension tiles (tier C, per head type) — appended beside thread tiles
+  const hd = headDimsFor(head, size);
+  if (hd){
+    const h = hd.d;
+    if (head === 'Socket cap'){
+      tiles += tileHTML('Head &Oslash;', 'dₖ', h.dk, state.us?4:1) +
+               tileHTML('Head height', 'k', h.k, state.us?4:1) +
+               tileHTML('Socket AF', 's', h.s, state.us?4:1) +
+               tileHTML('Key depth', 't', h.t, state.us?4:1);
+    } else if (head === 'Hex'){
+      tiles += tileHTML('Across flats', 's', h.s, state.us?4:1) +
+               tileHTML('Head height', 'k', h.k, state.us?4:1);
+    } else if (head === 'Countersunk'){
+      tiles += tileHTML('Head &Oslash;', 'dₖ', h.dk, state.us?4:2) +
+               tileHTML('Head height', 'k', h.k, state.us?4:2);
+    }
+  }
+  els.tiles.innerHTML = tiles;
+
+  els.cite.innerHTML = '<span class="t">Source</span> &nbsp; ISO 261 &middot; ISO 965-1 &middot; ISO 68-1 &middot; ISO 273 &middot; Machinery’s Handbook 30th &middot; tier B' +
+    ' &nbsp;·&nbsp; <span class="t">Head</span> ISO 4762 &middot; ISO 4014 &middot; ISO 10642 &middot; tier C, verified against fastener catalogs' +
+    (state.us ? ' &middot; mm→in via NIST SP 811 (25.4, exact)' : '');
+
+  els.bolt.innerHTML = buildBolt(head, size, d);
+  els.drawNote.innerHTML = drawNoteFor(head, size);
+}
+
+/* ================================================================
+   WIRE UP
+   ================================================================ */
+const pickerEls = document.querySelectorAll('.picker');
+const P = {};
+pickerEls.forEach(pe => {
+  const key = pe.dataset.key;
+  P[key] = makePicker(pe, { onChange: (i) => onPick(key, i) });
+});
+
+function pitchLabels(size){
+  return PITCHES[size].map(p => p.toFixed(p % 1 === 0 ? 2 : 2));
+}
+
+function onPick(key, i){
+  if (key === 'dia'){
+    state.diaIdx = i;
+    // rebuild pitch wheel for the new diameter, keep coarse default
+    state.pitchIdx = 0;
+    P.pitch.setItems(pitchLabels(SIZES[i]), 0);
+  } else if (key === 'pitch'){
+    state.pitchIdx = i;
+  } else if (key === 'head'){
+    state.headIdx = i;
+  } else if (key === 'grade'){
+    state.gradeIdx = i;
+  }
+  render();
+}
+
+// unit toggle
+const bMetric = document.getElementById('u-metric');
+const bUS = document.getElementById('u-us');
+function setUnits(us){
+  state.us = us;
+  bMetric.setAttribute('aria-pressed', String(!us));
+  bUS.setAttribute('aria-pressed', String(us));
+  render();
+}
+bMetric.addEventListener('click', () => setUnits(false));
+bUS.addEventListener('click', () => setUnits(true));
+
+// init
+P.dia.setItems(SIZES.slice(), state.diaIdx);
+P.pitch.setItems(pitchLabels(SIZES[state.diaIdx]), state.pitchIdx);
+P.head.setItems(HEADS.slice(), state.headIdx);
+P.grade.setItems(GRADES.slice(), state.gradeIdx);
+render();
+
+// expose for automated self-verification
+window.__proto = { state, derive, SIZES, HEADS, setDia:(i)=>{P.dia.setIndex(i,false);onPick('dia',i);}, setHead:(i)=>{P.head.setIndex(i,false);onPick('head',i);} };
+</script>
+</body>
+</html>
