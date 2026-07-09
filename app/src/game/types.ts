@@ -1,0 +1,94 @@
+// ===== Content schema =====
+// Content lives in src/content/* as data conforming to these types.
+// The game engine renders any chapter that satisfies this schema —
+// future chapters are added by dropping in a new content file.
+
+export interface Concept {
+  term: string
+  termEn: string
+  definition: string
+}
+
+export interface RuleOfThumb {
+  rule: string
+  caveat: string // when the rule is NOT enough — keeps rules-of-thumb honest
+}
+
+export interface CommonMistake {
+  mistake: string
+  why: string
+  damage: string
+  prevention: string
+}
+
+/** A lesson unit — rendered as an "INTEL FILE" in the game. */
+export interface IntelUnit {
+  id: string
+  codename: string // English HUD codename, e.g. "GRIP-01"
+  title: string
+  openingScenario: string // real-world failure story that motivates the unit
+  openingQuestion: string
+  briefing: string[] // short explanation, paragraph per entry
+  concepts: Concept[]
+  ruleOfThumb: RuleOfThumb
+  commonMistake: CommonMistake
+  xp: number
+}
+
+export interface ExerciseOption {
+  text: string
+  correct: boolean
+  feedback: string // explains WHY, and what would happen in the field
+}
+
+/** A decision scenario — rendered as a "FIELD OP" in the game. */
+export interface Exercise {
+  id: string
+  codename: string
+  scenario: string
+  question: string
+  options: ExerciseOption[]
+  skill: string // the measured skill, e.g. "בחירת אורך בורג"
+  xp: number
+}
+
+export interface Chapter {
+  id: string
+  number: number
+  codename: string // e.g. "OPERATION: IRON GRIP"
+  title: string
+  epigraph: string // Dune-style aphorism shown on the briefing screen
+  description: string
+  objectives: string[]
+  units: IntelUnit[]
+  exercises: Exercise[] // practice ops, immediate feedback
+  finalExam: Exercise[] // "BOSS FIGHT" — scored, gates chapter completion
+  checklist: string[] // practical field checklist unlocked on completion
+}
+
+/** Chapters not yet built — shown locked on the campaign map. */
+export interface LockedChapter {
+  number: number
+  codename: string
+  title: string
+}
+
+// ===== Progression =====
+
+export interface Rank {
+  minXp: number
+  name: string
+  nameEn: string
+}
+
+export interface ChapterProgress {
+  unitsRead: string[]
+  exercisesDone: Record<string, boolean> // id -> answered correctly on first try
+  examScore: number | null // percent, null until attempted
+  completed: boolean
+}
+
+export interface PlayerState {
+  xp: number
+  chapters: Record<string, ChapterProgress>
+}
