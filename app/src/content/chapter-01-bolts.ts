@@ -335,7 +335,7 @@ export const chapter01: Chapter = {
           sourceUrl: 'https://commons.wikimedia.org/wiki/File:Thread-locking_fluid_applied.jpg',
         },
         {
-          src: 'visuals/nylon-lock-nut.png',
+          src: 'visuals/nylon-lock-nut.jpg',
           caption:
             'החלופה המכנית: אום נעילה עם טבעת ניילון (Nyloc). הטבעת נדחסת סביב התבריג ויוצרת חיכוך קבוע שמתנגד להתרופפות עצמית ברעידות.',
           credit: 'Btarski, Wikimedia Commons',
