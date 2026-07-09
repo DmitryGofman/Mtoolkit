@@ -449,6 +449,13 @@ body {
 
 .visual-credit:hover { color: var(--cyan); }
 
+/* compact single visual inside an exercise */
+.exercise-visual { margin: 0 auto 18px; max-width: 560px; }
+
+.exercise-visual .visual-frame { min-height: 140px; max-height: 240px; }
+
+.exercise-visual .visual-frame img { max-height: 240px; }
+
 .concepts { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
 
 .concept-card {

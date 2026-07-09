@@ -380,6 +380,14 @@ export const chapter01: Chapter = {
       codename: 'FIELD OP // ACCESS PANEL',
       scenario:
         'אתה מתכנן מכסה שירות שטכנאי יפתח אחת לחודש כדי להחליף מסנן. המכסה יושב על מארז אלומיניום.',
+      visual: {
+        src: 'visuals/junction-box-cover.jpg',
+        caption: 'מכסה שירות טיפוסי: מכסה, שני ברגים, ומארז. תסתכל טוב על הפרטים לפני שאתה עונה.',
+        credit: 'Dmitry G, Wikimedia Commons',
+        license: 'CC BY-SA 3.0',
+        sourceUrl:
+          'https://commons.wikimedia.org/wiki/File:ABB_AU19_junction_box_for_drywall_with_AK11_cover.JPG',
+      },
       question: 'מה הפתרון הנכון לחיבור המכסה?',
       options: [
         {
@@ -415,6 +423,14 @@ export const chapter01: Chapter = {
       codename: 'FIELD OP // SHORT FUSE',
       scenario:
         'בהרכבה ראשונה של מכלול, בורג M6 נכנס לקדח מוברז עיוור ומרגיש מהודק. בבדיקת השרטוטים מתברר שהבורג תופס רק שתי כריכות תבריג.',
+      visual: {
+        src: 'visuals/bolted-joint-tapped.svg',
+        caption: 'חתך עקרוני של בורג בקדח הברזה עיוור. כמה תבריג באמת נושא כאן עומס?',
+        credit: 'Yuri Raysper, Wikimedia Commons',
+        license: 'Public domain',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Bolted_joint_2.svg',
+        plate: true,
+      },
       question: 'מה הבעיה, ולמה היא מסוכנת למרות שהבורג "מהודק"?',
       options: [
         {
@@ -450,6 +466,15 @@ export const chapter01: Chapter = {
       codename: 'FIELD OP // BABEL',
       scenario:
         'בהרכבת אב-טיפוס, בורג "כמעט נכנס" לאום אבל נתפס אחרי סיבוב וחצי. המרכיב מציע להמשיך עם מפתח — "זה רק קשה בהתחלה".',
+      visual: {
+        src: 'visuals/thread-pitch-gauge.jpg',
+        caption:
+          'מד פסיעה (Thread pitch gauge) משולב: להבים לוויטוורת׳ 55° ולמטרי 60°. הכלי שעונה על השאלה "איזה תבריג זה באמת" — לפני שהמפתח עונה עליה בכוח.',
+        credit: 'Cccefalon, Wikimedia Commons',
+        license: 'CC BY-SA 3.0',
+        sourceUrl:
+          'https://commons.wikimedia.org/wiki/File:Thread_pitch_gauge_Whitworth_and_metric.jpg',
+      },
       question: 'מה ההחלטה הנכונה?',
       options: [
         {
@@ -485,6 +510,14 @@ export const chapter01: Chapter = {
       codename: 'FIELD OP // BLUEPRINT LEAK',
       scenario:
         'אתה עובר על שרטוט לפני שליחה לייצור. מופיע בו קדח מוברז M5 עיוור, עם סימון סוג ההברגה בלבד.',
+      visual: {
+        src: 'visuals/drill-hole-types.png',
+        caption: 'קדח עיוור נעצר בתוך החומר. מה היצרן צריך לדעת כדי לייצר אותו נכון?',
+        credit: 'Robert Hewitt, Wikimedia Commons',
+        license: 'CC BY-SA 3.0',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Drill_-_Hole_Types.png',
+        plate: true,
+      },
       question: 'איזה מידע חסר בשרטוט וחייב להיות מוגדר?',
       options: [
         {
@@ -520,6 +553,14 @@ export const chapter01: Chapter = {
       codename: 'FIELD OP // SHAKEDOWN',
       scenario:
         'ברגי תושבת מנוע ברחפן מתרופפים אחרי כל כמה טיסות. את התושבת מפרקים לתחזוקה אחת לכמה חודשים.',
+      visual: {
+        src: 'visuals/racing-drone.jpg',
+        caption:
+          'רחפן מרוצים: ארבעה מנועים מסתובבים באלפי סל״ד, שלדת קרבון קלה, והרבה ברגים קטנים בסביבת הרעידות הקשה ביותר שיש.',
+        credit: 'Commanderbryce, Wikimedia Commons',
+        license: 'CC BY-SA 4.0',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Racing_Drone.jpg',
+      },
       question: 'מה הפתרון ההנדסי הסביר?',
       options: [
         {
@@ -557,6 +598,14 @@ export const chapter01: Chapter = {
       id: 'final1',
       codename: 'FINAL // Q1',
       scenario: 'בהרכבה נקרעו הברגות M5 בחלק אלומיניום. אתה החוקר.',
+      visual: {
+        src: 'visuals/failed-insert.jpg',
+        caption: 'כשל תבריג אמיתי באלומיניום. עכשיו — חקירה שיטתית, לא ניחושים.',
+        credit: 'Phiarc, Wikimedia Commons',
+        license: 'CC BY-SA 4.0',
+        sourceUrl:
+          'https://commons.wikimedia.org/wiki/File:Failed_threaded_insert_in_cast_aluminium.jpg',
+      },
       question: 'מה הבדיקה הראשונה והשיטתית ביותר?',
       options: [
         {
@@ -617,6 +666,14 @@ export const chapter01: Chapter = {
       id: 'final3',
       codename: 'FINAL // Q3',
       scenario: 'בורג נכנס לקדח מוברז עיוור, מרגיש מהודק — אבל החלקים לא נלחצים זה אל זה ונשאר מרווח.',
+      visual: {
+        src: 'visuals/bolted-joint-tapped.svg',
+        caption: 'חתך בורג בקדח עיוור. עקוב אחרי הגיאומטריה: איפה הבורג נגמר, ואיפה הקדח.',
+        credit: 'Yuri Raysper, Wikimedia Commons',
+        license: 'Public domain',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Bolted_joint_2.svg',
+        plate: true,
+      },
       question: 'מה ההסבר הסביר?',
       options: [
         {
@@ -677,6 +734,14 @@ export const chapter01: Chapter = {
       id: 'final5',
       codename: 'FINAL // Q5',
       scenario: 'אתה עובר על שרטוט חלק עם קדחי מעבר לברגי M6, לפני שליחה לייצור.',
+      visual: {
+        src: 'visuals/bolted-joint-with-nut.svg',
+        caption: 'חיבור בורג ואום בחתך. שים לב למרווח בין גוף הבורג לדפנות הקדחים.',
+        credit: 'Андрей Перцев, Wikimedia Commons',
+        license: 'CC0',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Bolted_joint_with_nut.svg',
+        plate: true,
+      },
       question: 'למה קדח המעבר מתוכנן גדול מקוטר הבורג?',
       options: [
         {

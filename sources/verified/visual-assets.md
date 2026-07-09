@@ -20,6 +20,9 @@
 | `failed-insert.jpg` | insert שנעקר מיציקת אלומיניום — כשל אמיתי | [Commons](https://commons.wikimedia.org/wiki/File:Failed_threaded_insert_in_cast_aluminium.jpg) | Phiarc | CC BY-SA 4.0 |
 | `nylon-lock-nut.png` | אומי נעילה עם טבעת ניילון | [Commons](https://commons.wikimedia.org/wiki/File:Nylon_Lock_Nut.png) | Btarski (en.wikipedia) | CC BY-SA 3.0 |
 | `threadlocker-applied.jpg` | חומר נעילת הברגות מרוח על תבריג | [Commons](https://commons.wikimedia.org/wiki/File:Thread-locking_fluid_applied.jpg) | Paul Breen | CC BY-SA 4.0 |
+| `thread-pitch-gauge.jpg` | מד פסיעה משולב ויטוורת׳/מטרי | [Commons](https://commons.wikimedia.org/wiki/File:Thread_pitch_gauge_Whitworth_and_metric.jpg) | Cccefalon | CC BY-SA 3.0 |
+| `racing-drone.jpg` | רחפן מרוצים — סביבת רעידות לברגים | [Commons](https://commons.wikimedia.org/wiki/File:Racing_Drone.jpg) | Commanderbryce | CC BY-SA 4.0 |
+| `junction-box-cover.jpg` | מכסה שירות עם ברגים ותותבי פליז | [Commons](https://commons.wikimedia.org/wiki/File:ABB_AU19_junction_box_for_drywall_with_AK11_cover.JPG) | Dmitry G | CC BY-SA 3.0 |
 
 ## כללי שימוש
 - רישיונות CC BY-SA מחייבים ייחוס — הקרדיט מוצג באפליקציה מתחת לכל נכס (שדה `credit` + `license` + קישור למקור).

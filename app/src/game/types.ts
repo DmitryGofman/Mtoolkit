@@ -61,6 +61,7 @@ export interface Exercise {
   id: string
   codename: string
   scenario: string
+  visual?: Visual // optional scene-setting image; must never reveal the answer
   question: string
   options: ExerciseOption[]
   skill: string // the measured skill, e.g. "בחירת אורך בורג"
