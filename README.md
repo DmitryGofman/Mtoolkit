@@ -8,6 +8,11 @@ Visual language: a blend of Call of Duty mission HUDs, StarCraft terran consoles
 Dune's spice-gold austerity, and Q-branch gadget dossiers. Dark void-navy base,
 cyan interface glow, gold XP/rank progression, red incident reports.
 
+## Play it live
+
+**https://dmitrygofman.github.io/Mtoolkit/** — public, no login. Every push to `main`
+rebuilds and redeploys via GitHub Actions (`.github/workflows/deploy-pages.yml`).
+
 ## MVP status
 
 **Chapter 1 — OPERATION: IRON GRIP (ברגים, הברגות ולוקטייט)** is playable end-to-end:
