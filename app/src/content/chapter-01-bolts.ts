@@ -42,6 +42,34 @@ export const chapter01: Chapter = {
         'ומה בורג לא עושה טוב? מיקום מדויק. לבורג יש חופש בתוך קדח המעבר שלו, ולכן הוא לא מבטיח שהחלקים יישבו באותו מקום בכל הרכבה. ' +
           'למיקום מדויק משתמשים בפינים. כלל הברזל של המכלול: ברגים מהדקים, פינים ממקמים.',
       ],
+      visuals: [
+        {
+          src: 'visuals/bolted-joint-with-nut.svg',
+          caption:
+            'חתך חיבור בורגי קלאסי: הבורג עובר דרך קדחי מעבר בשני החלקים, והאום סוגר את שרשרת הכוח. החלקים מוחזקים על ידי הלחיצה ביניהם — לא על ידי גוף הבורג.',
+          credit: 'Андрей Перцев, Wikimedia Commons',
+          license: 'CC0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Bolted_joint_with_nut.svg',
+          plate: true,
+        },
+        {
+          src: 'visuals/spring-analogy.jpg',
+          caption:
+            'אנלוגיית הקפיצים המפורסמת לכוח ההידוק: הבורג נמתח כמו קפיץ, החלקים נדחסים. כשמגיע עומס חיצוני — החלקים הדחוסים נושאים את רובו. בלי מתיחה מוקדמת (Preload) אין חיבור.',
+          credit: 'Stephen Mckelvey, Wikimedia Commons',
+          license: 'CC0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Spring_Analogy_for_a_Bolted_Joint.jpg',
+          plate: true,
+        },
+        {
+          src: 'visuals/steel-dowel-pins.jpg',
+          caption:
+            'פיני מיקום (Dowel pins) — מוטות פלדה מושחזים לדיוק גבוה. אלה, ולא הברגים, קובעים את המיקום ההדדי של חלקים מדויקים.',
+          credit: 'David J. Fred, Wikimedia Commons',
+          license: 'CC BY-SA 2.5',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Steel-Dowel-Pins.jpg',
+        },
+      ],
       concepts: [
         {
           term: 'חיבור פריק',
@@ -88,6 +116,26 @@ export const chapter01: Chapter = {
           'הברגה שנכנסת בכוח היא הברגה שנהרסת. באותו פרויקט משתדלים לעבוד עם תקן אחד, ולציין את התקן במפורש בשרטוט וב-BOM.',
         'גסה או עדינה? ההברגה הגסה היא ברירת המחדל הנפוצה להרכבה כללית — סלחנית יותר להרכבה ולפגיעות קלות. ' +
           'הברגה עדינה נבחרת מסיבה מוגדרת (למשל כיוונון עדין) — ואם בחרת בה, שיהיה לך נימוק.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/iso-uts-thread-dimensions.svg',
+          caption:
+            'פרופיל התבריג הסטנדרטי בזווית 60° — הבסיס המשותף להברגות מטריות (ISO) ואינצ׳יות (UTS). ‏P היא הפסיעה. אותה גיאומטריה עקרונית, מידות שונות — ולכן הן לעולם לא מתחלפות.',
+          credit: 'Inductiveload, Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:ISO_and_UTS_Thread_Dimensions.svg',
+          plate: true,
+        },
+        {
+          src: 'visuals/lead-and-pitch.png',
+          caption:
+            'פסיעה (Pitch, בירוק) — המרחק בין שתי כריכות סמוכות. בבורג רגיל (חד-התחלתי, משמאל) היא שווה להתקדמות בסיבוב שלם (Lead, באדום).',
+          credit: 'Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Lead_and_pitch_in_screws.png',
+          plate: true,
+        },
       ],
       concepts: [
         {
@@ -136,6 +184,35 @@ export const chapter01: Chapter = {
           'כלי ההברזה לא מייצר תבריג מלא עד תחתית הקדח.',
         'ולמה בכלל קדח המעבר גדול מהבורג? כדי לתת חופש להרכבה ולסטיות ייצור קטנות. בורג שנכנס בכוח לקדח מעבר צר מדי סימן שמשהו בתכן או בייצור לא נכון.',
       ],
+      visuals: [
+        {
+          src: 'visuals/bolted-joint-tapped.svg',
+          caption:
+            'בורג לתוך קדח הברזה עיוור, בחתך: בחלק העליון קדח מעבר חופשי, בתחתון תבריג. שים לב לקצה הקוני שהמקדח משאיר בתחתית — התבריג לא מגיע עד הסוף, ולכן עומק ההברגה חייב להיות מוגדר בשרטוט.',
+          credit: 'Yuri Raysper, Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Bolted_joint_2.svg',
+          plate: true,
+        },
+        {
+          src: 'visuals/drill-hole-types.png',
+          caption:
+            'חתך תלת-ממדי: קדח עיוור נעצר בתוך החומר ומשאיר תחתית קונית בצורת חוד המקדח; קדח עובר חוצה את החלק כולו.',
+          credit: 'Robert Hewitt, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Drill_-_Hole_Types.png',
+          plate: true,
+        },
+        {
+          src: 'visuals/machined-holes.svg',
+          caption:
+            'משפחת הקדחים בחתך — מקדיחה פשוטה, דרך שיקועים, ועד קדח מוברז (H, בקצה): כל סימון בשרטוט מייצג כלי ותהליך שונים על רצפת הייצור.',
+          credit: 'Inductiveload, Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Machined_Holes.svg',
+          plate: true,
+        },
+      ],
       concepts: [
         {
           term: 'קדח מעבר',
@@ -183,6 +260,24 @@ export const chapter01: Chapter = {
         'שייבה מפזרת את לחץ ראש הבורג על שטח גדול יותר ומגינה על פני החלק. אום נעילה (עם טבעת ניילון או קונוס) שומר על אחיזה גם ברעידות. ' +
           'לכל רכיב כזה יש תפקיד — הוא לא "קישוט" שמוסיפים אוטומטית.',
       ],
+      visuals: [
+        {
+          src: 'visuals/helicoil.jpg',
+          caption:
+            'תותב תבריג סלילי (Helicoil): סליל פלדה קפיצי שמושתל בקדח מוברז, ויוצר תבריג עמיד בחומר רך כמו אלומיניום.',
+          credit: 'Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Helicoil_14x1.25.jpg',
+        },
+        {
+          src: 'visuals/failed-insert.jpg',
+          caption:
+            'ככה נראה הכשל במציאות: insert שנעקר מיציקת אלומיניום, עם שאריות התבריג ההרוס. החומר הרך נכנע לפני הפלדה — בדיוק הסיבה שמתכננים את זה מראש.',
+          credit: 'Phiarc, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Failed_threaded_insert_in_cast_aluminium.jpg',
+        },
+      ],
       concepts: [
         {
           term: 'אורך תפיסה',
@@ -229,6 +324,24 @@ export const chapter01: Chapter = {
           'שימוש בנעילה חזקה על בורג שירות הוא טעות קלאסית שהופכת כל טיפול למלחמה.',
         'ויש חלופות מכניות: אומי נעילה, שייבות קפיציות ודסקיות נעילה ייעודיות. לכל פתרון יתרונות ומגבלות — הכלל החשוב הוא שנעילה נבחרת בתכן, לא מאולתרת בהרכבה. ' +
           'את סוג הנעילה המדויק בוחרים לפי דף היצרן של החומר. [דורש אימות מול דף יצרן]',
+      ],
+      visuals: [
+        {
+          src: 'visuals/threadlocker-applied.jpg',
+          caption:
+            'חומר נעילת הברגות מרוח על תבריג הבורג: הדבק האנאירובי ימלא את המרווח בין הכריכות ויתקשה ברגע שייסגר בתוך החיבור, הרחק מהאוויר.',
+          credit: 'Paul Breen, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Thread-locking_fluid_applied.jpg',
+        },
+        {
+          src: 'visuals/nylon-lock-nut.png',
+          caption:
+            'החלופה המכנית: אום נעילה עם טבעת ניילון (Nyloc). הטבעת נדחסת סביב התבריג ויוצרת חיכוך קבוע שמתנגד להתרופפות עצמית ברעידות.',
+          credit: 'Btarski, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Nylon_Lock_Nut.png',
+        },
       ],
       concepts: [
         {

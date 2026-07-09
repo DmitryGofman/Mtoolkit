@@ -32,6 +32,32 @@ export function IntelUnit({ unit, index, total, onComplete }: Props) {
           ))}
         </section>
 
+        {unit.visuals && unit.visuals.length > 0 && (
+          <section className="block">
+            <div className="block-label mono">◉ VISUAL INTEL — תצלומי מודיעין</div>
+            <div className="visuals">
+              {unit.visuals.map((v) => (
+                <figure key={v.src} className="visual-card">
+                  <div className={`visual-frame ${v.plate ? 'visual-plate' : ''}`}>
+                    <img src={v.src} alt={v.caption} loading="lazy" />
+                  </div>
+                  <figcaption>
+                    <p className="visual-caption">{v.caption}</p>
+                    <a
+                      className="visual-credit mono"
+                      href={v.sourceUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      SOURCE: {v.credit} // {v.license}
+                    </a>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        )}
+
         <section className="block">
           <div className="block-label mono">◈ TECH SPECS — מושגים</div>
           <div className="concepts">

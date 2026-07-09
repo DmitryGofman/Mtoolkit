@@ -3,6 +3,20 @@
 // The game engine renders any chapter that satisfies this schema —
 // future chapters are added by dropping in a new content file.
 
+/**
+ * A real image/diagram asset. NEVER invented: every visual is downloaded from a
+ * verified public source (e.g. Wikimedia Commons) into app/public/visuals/ and
+ * must carry author + license attribution. Catalog: sources/verified/visual-assets.md
+ */
+export interface Visual {
+  src: string // path under public/, e.g. 'visuals/spring-analogy.jpg'
+  caption: string // Hebrew caption tying the visual to the lesson
+  credit: string // author / origin, shown small
+  license: string // e.g. 'Public domain', 'CC BY-SA 4.0'
+  sourceUrl: string // the Commons (or other) page the asset came from
+  plate?: boolean // true for line-art diagrams that need a light backing plate
+}
+
 export interface Concept {
   term: string
   termEn: string
@@ -29,6 +43,7 @@ export interface IntelUnit {
   openingScenario: string // real-world failure story that motivates the unit
   openingQuestion: string
   briefing: string[] // short explanation, paragraph per entry
+  visuals?: Visual[] // real diagrams/photos rendered as a "VISUAL INTEL" block
   concepts: Concept[]
   ruleOfThumb: RuleOfThumb
   commonMistake: CommonMistake
