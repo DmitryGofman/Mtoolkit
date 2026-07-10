@@ -47,6 +47,34 @@ export const chapter05: Chapter = {
         'המסקנה למתכנן: על כל פיצ׳ר בחלק לשאול "מה זה תורם, ומה זה עולה במכונה?". ' +
           'המתכננים הטובים לא מציירים חלקים יפים ב-CAD — הם מדמיינים את הכלי המסתובב עובר על כל משטח.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch05-cnc-milling-coolant.jpg',
+          caption:
+            'מרכז עיבוד CNC בפעולה: החלק תפוס במלחציים, הכלי מסתובב, ונוזל קירור שוטף את אזור החיתוך. כל שנייה של התמונה הזאת עולה כסף — וזה מה שהתכן שלך קונה.',
+          credit: 'Glenn McKechnie — Wikimedia Commons',
+          license: 'CC BY-SA 2.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Makino-S33-MachiningCenter-example.jpg',
+        },
+        {
+          src: 'visuals/ch05-climb-milling-diagram.png',
+          caption:
+            'כרסום מלווה (Climb): הכלי נכנס לחומר בשבב עבה ויוצא דק. גימור טוב יותר ופחות עומס על הכלי — ברוב המכונות המודרניות זו ברירת המחדל.',
+          credit: 'Rocketmagnet — Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Climb_Milling_01.png',
+          plate: true,
+        },
+        {
+          src: 'visuals/ch05-conventional-milling-diagram.png',
+          caption:
+            'כרסום נגדי (Conventional): השבב מתחיל מאפס ומתעבה. ההשוואה בין שתי הדיאגרמות היא שיעור שלם על איך כיוון תנועה משנה כוחות, גימור וחיי כלי.',
+          credit: 'Rocketmagnet — Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Conventional_Milling_01.png',
+          plate: true,
+        },
+      ],
       concepts: [
         {
           term: 'הסרת שבבים',
@@ -105,6 +133,24 @@ export const chapter05: Chapter = {
           'ומה שמאולתר אצל היצרן מפתיע אותך בהרכבה.',
         'שורת המחיר פשוטה: חלק שדורש עיבוד משישה כיוונים דורש הרבה היפוכים, ואולי התקן אחיזה מיוחד. ' +
           'חלק שכל הפיצ׳רים שלו נגישים מכיוון אחד או שניים הוא חלק שהכרסם אוהב — וזה מחיר שאתה אוהב.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch05-machine-vise.jpg',
+          caption:
+            'מלחציים — האחיזה הבסיסית של עולם הכרסום: שתי לסתות מקבילות שקובעות את הייחוס של החלק. כל היפוך של החלק במלחציים = setup חדש = זמן וסטייה.',
+          credit: 'Dmitry Makeev — Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:An_engineer%27s_vise._img_04.jpg',
+        },
+        {
+          src: 'visuals/ch05-cnc-lathe.jpg',
+          caption:
+            'מחרטת CNC: עולם אחיזה אחר — החלק מסתובב והכלי נייח. חלק סיבובי שמתוכנן נכון למחרטה יכול להיות זול דרמטית מאותו חלק בכרסומת.',
+          credit: 'Glenn McKechnie — Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:MoriSeikiLathe.jpg',
+        },
       ],
       concepts: [
         {
@@ -165,6 +211,24 @@ export const chapter05: Chapter = {
           'מעמיקים את הרדיוס לתוך הפינה כך שהכלי העגול מפנה מקום לפינה החדה של החלק התואם. ' +
           'לחלופין — קוטמים או מעגלים את פינות החלק שנכנס. שני הפתרונות זולים; פינה חדה בכיס — יקרה.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch05-milling-cutter-closeup.jpg',
+          caption:
+            'כרסם עם פלטות קרביד מתחלפות, מקרוב: הכלי עגול — ולכן כל פינה פנימית שהוא משאיר עגולה גם היא. אין כלי מרובע.',
+          credit: 'Roll-Stone — Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Fingerfr%C3%A4ser.jpg',
+        },
+        {
+          src: 'visuals/ch05-milling-pocket-part.jpg',
+          caption:
+            'כרסום תושבת אלומיניום עם כיסים וצלעות: שים לב לרדיוסים בפינות הפנימיות של כל כיס — חתימת קוטר הכלי שייצר אותם.',
+          credit: 'Ceratizit — Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Ceratizit_Fr%C3%A4ser.jpg',
+        },
+      ],
       concepts: [
         {
           term: 'רדיוס פינה פנימי',
@@ -223,6 +287,17 @@ export const chapter05: Chapter = {
           'את הערכים עצמם לוקחים תמיד מטבלאות מאומתות של התאמות וטולרנסים כלליים — [דורש אימות] — לא מהרגשה.',
         'המבחן הפשוט: על כל מידה הדוקה בשרטוט, אתה צריך להיות מסוגל לומר בקול רם מה יקרה אם היא תסטה. ' +
           '"החלק ירגיש פחות איכותי" זו לא תשובה. "המיסב יישב רופף ויסתובב בבית שלו" — זו תשובה.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch02-roughness-symbols.svg',
+          caption:
+            'סימוני חספוס פני שטח על שרטוט: כל מדרגת Ra שאתה מהדק היא עוד מעבר עיבוד, עוד זמן מכונה, עוד כסף. לדרוש חלק — רק איפה שהתפקוד מצדיק. [ערכי Ra לפי יישום — דורש אימות]',
+          credit: 'Zielu20 (Adam Zieliński), Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Roughness_symbols.svg',
+          plate: true,
+        },
       ],
       concepts: [
         {
@@ -285,6 +360,16 @@ export const chapter05: Chapter = {
           'שני חלקים פשוטים + ברגים ופינים יכולים לעלות פחות מחלק אחד מתוחכם — אבל זכור שכל חיבור מוסיף סטייה והרכבה.',
         'העיקרון המסכם של כל הפרק: את השיחה עם הייצור מנהלים בשלב התכן, לא אחרי. ' +
           'שינוי שעולה חמש דקות ב-CAD עולה חלק שלם כשהוא מתגלה על רצפת הייצור.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch05-cad-vs-machined-part.jpg',
+          caption:
+            'למעלה: מודל ה-CAD. למטה: החלק האמיתי שחזר מהכרסומת. המרחק בין שתי התמונות — הוא בדיוק מה שחבילת ייצור טובה ושיחה נכונה עם הכרסם מגשרים עליו.',
+          credit: 'Mike1024 — Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:CAD_model_and_CNC_machined_part.PNG',
+        },
       ],
       concepts: [
         {

@@ -50,6 +50,17 @@ export const chapter03: Chapter = {
           'שם יש גישה מכל הכיוונים ואפשר גם לבדוק אותן — ורק אז משלבים אותן במכלול הראשי. ' +
           'תת-מכלול שנבדק לפני אינטגרציה חוסך פירוק כואב אחרי.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch03-exploded-gear-pump.svg',
+          caption:
+            'תרשים פירוק (Exploded view) של משאבת גלגלי שיניים: כל חלק במקומו ברצף ההרכבה — אטמים, בושינגים, גלגלי שיניים ומכסים. תרשים כזה הוא הדרך שבה התכן מספר למרכיב את הסדר.',
+          credit: 'Д.Ильин, Duk, cmglee — Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Gear_pump_exploded.svg',
+          plate: true,
+        },
+      ],
       concepts: [
         {
           term: 'סדר הרכבה',
@@ -153,6 +164,16 @@ export const chapter03: Chapter = {
           'והתיקון המפורט נעשה במעבדה. זה מקצר השבתה, ומכתיב תכן: מחברים נגישים, חיבורים פריקים בגבול המודול, ' +
           'ומינימום כיוונים מחדש אחרי החלפה.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch03-service-access-panel.jpg',
+          caption:
+            'טכנאית של הצי האמריקאי מחברת פאנל גישה למנוע מטוס. מישהו תכנן את הפאנל הזה כך שאפשר לפתוח ולסגור אותו בשטח — זו בדיוק המשמעות של תכנון לשירות.',
+          credit: 'U.S. Navy / Elizabeth L. Burke — Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:US_Navy_030126-N-9760B-004_Aviation_Machinist%27s_Mate_2nd_Class_Roxana_Guevara_from_Irving,_Texas,_attaches_an_access_panel_to_the_number_one_engine.jpg',
+        },
+      ],
       concepts: [
         {
           term: 'פריט מתכלה',
@@ -204,6 +225,17 @@ export const chapter03: Chapter = {
         'חופש מבוקר חייב נוהל שסוגר אותו: מיישרים מול ייחוס (סרגל, פין, חלק שכן), מודדים, מהדקים — ' +
           'ובמכלולים שדורשים חזרתיות גם נועלים את הכיוון, למשל בקדיחת פיני מיקום לאחר הכיוון. ' +
           'slot בלי נוהל כיוון הוא לא חופש מבוקר — הוא סתם רשלנות עם צורה מוארכת.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch03-slotted-hole-diagram.png',
+          caption:
+            'חור ארוך (Slot) בחתך: במקום קדח עגול שקובע מיקום אחד ויחיד, ה-slot מאפשר טווח כיוון מבוקר בכיוון אחד — הכלי הבסיסי של כיוון בהרכבה.',
+          credit: 'Dormira — Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Langloch.png',
+          plate: true,
+        },
       ],
       concepts: [
         {
@@ -257,6 +289,25 @@ export const chapter03: Chapter = {
         'ומכסים: מכסה שנפתח לא אמור למתוח כבלים שמחוברים אליו — משאירים לולאת שירות (עודף אורך מבוקר) ' +
           'שמאפשרת לפתוח, להניח בצד ולעבוד. אטמים סביב פתחים ומעברי כבל הם חלק מאותו תכן: פתח שירות בלי מקום ' +
           'לאטם וליד — יהיה או לא אטום או לא נגיש. את המרווחים האלה מזמינים בתכן, לא מגלים באינטגרציה.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch03-cable-management-rack.jpg',
+          caption:
+            'ניתוב כבלים בארון ציוד: זרוע ניהול כבלים, נקודות קשירה ורדיוסי כיפוף מבוקרים. כבל הוא רכיב מכני לכל דבר — וגם הוא צריך תכן.',
+          credit: 'Anton Olsen — Wikimedia Commons',
+          license: 'CC BY 2.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Server_Cable_Management_Arm_(2).jpg',
+        },
+        {
+          src: 'visuals/ch03-oring-seal-diagram.png',
+          caption:
+            'אטם O-ring בחתך: הטבעת יושבת בחריץ מתוכנן ונלחצת בין שני החלקים. איטום הוא תוצאה של גיאומטריה נכונה — לא של כוח הידוק.',
+          credit: 'Yapparina — Wikimedia Commons',
+          license: 'CC0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:O-ring_static_seal_usage_example.png',
+          plate: true,
+        },
       ],
       concepts: [
         {

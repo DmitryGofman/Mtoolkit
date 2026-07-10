@@ -24,6 +24,17 @@
 | `racing-drone.jpg` | רחפן מרוצים — סביבת רעידות לברגים | [Commons](https://commons.wikimedia.org/wiki/File:Racing_Drone.jpg) | Commanderbryce | CC BY-SA 4.0 |
 | `junction-box-cover.jpg` | מכסה שירות עם ברגים ותותבי פליז | [Commons](https://commons.wikimedia.org/wiki/File:ABB_AU19_junction_box_for_drywall_with_AK11_cover.JPG) | Dmitry G | CC BY-SA 3.0 |
 
+## נכסי פרקים 2–5 (ch02-* עד ch05-*)
+
+נכסים עם קידומת `ch02-` עד `ch05-` תועדו במניפסטים ייעודיים — רשומת המקור המחייבת לכל נכס:
+
+- `sources/inbox/ch02-visuals-manifest.md` — 9 נכסים לפרק קריאת שרטוט
+- `sources/inbox/ch03-visuals-manifest.md` — 5 נכסים לפרק אינטגרציה והרכבה (משוחזר; 3 תמונות ללא ייחוס נמחקו)
+- `sources/inbox/ch04-visuals-manifest.md` — 7 נכסים לפרק קליבה ומנגנונים
+- `sources/inbox/ch05-visuals-manifest.md` — 8 נכסים לפרק CNC
+
+כולם מ-Wikimedia Commons בלבד, ברישיונות Public domain / CC0 / CC BY / CC BY-SA, עם קרדיט מוצג באפליקציה.
+
 ## כללי שימוש
 - רישיונות CC BY-SA מחייבים ייחוס — הקרדיט מוצג באפליקציה מתחת לכל נכס (שדה `credit` + `license` + קישור למקור).
 - תמונות גדולות הורדו כ-thumbnails ברוחב 1280px כדי לשמור על משקל הריפו.

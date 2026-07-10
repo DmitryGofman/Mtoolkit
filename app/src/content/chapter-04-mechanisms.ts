@@ -50,6 +50,25 @@ export const chapter04: Chapter = {
           'רק לוחצים את המנגנון נגד עצמו. הם גונבים מומנט מהמנוע, מאיצים שחיקה, והופכים את המנגנון לרגיש לטמפרטורה וללכלוך. ' +
           'מנגנון טוב לא נלחם בסטיות — הוא נותן להן מקום מתוכנן ללכת אליו.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch04-four-bar-linkage.svg',
+          caption:
+            'מנגנון ארבעה מוטות — אבן הבניין של המנגנונים: גופים קשיחים המחוברים במפרקי סיבוב. כל מנגנון אמיתי הוא איזון בין חופש תנועה לאילוץ.',
+          credit: 'Salix alba — Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Linkage_four_bar.svg',
+          plate: true,
+        },
+        {
+          src: 'visuals/ch04-hinge-butt-annotated.jpg',
+          caption:
+            'ציר דלת פשוט הוא מפרק סיבוב (Revolute joint) קלאסי: דרגת חופש אחת — סיבוב — וכל השאר כלוא. כשמנגנון נתקע, מחפשים איפה החופש הזה אבד.',
+          credit: 'JonRichfield — Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Butt_Hinge_annotated.jpg',
+        },
+      ],
       concepts: [
         {
           term: 'קליבה מכנית',
@@ -107,6 +126,26 @@ export const chapter04: Chapter = {
           'חוזק מגיעים אליו בקשיחות החלקים ובכוח ההידוק; אילוצים רק מגדירים מיקום. ' +
           'אילוץ עודף לא מוסיף חוזק — הוא מוסיף מלחמה. לכן כלל הזהב: לא לאלץ מנגנון עם יותר מדי נקודות ייחוס.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch04-six-dof.svg',
+          caption:
+            'שש דרגות החופש של גוף קשיח: שלוש הזזות ושלושה סיבובים. תכן מנגנון הוא ההחלטה אילו מהן לכלוא — ובאיזה סדר.',
+          credit: 'GregorDS — Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:6DOF.svg',
+          plate: true,
+        },
+        {
+          src: 'visuals/ch04-kinematic-coupling.png',
+          caption:
+            'צימוד קינמטי (Kelvin coupling): שלושה כדורים על שקע, חריץ ומשטח — בדיוק שש נקודות מגע לשש דרגות חופש. אפס אילוץ-יתר, מיקום חוזר מושלם. הדוגמה הטהורה של "לאלץ בדיוק, לא יותר".',
+          credit: 'Imminent77 — Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Kelvin_Kinematic_Coupling.png',
+          plate: true,
+        },
+      ],
       concepts: [
         {
           term: 'דרגת חופש',
@@ -163,6 +202,35 @@ export const chapter04: Chapter = {
         'ולבסוף: רכיבי הובלה הם חלקים מדויקים שחיים בתוך מכלולים לא מדויקים. לכל מסילה ומיסב יש דרישות התקנה ויישור של היצרן — ' +
           'ישרות משטח ההרכבה, מקבילות, אופן ההידוק. את הדרישות האלה לוקחים מקטלוג היצרן של הרכיב הספציפי [דורש אימות מול קטלוג יצרן], ' +
           'ומתכננים את משטחי ההרכבה והכיוון סביבן — לא מגלים אותן אחרי שהמנגנון נתקע.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch04-linear-guide-rail.png',
+          caption:
+            'מסילה לינארית עם עגלת כדורים: משאירה דרגת חופש אחת — הזזה לאורך המסילה — וכולאת את חמש האחרות. הרכיב שמוביל כמעט כל תנועה לינארית מדויקת.',
+          credit: 'Silberwolf — Wikimedia Commons',
+          license: 'CC BY-SA 2.5',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Linear_table_rail_guide.png',
+          plate: true,
+        },
+        {
+          src: 'visuals/ch04-ball-bearing-cross-section.png',
+          caption:
+            'האנטומיה של מיסב כדורי: (1) טבעת חיצונית, (2) כדור, (3) כלוב, (4) מסילת כדורים, (5) טבעת פנימית. מאפשר סיבוב — וכולא הזזות.',
+          credit: 'Niabot — Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Rolling-element_bearing_(numbered).png',
+          plate: true,
+        },
+        {
+          src: 'visuals/ch04-plain-bearing-bushing.png',
+          caption:
+            'בושינג (מיסב החלקה) עם אוגן לפי DIN ISO 4379: אין בו חלקים נעים — רק משטח החלקה. פשוט, זול ושקט, במחיר חיכוך גבוה יותר ממיסב כדורי.',
+          credit: 'Silberwolf — Wikimedia Commons',
+          license: 'CC BY-SA 2.5',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Plain-bearing_DIN-ISO4379_Type-F.png',
+          plate: true,
+        },
       ],
       concepts: [
         {
@@ -222,6 +290,16 @@ export const chapter04: Chapter = {
           'פיני מיקום שייכים לצד הייחוס בלבד. בצד הצף אין פינים בכוונה — רק ברגים דרך מרווח או חריץ, ' +
           'ולעיתים הידוק רק אחרי יישור. פין בצד הצף מבטל את החופש שתכננת — והופך את התכן חזרה לאילוץ-יתר.',
       ],
+      visuals: [
+        {
+          src: 'visuals/steel-dowel-pins.jpg',
+          caption:
+            'פיני מיקום — הצד ה"קבוע" של הסיפור: הם קובעים ייחוס אחד מדויק. את הצד השני של המנגנון משחררים בכוונה — צד צף, slot או חופש מבוקר.',
+          credit: 'David J. Fred — Wikimedia Commons',
+          license: 'CC BY-SA 2.5',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Steel-Dowel-Pins.jpg',
+        },
+      ],
       concepts: [
         {
           term: 'צד קבוע',
@@ -280,6 +358,17 @@ export const chapter04: Chapter = {
         'חשוב להבין: כיוון מתוכנן אינו כישלון של המתכנן — הוא החלטה הנדסית לגיטימית. לפעמים חריץ ונוהל של חמש דקות זולים לאין ערוך ' +
           'מהידוק טולרנסים בחמישה חלקים. אבל לכל מכוונן יש מחיר: זמן הרכבה, ונקודה שיכולה לזוז בשטח. ' +
           'לכן מכווננים רק איפה שצריך, נועלים אחרי כיוון — ואת חישוב השרשרת עצמו עושים בשיטה מסודרת ממקור הנדסי [דורש אימות].',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch03-slotted-hole-diagram.png',
+          caption:
+            'ה-slot הוא משכך הטולרנסים הקלאסי: כשהסטיות של כמה חלקים מצטברות, החור הארוך נותן לשרשרת מקום לנשום — בכיוון שבחרת מראש.',
+          credit: 'Dormira — Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Langloch.png',
+          plate: true,
+        },
       ],
       concepts: [
         {
