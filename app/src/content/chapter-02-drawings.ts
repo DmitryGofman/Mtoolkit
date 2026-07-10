@@ -51,6 +51,17 @@ export const chapter02: Chapter = {
           'מה שכתוב בשרטוט ולא בוצע — באחריות הספק. מה שלא כתוב בשרטוט — באחריותך. ' +
           'לכן כל דרישה שחשובה לך חייבת להופיע על הנייר, במפורש.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch02-din-hsk-tool-holder.png',
+          caption:
+            'שרטוט ייצור אמיתי (לפי תקן DIN 69893 — תופסן כלי HSK): חתך מלא עם קטרים, אורכים, זווית ושיפוע. כל מה שהיצרן צריך כדי לייצר — ולבדוק. זה נראה כמו חוזה, כי זה בדיוק מה שזה.',
+          credit: 'Sven Gleich, Wikimedia Commons',
+          license: 'CC BY-SA 2.5',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:DIN_69893_hsk_63a_drawing.png',
+          plate: true,
+        },
+      ],
       concepts: [
         {
           term: 'שרטוט ייצור',
@@ -111,6 +122,26 @@ export const chapter02: Chapter = {
           '(Detail view): הגדלה ממוקדת של אזור מסומן. הכלל המנחה בבחירת מבטים הוא חסכוני: מספיק מבטים כדי שאין ' +
           'שום עמימות — ואף מבט אחד מעבר לזה.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch02-first-angle-projection.svg',
+          caption:
+            '״קופסת הזכוכית״ — כך נולדים היטלים: מקרינים את הגוף על מישורים סביבו (כאן בשיטת ההיטל הראשון). כל מבט בשרטוט הוא דופן אחת של הקופסה, פרושה על הנייר.',
+          credit: 'Emok, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:First_angle_projection.svg',
+          plate: true,
+        },
+        {
+          src: 'visuals/ch02-section-view-line-types.svg',
+          caption:
+            'מבטים וחתך A-A של אותו חלק: אדום מקווקו — קו נסתר; כחול קו-נקודה — קו מרכז; מגנטה — מישור החיתוך וכיוון ההסתכלות. הקווקוו האלכסוני בחתך מסמן חומר שנחתך.',
+          credit: 'HereToHelp / BAxelrod, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Mech_draw_1.svg',
+          plate: true,
+        },
+      ],
       concepts: [
         {
           term: 'היטל',
@@ -169,6 +200,25 @@ export const chapter02: Chapter = {
         'ולמה מידה חסרה כל כך מסוכנת? כי הייצור לא עוצר. יצרן שנתקל במידה חסרה ימדוד מהמודל, ינחש מהקשר, ' +
           'או יבחר מה שנוח לו — וכל יצרן יבחר אחרת. מידה חסרה בשרטוט פירושה חלק אחר אצל כל ספק: ' +
           'כולם "לפי השרטוט", ואף אחד לא מה שהתכוונת. עדיף שיצרן יתקשר לשאול — אבל אי אפשר לבנות תהליך על נימוס.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch02-dimensioning-example.svg',
+          caption:
+            'תושבת שטוחה עם שרשרת מידות מלאה: מידות כלליות, מרחקי מרכזים, רדיוסים וקוטר מרכזי. כל מה שהיצרן צריך נמצא במספרים — אף אחד לא מודד מהנייר.',
+          credit: 'Wedrey, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:AcotacionTecnico.svg',
+          plate: true,
+        },
+        {
+          src: 'visuals/ch02-micrometer-measuring.jpg',
+          caption:
+            'ככה מודדים באמת: מיקרומטר על החלק עצמו — לא סרגל על השרטוט. ההדפסה משקרת (קנה מידה, עיוותים); המדידה מדברת עם המתכת.',
+          credit: 'U.S. Navy / A. Wallace, Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:US_Navy_040703-N-9954W-031_Machinery_Repairman_3rd_Class_Floyd_Francis,_of_Ocala,_Fla.,_uses_a_micrometer_to_measure_metal_stock_in_the_Machine_Shop_aboard_the_Nimitz-class_aircraft_carrier_USS_George_Washington_CVN_73.jpg',
+        },
       ],
       concepts: [
         {
@@ -232,6 +282,26 @@ export const chapter02: Chapter = {
           'שאר המשטחים מסתפקים בגימור הטבעי של התהליך. כמו בטולרנסים — דרישת חספוס מחמירה בלי סיבה היא ' +
           'שריפת כסף. ערכים מתאימים לכל שימוש נלקחים ממקור הנדסי מאומת. [דורש אימות]',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch02-fits-passungsarten.jpg',
+          caption:
+            'שלוש משפחות ההתאמה (דיאגרמה קלאסית, כיתוב גרמני): חופש — שדה הטולרנס של הקדח כולו מעל זה של הציר; מעבר — חפיפה בין השדות; והידוק — הציר גדול מהקדח. שדות הטולרנס הם הסיפור, לא המידה הנומינלית.',
+          credit: 'Badsaiyaman, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Passungsarten.jpg',
+          plate: true,
+        },
+        {
+          src: 'visuals/ch02-roughness-symbols.svg',
+          caption:
+            'סימני חספוס פני שטח: הסימן הבסיסי, עם פס — חובה להסיר חומר, עם עיגול — אסור להסיר חומר, וקו מאוזן להערות תהליך. הערכים המספריים שבדוגמה הם מהמקור להמחשה בלבד.',
+          credit: 'Zielu20, Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Roughness_symbols.svg',
+          plate: true,
+        },
+      ],
       concepts: [
         {
           term: 'טולרנס',
@@ -292,6 +362,26 @@ export const chapter02: Chapter = {
           'שהיה ביד, וכולם פעלו נכון מקומית. הבעיה מתגלה רק בהרכבה או בשטח — הכי מאוחר והכי יקר. ' +
           'ההגנה היחידה היא משמעת גרסאות: מקור אמת אחד לשרטוט העדכני, גרסה מפורשת בכל הזמנה, ואישור חוזר ' +
           'של הספק על מספר חלק + גרסה לפני ייצור.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch02-worm-gear-assembly-bom.png',
+          caption:
+            'שרטוט מכלול אמיתי של ממסרת חילזון: שני חתכים, בלוני מספור לכל רכיב, טבלת BOM מלאה (פריט, כמות, תיאור, חומר/תקן) וטבלת כותרת — הכל על גיליון אחד. ככה נראה מסמך שמרכיבים ממנו.',
+          credit: 'Thorsten Hartmann (Thgoiter), Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Schneckengetriebe.png',
+          plate: true,
+        },
+        {
+          src: 'visuals/ch02-title-block-iso7200.svg',
+          caption:
+            'טבלת כותרת לפי ISO 7200: יוצר, מאשר, סטטוס מסמך, מספר מזהה, גרסה (.Rev), תאריך וגיליון. השדה הקטן של הגרסה הוא ההבדל בין לייצר את החלק הנכון — לבין לייצר את הגרסה הישנה.',
+          credit: 'Con-struct, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Title_block_EN_ISO_7200.svg',
+          plate: true,
+        },
       ],
       concepts: [
         {
