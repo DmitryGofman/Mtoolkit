@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { chapter01, lockedChapters } from './content/chapter-01-bolts.ts'
+import { chapters, lockedChapters } from './content/index.ts'
 import { loadState, saveState, resetState, emptyChapterProgress } from './game/progress.ts'
 import type { PlayerState } from './game/types.ts'
 import { Hud } from './components/Hud.tsx'
@@ -17,12 +17,12 @@ type Screen =
   | { kind: 'exam'; index: number; correct: number }
   | { kind: 'debrief'; score: number }
 
-const chapter = chapter01
-
 export default function App() {
   const [player, setPlayer] = useState<PlayerState>(loadState)
+  const [activeId, setActiveId] = useState(chapters[0].id)
   const [screen, setScreen] = useState<Screen>({ kind: 'command-center' })
 
+  const chapter = chapters.find((c) => c.id === activeId) ?? chapters[0]
   const progress = player.chapters[chapter.id] ?? emptyChapterProgress()
 
   function update(next: PlayerState) {
@@ -37,6 +37,11 @@ export default function App() {
       xp: player.xp + amount,
       chapters: { ...player.chapters, [chapter.id]: chapterProgress },
     })
+  }
+
+  function deploy(chapterId: string) {
+    setActiveId(chapterId)
+    setScreen({ kind: 'briefing' })
   }
 
   function completeIntel(index: number) {
@@ -79,6 +84,7 @@ export default function App() {
 
   function reset() {
     update(resetState())
+    setActiveId(chapters[0].id)
     setScreen({ kind: 'command-center' })
   }
 
@@ -90,10 +96,10 @@ export default function App() {
 
       {screen.kind === 'command-center' && (
         <CommandCenter
-          chapter={chapter}
+          chapters={chapters}
           locked={lockedChapters}
-          progress={progress}
-          onDeploy={() => setScreen({ kind: 'briefing' })}
+          progressFor={(id) => player.chapters[id] ?? emptyChapterProgress()}
+          onDeploy={deploy}
         />
       )}
 
@@ -103,6 +109,7 @@ export default function App() {
 
       {screen.kind === 'intel' && (
         <IntelUnit
+          key={chapter.units[screen.index].id}
           unit={chapter.units[screen.index]}
           index={screen.index}
           total={chapter.units.length}
@@ -142,7 +149,7 @@ export default function App() {
       )}
 
       <footer className="foot mono">
-        MECHALC ACADEMY // MVP v0.1 // תוכן לפי docs/syllabus-he.md — כללי אצבע ללמידה, לא תחליף
+        MECHALC ACADEMY // MVP v0.2 // תוכן לפי docs/syllabus-he.md — כללי אצבע ללמידה, לא תחליף
         לבדיקה הנדסית
       </footer>
     </div>

@@ -1,19 +1,13 @@
 import type { Chapter, LockedChapter, ChapterProgress } from '../game/types.ts'
 
 interface Props {
-  chapter: Chapter
+  chapters: Chapter[]
   locked: LockedChapter[]
-  progress: ChapterProgress
-  onDeploy: () => void
+  progressFor: (chapterId: string) => ChapterProgress
+  onDeploy: (chapterId: string) => void
 }
 
-export function CommandCenter({ chapter, locked, progress, onDeploy }: Props) {
-  const total = chapter.units.length + chapter.exercises.length
-  const done =
-    progress.unitsRead.length +
-    Object.keys(progress.exercisesDone).length
-  const pct = Math.round((done / total) * 100)
-
+export function CommandCenter({ chapters, locked, progressFor, onDeploy }: Props) {
   return (
     <main className="screen">
       <div className="cc-hero">
@@ -21,26 +15,32 @@ export function CommandCenter({ chapter, locked, progress, onDeploy }: Props) {
         <h1 className="cc-title">חדר המבצעים</h1>
         <p className="cc-sub">
           שמונה מבצעים בין הטירון לבין מהנדס שדה. כל מבצע מקנה מיומנות הנדסית אמיתית —
-          לא נקודות בלבד. המבצע הראשון פתוח. השאר ייפתחו בהמשך הקמפיין.
+          לא נקודות בלבד. {chapters.length} מבצעים פתוחים. השאר ייפתחו בהמשך הקמפיין.
         </p>
       </div>
 
       <div className="op-grid">
-        <button className="op-card op-active" onClick={onDeploy}>
-          <div className="op-num mono">01</div>
-          <div className="op-code mono">{chapter.codename}</div>
-          <div className="op-name">{chapter.title}</div>
-          <div className="op-meta">
-            <span className="tag tag-live">{progress.completed ? '✔ הושלם' : 'זמין לפריסה'}</span>
-            <span className="mono dim">{pct}% הושלם</span>
-          </div>
-          <div className="op-bar">
-            <div className="op-bar-fill" style={{ width: `${pct}%` }} />
-          </div>
-          <div className="op-deploy mono">
-            {progress.completed ? 'REDEPLOY ▸' : 'DEPLOY ▸'}
-          </div>
-        </button>
+        {chapters.map((chapter) => {
+          const progress = progressFor(chapter.id)
+          const total = chapter.units.length + chapter.exercises.length
+          const done = progress.unitsRead.length + Object.keys(progress.exercisesDone).length
+          const pct = Math.round((done / total) * 100)
+          return (
+            <button key={chapter.id} className="op-card op-active" onClick={() => onDeploy(chapter.id)}>
+              <div className="op-num mono">{String(chapter.number).padStart(2, '0')}</div>
+              <div className="op-code mono">{chapter.codename}</div>
+              <div className="op-name">{chapter.title}</div>
+              <div className="op-meta">
+                <span className="tag tag-live">{progress.completed ? '✔ הושלם' : 'זמין לפריסה'}</span>
+                <span className="mono dim">{pct}% הושלם</span>
+              </div>
+              <div className="op-bar">
+                <div className="op-bar-fill" style={{ width: `${pct}%` }} />
+              </div>
+              <div className="op-deploy mono">{progress.completed ? 'REDEPLOY ▸' : 'DEPLOY ▸'}</div>
+            </button>
+          )
+        })}
 
         {locked.map((op) => (
           <div key={op.number} className="op-card op-locked" aria-disabled>
