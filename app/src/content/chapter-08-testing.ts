@@ -48,6 +48,16 @@ export const chapter08: Chapter = {
         'החשיבה הנכונה: כל ניסוי מתחיל במשפט אחד — "אנחנו רוצים לדעת האם X, ונדע זאת אם נמדוד Y". ' +
           'אם אינך מצליח לנסח את המשפט הזה, אינך מוכן להריץ את הניסוי. חסכת יום מעבדה — הרווחת שבוע של ויכוחים על מה התוצאה אומרת.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch08-universal-testing-machine.jpg',
+          caption:
+            'מכונת בדיקה אוניברסלית: מותחת, לוחצת ומכופפת דגימות עד כשל. השופט שלא משקר — אבל הוא עונה רק על השאלה שהגדרת לו.',
+          credit: 'Ganitz, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Modern_universal_testing_machine.jpg',
+        },
+      ],
       concepts: [
         {
           term: 'וריפיקציה',
@@ -100,6 +110,25 @@ export const chapter08: Chapter = {
         'עיקרון נוסף: משתנה אחד בכל פעם. אם שינית גם חומר, גם גיאומטריה וגם ספק — והתוצאה השתפרה — לא למדת דבר על אף אחד מהם. ' +
           'זה מפתה לחסוך זמן ולשנות הכול ביחד, אבל ניסוי שמערבב משתנים עונה על אפס שאלות במחיר של ניסוי שלם.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch08-stress-strain-curve.svg',
+          caption:
+            'עקומת מאמץ-עיבור קלאסית: (1) חוזק מרבי, (2) כניעה, (3) שבר. ניסוי טוב יודע מראש על איזו נקודה בעקומה הוא שואל — ומה ייחשב הצלחה.',
+          credit: 'Sigmund, Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Stress-strain_curve_numbered.svg',
+          plate: true,
+        },
+        {
+          src: 'visuals/ch08-tensile-fracture-castiron.jpg',
+          caption:
+            'דגימות מתיחה של יציקת ברזל אחרי הבדיקה: שבר פריך, כמעט בלי התארכות. ככה נראית תשובה חד-משמעית של ניסוי — כשהשאלה הוגדרה נכון.',
+          credit: 'Sigmund, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Cast_iron_tensile_test.JPG',
+        },
+      ],
       concepts: [
         {
           term: 'קריטריון הצלחה',
@@ -151,6 +180,32 @@ export const chapter08: Chapter = {
         'לכן הבחירה מתחילה תמיד מהסביבה האמיתית של המוצר: מה הוא יפגוש בחייו — הובלה? רכב? טיפול גס? חוץ? — ' +
           'ומכל תרחיש נגזרת הבדיקה שמדמה אותו. רמות ופרופילים של בדיקות סביבתיות נלקחים מתקנים ייעודיים או מדרישות הלקוח, לא ממציאים אותם [דורש אימות מול תקן בדיקות סביבתיות רלוונטי].',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch08-vibration-shaker-satellite.jpg',
+          caption:
+            'לוויין GPM על שולחן רעידות בנאס"א: אם הוא ישרוד את השיגור — זה ייקבע כאן, לא בחלל. בדיקת רעידות מגלה ברגים משתחררים, תהודות וכשלי עייפות.',
+          credit: 'NASA Goddard, Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:GPM_Vibration_Testing.jpg',
+        },
+        {
+          src: 'visuals/ch08-climatic-chamber.jpg',
+          caption:
+            'תא אקלים: טמפרטורה ולחות מבוקרות. חומרים מתפשטים, פלסטיק מזדקן, אטמים מתקשים — התא דוחס שנים של שטח לשבועות של בדיקה.',
+          credit: 'Cjp24, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Climatic_test_chamber.jpg',
+        },
+        {
+          src: 'visuals/ch08-drop-test-cargo.jpg',
+          caption:
+            'הכנה לבדיקת הצנחה ממטוס C-17: גם "להפיל דברים" הוא ניסוי מתוכנן — עם מדדים, מצלמות וקריטריון הצלחה שהוגדר מראש.',
+          credit: 'Eric Grabow, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Falcon_Drop-Test_SLC.jpg',
+        },
+      ],
       concepts: [
         {
           term: 'עייפות חומר',
@@ -200,6 +255,24 @@ export const chapter08: Chapter = {
           'כולל מה שנראה תקין. בכשל עתידי, התמונה של "איך זה נראה כשזה היה בסדר" היא לפעמים הראיה החשובה ביותר.',
         'ונקודה שמפרידה מקצוענים ממתחילים: מתעדים גם את מה שלא עבד ואת מה שהשתבש בדרך — ריצה שבוטלה, חיישן שהתנתק, תוצאה מוזרה שנפסלה. ' +
           'התיעוד "המביך" הזה הוא שמונע מהצוות הבא ליפול לאותם בורות, והוא ההבדל בין ארגון שלומד לארגון שחוזר על עצמו.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch08-strain-gauge-bonded.jpg',
+          caption:
+            'מד עיבור (Strain gauge) מודבק על מתכת: הופך עיוות זעיר לאות חשמלי. תיעוד טוב מתחיל בחיישן נכון במקום נכון — ובידיעה מה בדיוק הוא מודד.',
+          credit: 'Cristian V., Wikimedia Commons',
+          license: 'CC BY 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Strain_gauge_-.jpg',
+        },
+        {
+          src: 'visuals/ch08-load-cell-sbeam.jpg',
+          caption:
+            'תא עומס (Load cell) מסוג S: מודד כוח מתיחה ולחיצה. כל מספר בדוח הבדיקה נולד בחיישן כזה — והוא טוב בדיוק כמו הכיול שלו. [תוקף כיול — דורש אימות]',
+          credit: 'FUTEK Advanced Sensor Technology, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Miniature_S-beam_load_cell.jpg',
+        },
       ],
       concepts: [
         {

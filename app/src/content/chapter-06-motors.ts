@@ -51,6 +51,16 @@ export const chapter06: Chapter = {
         'לכן מערכת תנועה אמיתית היא תמיד שרשרת: מקור כוח, בקר/דרייבר, מנוע, תמסורת, עומס — ולעיתים חיישן שסוגר את המעגל חזרה לבקר. ' +
           'כשבוחרים ״מנוע״, בוחרים בעצם את כל השרשרת. מי ששוכח חוליה — מגלה אותה בשטח, בדרך כלל בעשן.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch06-dc-motor-cutaway-photo.jpg',
+          caption:
+            'מנוע DC פתוח: סלילי שדה, קומוטטור ומברשות. כל מה שמנוע עושה — הפיכת זרם למומנט — קורה כאן. מה שהוא לא עושה: לדעת איפה הוא נמצא.',
+          credit: 'Oliver Wallscheid, Wikimedia Commons',
+          license: 'CC BY 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:DC_motor_with_interpole_and_main_field_winding_as_well_as_commutator.png',
+        },
+      ],
       concepts: [
         {
           term: 'מומנט',
@@ -103,6 +113,24 @@ export const chapter06: Chapter = {
         'איך בוחרים ביניהם? לפי מחזור העבודה והחיים הנדרשים. הפעלה קצרה ומזדמנת במוצר רגיש-עלות — מנוע מברשות הוא בחירה לגיטימית. ' +
           'עבודה רציפה, מוצר שאמור לחיות שנים, סביבה שרגישה לרעש חשמלי או לתחזוקה — הכיוון הוא ללא מברשות. ' +
           'ובתעשייה, לעומסים סיבוביים רציפים שניזונים מרשת החשמל, יש שחקן שלישי ותיק: מנוע AC — אבל זה סיפור ליחידת המשך.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch06-brushed-dc-motor-disassembled.jpg',
+          caption:
+            'מנוע DC מוברש קטן, מפורק: מכסה עם מברשות, רוטור עם קומוטטור, ובית עם מגנטים. המברשות הן הגאונות — וגם החולשה המתכלה.',
+          credit: 'Ilia Krivoruk / Andy Dingley, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Brushed_DC_motor_disassembled.jpg',
+        },
+        {
+          src: 'visuals/ch06-outrunner-bldc.jpg',
+          caption:
+            'מנוע BLDC מסוג Outrunner עם מדחף: הסלילים במרכז קבועים, וכל הפעמון החיצוני עם המגנטים מסתובב. אין מברשות — אבל חייבים בקר (ESC).',
+          credit: '1sfoerster, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Outrunner.jpg',
+        },
       ],
       concepts: [
         {
@@ -158,6 +186,24 @@ export const chapter06: Chapter = {
           'ולכן ההכרעה היא הנדסית: עומס מוכר, מתון וקבוע, ואובדן מיקום נסבל (יש בית ייחוס והמכונה חוזרת אליו) — Stepper עם רזרבת מומנט הוא בחירה מצוינת. ' +
           'עומס משתנה, דינמיקה גבוהה, או מיקום שאסור לאבד — סרוו, וזה שווה את מחירו.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch06-nema17-stepper.jpg',
+          caption:
+            'מנוע צעד NEMA 17 — סוס העבודה של מדפסות תלת-ממד ומכונות CNC קטנות: זול, פשוט, מדויק בחוג פתוח — כל עוד לא מעמיסים עליו יותר מדי.',
+          credit: 'oomlout, Wikimedia Commons',
+          license: 'CC BY-SA 2.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Nema_17_Stepper_Motor.jpg',
+        },
+        {
+          src: 'visuals/ch06-hobby-servo-motors.jpg',
+          caption:
+            'סרוו מודלים: מנוע + גיר + חיישן מיקום + בקר בקופסה אחת. חוג סגור בזעיר אנפין — הוא יודע איפה הוא, ונלחם להישאר שם.',
+          credit: 'Kborer, Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Two_hobby_servo_motors.jpg',
+        },
+      ],
       concepts: [
         {
           term: 'חוג פתוח',
@@ -209,6 +255,25 @@ export const chapter06: Chapter = {
           'ומגבלות הגיר עצמו — לגיר יש מומנט מרבי מותר משלו, ולעיתים הוא הנמוך בשרשרת. מנוע חזק על גיר חלש שובר את הגיר, לא מזיז את העומס.',
         'איך חושבים על זה נכון: קודם קובעים מה העומס צריך — מהירות ומומנט בציר העומס. אחר כך בוחרים יחס תמסורת שמביא את המנוע לאזור העבודה הנוח שלו. ' +
           'ורק בסוף בודקים את דף הנתונים של הגיר: מומנט מותר, נצילות, באקלש ואורך חיים. הגיר הוא רכיב הנדסי עם גבולות — לא צינור קסם שמכפיל כוח.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch06-spur-gear-train.jpg',
+          caption:
+            'תמסורת תלת-שלבית בחתך: כל זוג גלגלים מחליף מהירות במומנט. מהצד המהיר של המנוע אל הצד האיטי והחזק של העומס.',
+          credit: 'Lüt, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Stirnradgetriebe_dreistufig.jpg',
+        },
+        {
+          src: 'visuals/ch06-planetary-gearing-scheme.svg',
+          caption:
+            'סכמת גיר פלנטרי: שמש (1), פלנטות (2), טבעת (3) וזרוע (4). יחס תמסורת גדול בנפח קטן — ולכן זה הגיר שמוצמד לרוב מנועי ה-DC הקטנים.',
+          credit: 'Malyszkz, Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Epicyclic_gearing-scheme.svg',
+          plate: true,
+        },
       ],
       concepts: [
         {
@@ -263,6 +328,16 @@ export const chapter06: Chapter = {
         'ולבסוף — ענווה הנדסית: חיכוך ואינרציה של מערכת אמיתית קשים להערכה מדויקת על הנייר. ' +
           'מהנדסים מנוסים מודדים מוקדם: אב-טיפוס גס, מד כוח פשוט, ניסוי קצר — לפני שמזמינים עשרה מנועים ומקבעים מארז. ' +
           'מנוע שנבחר עם רזרבה על סמך מדידה שווה יותר מחישוב אלגנטי על סמך ניחוש.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch06-rotary-encoder.jpg',
+          caption:
+            'אנקודר סיבובי תעשייתי: העיניים של המערכת. בלי משוב — אין חוג סגור; ובחירת מנוע גומרת תמיד בשאלה כמה דיוק אתה באמת צריך, ומאיפה יגיע המשוב.',
+          credit: 'Joao Paulo Chagas, Wikimedia Commons',
+          license: 'CC BY 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Rotary_encoder.jpg',
+        },
       ],
       concepts: [
         {

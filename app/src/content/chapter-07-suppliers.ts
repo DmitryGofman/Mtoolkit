@@ -51,6 +51,16 @@ export const chapter07: Chapter = {
         'חבילה חסרה מייצרת אחד משני נזקים: הצעת מחיר שגויה שתתנפח אחר כך, או חלק שגוי שמייצרים מחדש. ' +
           'בשני המקרים הזמן והכסף יוצאים מהפרויקט שלך — והאמון בינך לבין הספק נשחק, למרות שהוא עשה את עבודתו נאמנה.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch07-drawing-review.jpg',
+          caption:
+            'מהנדסים על שולחן השרטוט, 1954: הטכנולוגיה השתנתה, העיקרון לא — הייצור מתחיל במסמך שכולם מבינים אותו דבר. חבילת הייצור היא השפה המשותפת.',
+          credit: 'Hecker / Bundesarchiv, Wikimedia Commons',
+          license: 'CC BY-SA 3.0 DE',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_183-23757-1650,_Ingenieure_am_Reissbrett.jpg',
+        },
+      ],
       concepts: [
         {
           term: 'חבילת ייצור',
@@ -112,6 +122,16 @@ export const chapter07: Chapter = {
           'הצעה שכוללת הובלה מול הצעה שלא, או זמן אספקה שונה בשבועות — אלה לא אותם מספרים גם אם הם באותו מטבע. ' +
           'ומחיר הוא רק ממד אחד: זמן אספקה, איכות מוכחת, ותקשורת טובה שווים כסף אמיתי כשמשהו משתבש.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch07-machine-shop.jpg',
+          caption:
+            'בית מלאכה אמיתי: מכונות, שולחנות עבודה, ידע של שנים. כשאתה קורא הצעת מחיר — זה מה שעומד מאחורי המספרים. הצעה זולה מדי אומרת שמשהו כאן לא תוקצב.',
+          credit: 'NOIRLab/NSF/AURA/T. Slovinský, Wikimedia Commons',
+          license: 'CC BY 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:NOIRLab_HQ_Machine_Shop_(6V6A0724-CC).jpg',
+        },
+      ],
       concepts: [
         {
           term: 'בקשת הצעת מחיר',
@@ -172,6 +192,24 @@ export const chapter07: Chapter = {
         'זו גם שאלה של ענווה מקצועית. מהנדס צעיר שמדבר אל בעל מלאכה מלמעלה סוגר את ערוץ הידע הכי זול שיש לו. ' +
           'מי שמתייחס לניסיון של עשרים שנה ליד מכונה בכבוד — מקבל בחזרה הערות שאף בודק תכן לא היה תופס. ' +
           'הכבוד הזה הוא לא נימוס: הוא כלי עבודה הנדסי.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch07-lathe-machinist.jpg',
+          caption:
+            'חרט ותלמידו על המחרטה, 1954: הידע הזה לא כתוב בספרים. השאלה "מה קשה לייצר בחלק שלי?" פותחת אותו בחינם — לפני שמשלמים עליו בסבב ייצור כושל.',
+          credit: 'Hans-Günter Quaschinsky / Bundesarchiv, Wikimedia Commons',
+          license: 'CC BY-SA 3.0 DE',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_183-27429-0014,_VEB_Stahl-_und_Walzwerk_Brandenburg,_Stechstahl.jpg',
+        },
+        {
+          src: 'visuals/ch07-welder-at-work.jpg',
+          caption:
+            'רתך בעבודה. בעל המקצוע רואה את התכן שלך דרך הידיים: גישה לתפר, עיוות חום, סדר ריתוכים. שאל אותו לפני שהשרטוט קופא. (בתמונה: עבודה ללא מיגון מלא — לא מומלץ.)',
+          credit: 'Kwameghana, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:A_welder_at_work_welding_a_metal_together_(1).jpg',
+        },
       ],
       concepts: [
         {
@@ -297,6 +335,32 @@ export const chapter07: Chapter = {
           'מול איזו מידה בשרטוט, לפי איזה REV. אחר כך שיחה: מציגים את הממצא, שואלים איך זה קרה, ומחליטים יחד — ' +
           'תיקון, ייצור חוזר, או קבלה חריגה אם הפונקציה לא נפגעת. ספק שמקבל ממצא מדויק בטון מכבד יתקן וישתפר; ' +
           'ספק שחוטף האשמות בטלפון ילמד להתגונן ולהסתיר. היחסים האלה הם נכס לטווח ארוך — לא זירת ניצחונות.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch07-export-crate.jpg',
+          caption:
+            'ארגז ייצוא פתוח: המכונה עטופה בשקית חוסמת-אדים. אריזה ומשלוח הם חלק מהחבילה — חלק מושלם שמגיע פגום הוא עדיין חלק פגום.',
+          credit: 'VCCmatt, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Barrier-bag-crate-vol-case.png',
+        },
+        {
+          src: 'visuals/ch07-incoming-inspection-tag.jpg',
+          caption:
+            'תג ביקורת קבלה אמיתי (IQC) על קרטון — כולל כמות שתוקנה בעט. זה מה שתיעוד קבלה נראה כמו בשטח: מסמך חי שתופס אי-התאמות ברגע שהן נכנסות בדלת.',
+          credit: 'Solomon203, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Lian_Li_Industrial_incoming_inspection_tag_20160809a.jpg',
+        },
+        {
+          src: 'visuals/ch07-first-article-inspection.jpg',
+          caption:
+            'עמדת First Article Inspection: בודקת משווה את החלק הראשון מהייצור מול ההגדרה. החלק הראשון קובע את גורל הסדרה — בודקים אותו לפני שממשיכים.',
+          credit: 'Encik Tekateki, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Inspektor_QC_India_membuat_FAI_(First_Article_Inspection).png',
+        },
       ],
       concepts: [
         {
