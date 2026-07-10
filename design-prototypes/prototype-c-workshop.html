@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MECHALC — פרוטוטייפ ג׳: רצפת הייצור</title>
+<style>
+/* =====================================================
+   PROTOTYPE C — "רצפת הייצור" (The Shop Floor)
+   Industrial: steel panels, safety yellow, hazard
+   stripes, stencil type, rivets, e-stop button.
+   Palette: steel #26292e | plate #33373d | safety #ffd100
+            danger #d7263d | pass #2fbf71 | chalk #e8eaed
+   ===================================================== */
+*{ margin:0; padding:0; box-sizing:border-box; }
+:root{
+  --steel:#1d2024; --plate:#33373d; --plate2:#3c4148; --edge:#4a5058;
+  --safety:#ffd100; --danger:#d7263d; --pass:#2fbf71; --chalk:#e8eaed; --dim:#9aa1ab;
+}
+body{
+  background:var(--steel);
+  background-image:radial-gradient(rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size:22px 22px;
+  font-family:'Arial Narrow','Helvetica Neue',Arial,sans-serif;
+  color:var(--chalk); padding:26px 12px; line-height:1.65;
+}
+.hazard{
+  height:16px; max-width:900px; margin:0 auto;
+  background:repeating-linear-gradient(-45deg, var(--safety) 0 16px, #111 16px 32px);
+  border:2px solid #111;
+}
+.board{
+  max-width:900px; margin:0 auto; background:var(--plate);
+  border:2px solid #111; border-top:none; padding:28px 30px 30px; position:relative;
+  box-shadow:inset 0 2px 0 var(--edge), 0 18px 44px rgba(0,0,0,.5);
+}
+.rivet{ position:absolute; width:12px; height:12px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #b9c0c9, #6a7078 60%, #3a3f45);
+  box-shadow:0 1px 2px rgba(0,0,0,.6); }
+.r1{ top:12px; right:12px; } .r2{ top:12px; left:12px; }
+.r3{ bottom:12px; right:12px; } .r4{ bottom:12px; left:12px; }
+
+header{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:24px; }
+.badge{
+  background:var(--safety); color:#111; font-weight:900; letter-spacing:.08em;
+  padding:10px 16px; clip-path:polygon(8% 0,100% 0,92% 100%,0 100%);
+  font-size:22px; text-transform:uppercase;
+}
+h1{ font-size:26px; font-weight:900; letter-spacing:.04em; }
+h1 small{ display:block; font-size:11px; font-weight:700; color:var(--safety); letter-spacing:.3em; }
+
+.workorder{
+  background:var(--plate2); border:1.5px solid var(--edge); border-right:6px solid var(--danger);
+  padding:16px 20px; margin-bottom:22px;
+}
+.workorder .wo-head{ display:flex; justify-content:space-between; font-size:12px; font-weight:700; letter-spacing:.2em; color:var(--danger); margin-bottom:6px; }
+.workorder .wo-head span:last-child{ color:var(--dim); }
+
+.tagrow{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:18px 0 22px; }
+.tag{
+  background:var(--safety); color:#141414; padding:12px 14px 10px;
+  clip-path:polygon(0 0, 100% 0, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  box-shadow:0 4px 10px rgba(0,0,0,.35); position:relative;
+}
+.tag::before{ content:''; position:absolute; top:8px; left:10px; width:10px; height:10px; border-radius:50%;
+  background:var(--plate); box-shadow:inset 0 1px 2px rgba(0,0,0,.7); }
+.tag b{ display:block; font-size:12px; letter-spacing:.15em; text-transform:uppercase; }
+.tag span{ font-size:14px; line-height:1.45; display:block; }
+
+.stencil{ font-weight:900; letter-spacing:.25em; text-transform:uppercase; color:var(--safety); font-size:13px; margin:20px 0 10px; }
+.stencil::before{ content:'■ '; }
+
+.q{ font-size:20px; font-weight:900; margin-bottom:14px; }
+.opt{
+  display:flex; align-items:center; gap:14px; width:100%; text-align:right; font:inherit; font-size:16px;
+  background:var(--plate2); color:var(--chalk); border:1.5px solid var(--edge);
+  padding:13px 16px; margin-bottom:10px; cursor:pointer;
+}
+.opt .bolt{ min-width:26px; height:26px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #cdd3da, #7d848d 60%, #4a5058);
+  display:grid; place-items:center; color:#222; font-weight:900; font-size:12px; }
+.opt:hover{ border-color:var(--safety); }
+.opt.ok{ border-color:var(--pass); background:rgba(47,191,113,.12); }
+.opt.bad{ border-color:var(--danger); background:rgba(215,38,61,.1); }
+.fb{ display:none; margin:-2px 0 12px; padding:10px 16px; font-size:14.5px; border-right:5px solid; background:var(--plate2); }
+.fb.show{ display:block; }
+.fb.good{ border-color:var(--pass); }
+.fb.bad{ border-color:var(--danger); }
+
+.gauge-wrap{ display:flex; align-items:center; gap:14px; margin-top:24px; padding-top:16px; border-top:1.5px solid var(--edge); flex-wrap:wrap; }
+.gauge{ flex:1; min-width:200px; height:18px; background:#191b1e; border:1.5px solid var(--edge); position:relative; }
+.gauge .fill{ height:100%; width:0%; background:repeating-linear-gradient(-45deg, var(--safety) 0 10px, #d9b200 10px 20px); transition:width .6s; }
+.gauge-label{ font-weight:900; letter-spacing:.15em; font-size:12px; color:var(--dim); }
+.estop{
+  width:74px; height:74px; border-radius:50%; border:5px solid #7c1420; cursor:pointer;
+  background:radial-gradient(circle at 35% 30%, #ff5a6e, var(--danger) 65%);
+  color:#fff; font-weight:900; font-size:10px; letter-spacing:.1em;
+  box-shadow:0 6px 0 #6e0f1a, 0 10px 18px rgba(0,0,0,.5); font-family:inherit;
+}
+.estop:active{ transform:translateY(4px); box-shadow:0 2px 0 #6e0f1a; }
+@media (max-width:600px){ .board{ padding:22px 16px; } }
+</style>
+</head>
+<body>
+<div class="hazard"></div>
+<div class="board">
+  <span class="rivet r1"></span><span class="rivet r2"></span><span class="rivet r3"></span><span class="rivet r4"></span>
+
+  <header>
+    <div class="badge">תחנה 01</div>
+    <h1>ברגים, הברגות ולוקטייט <small>MECHALC · SHOP FLOOR EDITION</small></h1>
+  </header>
+
+  <div class="workorder">
+    <div class="wo-head"><span>⚠ הוראת עבודה — תקלה פתוחה</span><span>WO-4471</span></div>
+    מכלול עבר בדיקת רעידות. אחרי עשר דקות אחד המכסים מקרקש. בפירוק התגלה שהבורג "החזיק" רק בשתי כריכות תבריג — קצר מדי מההתחלה, ואיש לא שם לב, כי בהרכבה הוא הרגיש מהודק.
+  </div>
+
+  <div class="stencil">תגי בטיחות — מה שחייבים לזכור</div>
+  <div class="tagrow">
+    <div class="tag"><b>אורך תפיסה</b><span>עובי החלקים שהבורג מהדק. ההרגשה מרמה — החשבון לא.</span></div>
+    <div class="tag"><b>קדח עיוור</b><span>בורג ארוך מדי ננעל על תחתית הקדח — "מהודק" אבל החלקים חופשיים.</span></div>
+    <div class="tag"><b>חומר רך</b><span>אלומיניום שמפורק שוב ושוב? תשקול Insert מראש.</span></div>
+  </div>
+
+  <div class="stencil">בדיקת כשירות — ענה לפני חזרה לקו</div>
+  <div class="q">בורג מרגיש מהודק היטב בהרכבה. האם זה מספיק כדי לאשר את החיבור?</div>
+  <div id="opts"></div>
+
+  <div class="gauge-wrap">
+    <span class="gauge-label">מד כשירות</span>
+    <div class="gauge"><div class="fill" id="fill"></div></div>
+    <button class="estop" id="estop">RESET</button>
+  </div>
+</div>
+<script>
+const data=[
+  { t:'לא — הידוק מרגיש זהה עם שתי כריכות ועם עשר. בודקים אורך תפיסה ועומק תבריג מול השרטוט', ok:true,
+    f:'נכון. תחושת הידוק אומרת שיש חיכוך — לא שיש מספיק תבריג נושא עומס. ההבדל מתגלה רק בעומס, ואז זה כשל בשטח.' },
+  { t:'כן — אם הוא מהודק, החיבור תקין', ok:false,
+    f:'זו בדיוק המלכודת של WO-4471. הבורג היה מהודק — ותפס שתי כריכות בלבד. הרעידות סיימו את הסיפור.' },
+  { t:'כן, בתנאי שמהדקים חזק יותר', ok:false,
+    f:'הידוק חזק יותר על מעט תבריג רק מקרב את הקריעה. הפתרון: בורג ארוך יותר או הברגה עמוקה יותר — לא יותר כוח.' },
+];
+const box=document.getElementById('opts');
+data.forEach((o,i)=>{
+  const b=document.createElement('button'); b.className='opt';
+  b.innerHTML=`<span class="bolt">${i+1}</span><span>${o.t}</span>`;
+  const f=document.createElement('div'); f.className='fb '+(o.ok?'good':'bad'); f.textContent=o.f;
+  b.onclick=()=>{ b.classList.add(o.ok?'ok':'bad'); f.classList.add('show');
+    if(o.ok) document.getElementById('fill').style.width='40%'; };
+  box.append(b,f);
+});
+document.getElementById('estop').onclick=()=>{
+  document.querySelectorAll('.opt').forEach(el=>el.classList.remove('ok','bad'));
+  document.querySelectorAll('.fb').forEach(el=>el.classList.remove('show'));
+  document.getElementById('fill').style.width='0%';
+};
+</script>
+</body>
+</html>
