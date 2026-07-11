@@ -7,6 +7,7 @@ import { chapter05 } from './chapter-05-cnc.ts'
 import { chapter06 } from './chapter-06-motors.ts'
 import { chapter07 } from './chapter-07-suppliers.ts'
 import { chapter08 } from './chapter-08-testing.ts'
+import { chapter16 } from './chapter-16-metrology.ts'
 
 /** Playable campaign, in operation order. Add new chapters here once reviewed. */
 export const chapters: Chapter[] = [
@@ -18,6 +19,7 @@ export const chapters: Chapter[] = [
   chapter06,
   chapter07,
   chapter08,
+  chapter16, // enrichment op — practical metrology
 ]
 
 /**

@@ -14,8 +14,9 @@ export function CommandCenter({ chapters, locked, progressFor, onDeploy }: Props
         <div className="cc-kicker mono">// CAMPAIGN MAP — בחר מבצע</div>
         <h1 className="cc-title">חדר המבצעים</h1>
         <p className="cc-sub">
-          שמונה מבצעים בין הטירון לבין מהנדס שדה. כל מבצע מקנה מיומנות הנדסית אמיתית —
-          לא נקודות בלבד. {chapters.length} מבצעים פתוחים. השאר ייפתחו בהמשך הקמפיין.
+          מהטירון ועד מהנדס שדה: מבצעי הליבה, מבצעי העשרה, ומבצעי תהליכי ייצור בהמשך.
+          כל מבצע מקנה מיומנות הנדסית אמיתית — לא נקודות בלבד. {chapters.length} מבצעים
+          פתוחים כעת.
         </p>
       </div>
 
