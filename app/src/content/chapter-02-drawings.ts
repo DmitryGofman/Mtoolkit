@@ -447,6 +447,25 @@ export const chapter02: Chapter = {
           'ומְמוּדדת רק לקצוות תפקודיים, הערה כללית סבירה לכל השאר. את ערכי הפאזות ודרגות מצב-הקצה עצמם לוקחים ' +
           'מתקן או ממקור הנדסי מאומת [דורש אימות].',
       ],
+      visuals: [
+        {
+          src: 'visuals/enr-burr-machined-edge.jpg',
+          caption:
+            'גרד (Burr) אמיתי על קצה מתכת חתוכה, בהגדלה: חד, שביר, ומחכה לאצבע של המרכיב או לאטם של המכלול. הוא לא ייעלם לבד — מישהו צריך לדרוש את הסרתו.',
+          credit: 'Zureks, Wikimedia Commons',
+          license: 'CC BY 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Metal_burr.jpg',
+        },
+        {
+          src: 'visuals/enr-chamfer-vs-fillet.svg',
+          caption:
+            'פאזה (Chamfer) מול רדיוס (Fillet): שתי דרכים לטפל בקצה — משטח משופע או קשת. לכל אחת תפקיד, מחיר ותהליך ייצור משלה.',
+          credit: 'Cmglee, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Chamfer_vs_fillet.svg',
+          plate: true,
+        },
+      ],
       concepts: [
         {
           term: 'גרד',

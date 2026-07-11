@@ -401,6 +401,16 @@ export const chapter01: Chapter = {
           'שייבת שיניים (Star washer) כן נועלת במידה מסוימת — אבל השיניים החדות פוצעות את המשטחים, והשריטות עלולות להפוך למוקדי סדקים וקורוזיה (NASA RP-1228, עמ׳ 10). ' +
           'לכן הבחירה תמיד עוברת דרך ארבע שאלות: מה הטמפרטורה? כמה מחזורי פירוק? מה מחיר ההתרופפות? ויש גישה לכלים ולקדחי הנעילה?',
       ],
+      visuals: [
+        {
+          src: 'visuals/enr-double-nut-jam.jpg',
+          caption:
+            'אום כפול (Jam nut) על מוט הברגה: שני האומים נעולים זה כנגד זה. עובד מכנית — אבל לפי NASA RP-1228, חלוקת העומס בין האומים בלתי צפויה, ואום נעילה ייעודי הוא כמעט תמיד הבחירה המעשית יותר.',
+          credit: 'Becs, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Counter_nut.jpg',
+        },
+      ],
       concepts: [
         {
           term: 'אום כפול (אום נגדי)',

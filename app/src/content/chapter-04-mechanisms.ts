@@ -436,6 +436,25 @@ export const chapter04: Chapter = {
           'שקיימים סידורים מכוונים אחרים — למשל זוג מיסבי מגע זוויתי בהעמסה מוקדמת מבוקרת ומכווננת — ' +
           'אבל אלה החלטות תכן מודעות עם ערכים מהקטלוג, לא מכסה שסגרו "חזק, שלא יזוז".',
       ],
+      visuals: [
+        {
+          src: 'visuals/enr-bearing-fest-los-lagerung.svg',
+          caption:
+            'סידור קבוע-צף (Fest-Los-Lagerung) בחתך — הדיאגרמה הקלאסית: המיסב השמאלי מקובע אקסיאלית (כתף + טבעת סגר) וקובע את מיקום הציר; הימני חופשי לנוע בבית — ובולע התפשטות תרמית וסטיות ייצור.',
+          credit: 'Jahobr, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Fest-Los-Lagerung.svg',
+          plate: true,
+        },
+        {
+          src: 'visuals/enr-circlip-external.png',
+          caption:
+            'טבעת סגר חיצונית (Circlip): הכלי הזול והנפוץ לקיבוע אקסיאלי על ציר. נכנסת לחריץ מוגדר — והחריץ הזה חייב להופיע בשרטוט.',
+          credit: 'Pattelitos, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:External_circlip.png',
+        },
+      ],
       concepts: [
         {
           term: 'מיסב קובע',
