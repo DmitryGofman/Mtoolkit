@@ -7,6 +7,9 @@ import { chapter05 } from './chapter-05-cnc.ts'
 import { chapter06 } from './chapter-06-motors.ts'
 import { chapter07 } from './chapter-07-suppliers.ts'
 import { chapter08 } from './chapter-08-testing.ts'
+import { chapter09 } from './chapter-09-laser-sheetmetal.ts'
+import { chapter10 } from './chapter-10-printing.ts'
+import { chapter11 } from './chapter-11-welding.ts'
 import { chapter16 } from './chapter-16-metrology.ts'
 
 /** Playable campaign, in operation order. Add new chapters here once reviewed. */
@@ -19,6 +22,9 @@ export const chapters: Chapter[] = [
   chapter06,
   chapter07,
   chapter08,
+  chapter09,
+  chapter10,
+  chapter11,
   chapter16, // enrichment op — practical metrology
 ]
 
@@ -30,9 +36,6 @@ export const chapters: Chapter[] = [
  * agent team; keep numbering stable when promoting to a playable chapter.
  */
 export const lockedChapters: LockedChapter[] = [
-  { number: 9, codename: 'OPERATION: PHOTON EDGE', title: 'חיתוך לייזר ופחים' },
-  { number: 10, codename: 'OPERATION: REPLICATOR', title: 'הדפסת תלת-ממד' },
-  { number: 11, codename: 'OPERATION: ARC LIGHT', title: 'ריתוך' },
   { number: 12, codename: 'OPERATION: IRONWORKS', title: 'מסגרוּת' },
   { number: 13, codename: 'OPERATION: TIMBERLINE', title: 'נגרוּת' },
   { number: 14, codename: 'OPERATION: NEEDLE POINT', title: 'תפירה וטקסטיל טכני' },
