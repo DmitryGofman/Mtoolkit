@@ -399,6 +399,42 @@ export const chapter06: Chapter = {
           'מומנט גבוה או זעזועים — מפתח מעביר אותם בצורה, אבל דורש חריץ מעובד (עלות) ומכניס באקלש זעיר; ' +
           'תותב חרוטי נעול נותן אחיזה גבוהה בחיכוך בלי חריץ מפתח כלל. מי שלא בוחר במודע — יקבל בורג צביטה בודד, וייפגש איתו שוב בשטח.',
       ],
+      visuals: [
+        {
+          src: 'visuals/enr2-shaft-collar-setscrew.svg',
+          caption:
+            'טבעת ציר עם בורג-תוקע (Set screw) בודד: הבורג נועץ נקודה אחת בציר. מקבע לעומסים קטנים — אבל פוגע בציר, מחליק בהלם, ומשתחרר ברעידה. השיטה הנפוצה והחלשה ביותר.',
+          credit: 'Biezl, Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Stellring.svg',
+          plate: true,
+        },
+        {
+          src: 'visuals/enr2-key-keyway-keyseating.jpg',
+          caption:
+            'מפתח ומגרעת (Key & keyway): ציר, מפתח חופשי, ותושבת — כל אחד עם מגרעת. חיבור בצורה שמעביר מומנט גבוה — אבל דורש עיבוד מגרעת (עלות) ויש בו מעט משחק (backlash).',
+          credit: 'Scheremeg, Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Keyseating.jpg',
+        },
+        {
+          src: 'visuals/enr2-taper-lock-hub.jpg',
+          caption:
+            'תותב טעפר-לוק (Taper-lock) מפורק: שרוול חרוטי שנלחץ בברגים סביב הציר. אחיזת חיכוך חזקה בכל ההיקף — בלי מגרעת, בלי לפגוע בציר.',
+          credit: 'Miessen, Wikimedia Commons',
+          license: 'CC0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Taper-lock-hub.jpg',
+        },
+        {
+          src: 'visuals/enr2-spannsatz-clamping-set.jpg',
+          caption:
+            'סט צביטה נטול-מפתח (Spannsatz): הדגמה של עקרון הצביטה — לחיצת טבעות חרוטיות שמפזרת את האחיזה סביב הציר כולו, במקום נקודת מגע אחת.',
+          credit: 'Ukko-wc, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Spannsatz-2.jpg',
+          plate: true,
+        },
+      ],
       concepts: [
         {
           term: 'חיבור בחיכוך',
