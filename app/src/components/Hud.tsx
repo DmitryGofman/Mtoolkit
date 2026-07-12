@@ -1,6 +1,13 @@
 import { rankFor, nextRank } from '../game/progress.ts'
 
-export function Hud({ xp, onReset }: { xp: number; onReset: () => void }) {
+interface HudProps {
+  xp: number
+  onReset: () => void
+  /** Return to the command center; progress is kept. Hidden when already there. */
+  onHome?: () => void
+}
+
+export function Hud({ xp, onReset, onHome }: HudProps) {
   const rank = rankFor(xp)
   const next = nextRank(xp)
   const pct = next
@@ -29,9 +36,16 @@ export function Hud({ xp, onReset }: { xp: number; onReset: () => void }) {
           {next && <span className="mono dim"> ▸ {next.nameEn}: {next.minXp}</span>}
         </div>
       </div>
-      <button className="btn-ghost" onClick={onReset} title="איפוס התקדמות">
-        RESET
-      </button>
+      <div className="hud-actions">
+        {onHome && (
+          <button className="btn-ghost btn-home" onClick={onHome} title="חזרה לחדר המבצעים — ההתקדמות נשמרת">
+            ⌂ בסיס
+          </button>
+        )}
+        <button className="btn-ghost" onClick={onReset} title="איפוס התקדמות">
+          RESET
+        </button>
+      </div>
     </header>
   )
 }

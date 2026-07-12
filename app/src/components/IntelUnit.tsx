@@ -1,4 +1,5 @@
 import type { IntelUnit as Unit } from '../game/types.ts'
+import { VisualCard } from './VisualCard.tsx'
 
 interface Props {
   unit: Unit
@@ -37,22 +38,7 @@ export function IntelUnit({ unit, index, total, onComplete }: Props) {
             <div className="block-label mono">◉ VISUAL INTEL — תצלומי מודיעין</div>
             <div className="visuals">
               {unit.visuals.map((v) => (
-                <figure key={v.src} className="visual-card">
-                  <div className={`visual-frame ${v.plate ? 'visual-plate' : ''}`}>
-                    <img src={v.src} alt={v.caption} loading="lazy" />
-                  </div>
-                  <figcaption>
-                    <p className="visual-caption">{v.caption}</p>
-                    <a
-                      className="visual-credit mono"
-                      href={v.sourceUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      SOURCE: {v.credit} // {v.license}
-                    </a>
-                  </figcaption>
-                </figure>
+                <VisualCard key={v.src} visual={v} />
               ))}
             </div>
           </section>

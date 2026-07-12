@@ -403,14 +403,40 @@ body {
   position: relative;
   display: grid;
   place-items: center;
+  width: 100%;
   min-height: 190px;
   max-height: 300px;
   overflow: hidden;
+  border: none;
   border-bottom: 1px solid var(--line);
+  padding: 0;
+  font: inherit;
+  cursor: zoom-in;
   background:
     linear-gradient(rgba(53, 224, 255, 0.04), rgba(53, 224, 255, 0.04)),
     #0a1120;
 }
+
+.visual-frame:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }
+
+.visual-zoom-hint {
+  position: absolute;
+  bottom: 8px;
+  inset-inline-end: 8px;
+  z-index: 2;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--text);
+  background: rgba(5, 8, 15, 0.72);
+  border: 1px solid var(--cyan-dim);
+  padding: 3px 8px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+}
+
+.visual-frame:hover .visual-zoom-hint,
+.visual-frame:focus-visible .visual-zoom-hint { opacity: 1; }
 
 /* light backing plate so black-line diagrams stay readable on the dark HUD */
 .visual-plate {
@@ -451,6 +477,66 @@ body {
 
 /* compact single visual inside an exercise */
 .exercise-visual { margin: 0 auto 18px; max-width: 560px; }
+
+/* ---- lightbox (full-screen image) ---- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 40px 20px;
+  background: rgba(3, 6, 12, 0.92);
+  backdrop-filter: blur(4px);
+  cursor: zoom-out;
+  animation: deploy 0.2s ease-out;
+}
+
+.lightbox-img {
+  max-width: min(1100px, 94vw);
+  max-height: 82vh;
+  object-fit: contain;
+  cursor: default;
+  border: 1px solid var(--line);
+  box-shadow: 0 0 60px rgba(53, 224, 255, 0.15);
+}
+
+.lightbox-img.visual-plate { background: #e8edf4; padding: 12px; }
+
+.lightbox-caption {
+  max-width: 760px;
+  text-align: center;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+  cursor: default;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 18px;
+  inset-inline-end: 20px;
+  color: var(--text);
+  background: transparent;
+  border: 1px solid var(--line);
+  padding: 8px 14px;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+}
+
+.lightbox-close:hover { color: var(--red); border-color: var(--red); }
+
+/* ---- HUD actions (home + reset) ---- */
+.hud-actions { display: flex; gap: 8px; align-items: center; }
+
+.btn-home { color: var(--gold-soft); border-color: rgba(242, 169, 59, 0.4); }
+
+.btn-home:hover { color: var(--gold); border-color: var(--gold); }
 
 .exercise-visual .visual-frame { min-height: 140px; max-height: 240px; }
 

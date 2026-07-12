@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import type { Exercise } from '../game/types.ts'
+import { VisualCard } from './VisualCard.tsx'
 
 interface Props {
   exercise: Exercise
@@ -57,24 +58,7 @@ export function ExercisePanel({ exercise, index, total, mode, onComplete }: Prop
           <p>{exercise.scenario}</p>
         </section>
 
-        {exercise.visual && (
-          <figure className="visual-card exercise-visual">
-            <div className={`visual-frame ${exercise.visual.plate ? 'visual-plate' : ''}`}>
-              <img src={exercise.visual.src} alt={exercise.visual.caption} loading="lazy" />
-            </div>
-            <figcaption>
-              <p className="visual-caption">{exercise.visual.caption}</p>
-              <a
-                className="visual-credit mono"
-                href={exercise.visual.sourceUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                SOURCE: {exercise.visual.credit} // {exercise.visual.license}
-              </a>
-            </figcaption>
-          </figure>
-        )}
+        {exercise.visual && <VisualCard visual={exercise.visual} className="exercise-visual" />}
 
         <h2 className="exercise-q">{exercise.question}</h2>
 
