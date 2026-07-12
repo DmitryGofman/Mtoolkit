@@ -57,6 +57,32 @@ export const chapter13: Chapter = {
           'לביד — סוס העבודה של מתקנים ואבות-טיפוס; MDF — משטחים חלקים ותבניות שאינם פוגשים מים ועומס. ' +
           'הבחירה ביניהם היא החלטה הנדסית, לא עניין של מה שיש במחסן.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch13-wood-grain-growth-rings.jpg',
+          caption:
+            'טבעות שנה בחתך גזע: עץ הוא חומר עם היסטוריה וכיוון. חזק לאורך הסיבים, חלש ונסדק לרוחבם — אנאיזוטרופיה שנולדה בעץ החי.',
+          credit: 'Kelsey Todd, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Stacked_Timber_Displaying_Growth_Rings_Closeup.jpg',
+        },
+        {
+          src: 'visuals/ch13-plywood-cross-section.jpg',
+          caption:
+            'לביד (Plywood) בחתך: שכבות פורניר מודבקות בכיוונים מצטלבים — ההנדסה שמבטלת את כיווניות העץ ומייצבת אותו.',
+          credit: 'Mendaliv, Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Plywood_cross_section.jpg',
+        },
+        {
+          src: 'visuals/ch13-mdf-fiber-closeup.jpg',
+          caption:
+            'MDF מקרוב: סיבים דחוסים בדבק. אחיד, זול, מתעבד יפה — ושונא מים ומחזיק ברגים גרוע. לכל לוח יש אופי.',
+          credit: 'Nikipetia, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Mdf-plaat-zijaanzicht.jpg',
+        },
+      ],
       concepts: [
         {
           term: 'אנאיזוטרופיה',
@@ -121,6 +147,16 @@ export const chapter13: Chapter = {
           'ולכן מתקנים ומשטחי עבודה מעדיפים לביד על עץ מלא. אבל גם ללוחות יש נקודת תורפה — מים נוזליים: ' +
           'MDF שנרטב מתנפח בשפתו ולא חוזר, ולביד זול מתקלף. ועוד כלל זהב מהנגרייה: עץ שהגיע ממחסן צריך ' +
           'להתאקלם בסביבת העבודה לפני עיבוד סופי — לוח שנוסר מיד עם הגעתו ימשיך לזוז אחרי החיתוך.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch13-wood-warp-cupped-board.jpg',
+          caption:
+            'קורה שהתקערה (Cupping): העץ ספג לחות בצד אחד יותר מהשני — וזז. עץ תמיד זז; השאלה היא רק אם התכן שלך נתן לו לאן.',
+          credit: 'Dschamal Berger, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Schiefes_Holz_mit_fragw%C3%BCrdiger_Maserung.jpg',
+        },
       ],
       concepts: [
         {
@@ -189,6 +225,24 @@ export const chapter13: Chapter = {
           'שטח הדבקה; ברגים — למהירות ולכוונון; אינסרטים — לפירוק חוזר. הבחירה מתחילה תמיד באותה שאלה: ' +
           'האם החיבור הזה יתפרק אי פעם, ומאיזה כיוון הוא נמשך?',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch13-dovetail-joint-handcut.jpg',
+          caption:
+            'חיבור שילוב (Dovetail) בעבודת יד: הגיאומטריה נועלת את החלקים גם בלי דבק — החיבור הקלאסי שכיוון העומס בו הוא הכל.',
+          credit: 'Damien Pollet, Wikimedia Commons',
+          license: 'CC BY-SA 2.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:My_first_handcut_dovetails!.jpg',
+        },
+        {
+          src: 'visuals/ch13-wood-dowel-corner-joint.jpg',
+          caption:
+            'חיבור פינה עם פיני עץ (Dowels): מיקום + הדבקה בשטח סיב-לאורך-סיב. פשוט, מהיר, ונפוץ בכל רהיט תעשייתי.',
+          credit: 'böhringer friedrich, Wikimedia Commons',
+          license: 'CC BY-SA 2.5',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:D%C3%BCbelverbindung.jpg',
+        },
+      ],
       concepts: [
         {
           term: 'שילוב',
@@ -255,6 +309,16 @@ export const chapter13: Chapter = {
           'משטח ייחוס אחד מוגדר וכל המידות ממנו, ורכיבי הדיוק האמיתיים (פינים, תותבים, אינסרטים) עשויים ' +
           'מתכת ונטועים בעץ. עץ נותן את הגוף הזול והמהיר; המתכת נותנת את הנקודות המדויקות. השילוב הזה ' +
           'הוא סוד המתקנים הטובים.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch13-table-saw-cutting.jpg',
+          caption:
+            'מסור שולחן באמצע חיתוך זווית: הכלי המרכזי של הנגרייה. חיתוכים ישרים, מהירים וזולים — סביב זה בונים את התכן.',
+          credit: 'Patrick Fitzgerald, Wikimedia Commons',
+          license: 'CC BY 2.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Table_saw_cutting_wood_at_an_angle,_by_BarelyFitz.jpg',
+        },
       ],
       concepts: [
         {
@@ -323,6 +387,16 @@ export const chapter13: Chapter = {
           'ניקיון בתקן (חדרים נקיים, מזון ותרופות) או עמידות אש. ובכל מקרה — ההחלטה חוזרת לעיקרון שמלווה ' +
           'אותך מתחילת הקורס: לדבר עם בעל המלאכה מוקדם. שאל את הנגר "מאיזה לוח היית בונה את זה?" — ' +
           'התשובה שלו שווה יותר מקטלוג חומרים שלם.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch13-carpentry-workshop.jpg',
+          caption:
+            'נגרייה עובדת: מכונות, עץ מאוחסן, וידע של דורות. שרטוט נכון + רשימת חיתוך + שיחה אחת טובה — וזה המקום שבו מתקנים ואבי-טיפוס נולדים מהר וזול.',
+          credit: 'Faiza affes, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Carpentry_workshop_in_the_old_medina_of_Tunis.jpg',
+        },
       ],
       concepts: [
         {

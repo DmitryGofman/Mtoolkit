@@ -58,6 +58,24 @@ export const chapter12: Chapter = {
           'אם התשובה היא דיסק, מטר ורתכת — השרטוט צריך לדבר בשפה שלהם. ' +
           'ואם יש בחלק אזור אחד שכן דורש דיוק אמיתי — מפרידים אותו במפורש, ועל זה בדיוק יחידה 4.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch12-metal-fabrication-workshop.jpg',
+          caption:
+            'מסגרייה אמיתית: מכבש, שולחנות עבודה, חלקים באמצע דרך. העולם שבו "מדויק" נמדד בסרט מדידה — ובידיים שיודעות מה הן עושות.',
+          credit: 'Konouyawo, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Atelier_de_chaudronnerie_01.jpg',
+        },
+        {
+          src: 'visuals/ch12-angle-grinder-cutting-steel.jpg',
+          caption:
+            'משחזת זווית חותכת פלדה: הכלי האוניברסלי של המסגרייה. מהיר וגמיש — ולא כלי דיוק. ההבדל הזה הוא לב הפרק.',
+          credit: 'Jorge Royan, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Steel_iron_construction_worker_-_8338.jpg',
+        },
+      ],
       concepts: [
         {
           term: 'מסגרייה',
@@ -121,6 +139,24 @@ export const chapter12: Chapter = {
         'איך חושבים על זה נכון: הגלם נותן את הצורה הכללית והחוזק — לא את הדיוק. ' +
           'מתכננים כך שהמידות הקריטיות לא יישענו על דיוק הגלם: או שיוצרים אותן בעיבוד (קדח, כרסום מקומי), ' +
           'או שמאפשרים כוונון בהרכבה. ומאמצים הרגל של מקצוענים: לפני קיבוע מידות בשרטוט — שיחה קצרה על מלאי.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch12-steel-profiles-stock-rack.jpg',
+          caption:
+            'מתקן גלם במסגרייה: מוטות ופרופילים באורכים מסחריים. תכן חכם מתחיל ממה שקיים במתקן הזה — לא ממה שנוח ב-CAD. [מידות קטלוג — דורש אימות]',
+          credit: 'Cdang, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Parc_materiau_usinage.jpg',
+        },
+        {
+          src: 'visuals/ch12-cold-saw-cutting-steel.jpg',
+          caption:
+            'מסור קר עם קירור מים חותך מוט פלדה: החיתוך המדויק והנקי של המסגרייה — ישר, בלי חום, מוכן להמשך עבודה.',
+          credit: 'Erik Wannee, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Afkortzaag_BEWO.jpg',
+        },
       ],
       concepts: [
         {
@@ -186,6 +222,24 @@ export const chapter12: Chapter = {
         'ההחלטה, אם כך, היא לא "מה חזק יותר" אלא "מה יקרה לשלד הזה בחייו": ' +
           'כמה פעמים ישתנה? מי יתחזק אותו? באיזו סביבה יחיה? אילו עומסים יראה? ' +
           'שלד שמשתנה כל חודש ורותך — הוא טעות. שלד שסופג מכות בשטח והורכב מפרופילי אלומיניום עדינים — גם.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch12-welded-tube-frame.jpg',
+          caption:
+            'ריתוך שלד צינורות בתוך מתקן קיבוע: חזק, קשיח, זול — וקבוע לנצח. שינוי אחרי ריתוך = משחזת ומהתחלה.',
+          credit: 'University of the Fraser Valley, Wikimedia Commons',
+          license: 'CC BY 2.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:UFV_Bicycle_frame_building_(8639724661).jpg',
+        },
+        {
+          src: 'visuals/ch12-aluminum-extrusion-frame-assembly.jpg',
+          caption:
+            'שלד מפרופילי אלומיניום T-slot: מתפרק, מתכוונן, וניתן לשינוי בכל רגע — במחיר קשיחות נמוכה יותר ועלות רכיבים גבוהה יותר. הבחירה בין השניים היא החלטת חיים של המכלול.',
+          credit: 'Kenming Wang, Wikimedia Commons',
+          license: 'CC BY-SA 2.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:HyperCube_HyperCube_2020_Aluminum_Frame_(34630748023).jpg',
+        },
       ],
       concepts: [
         {
@@ -255,6 +309,24 @@ export const chapter12: Chapter = {
           'לא נכנס לכל כרסומת. כשעיבוד-אחרי אינו מעשי, עוברים לתוכנית ב׳ של המתכננים המנוסים: ' +
           'ממשקים מתכווננים — חורים אובאליים (slots), פלטות כוונון, שימס (shims) — שנותנים להרכבה לבלוע את העיוות. ' +
           'דיוק שאי אפשר לייצר, מתכננים סביבו.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch12-drill-press-drilling-metal.jpg',
+          caption:
+            'מקדחה עמודית קודחת פח: מדויק יותר מקידוח יד, רחוק מדיוק CNC. את החורים הקריטיים קודחים יחד (match drilling) או משאירים לעיבוד שבבי.',
+          credit: 'SuperBlobMonster, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Using_drill_press.jpg',
+        },
+        {
+          src: 'visuals/ch12-deburring-chisel.jpg',
+          caption:
+            'הסרת גרדים על משחזת שולחן: הפרט הקטן שמפריד בין עבודת מסגרות טובה לבין חלק שחותך ידיים בהרכבה.',
+          credit: 'U.S. Air Force / Luis E. Rios Calderon, Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Making_sparks_for_parts_(8625891).jpg',
+        },
       ],
       concepts: [
         {

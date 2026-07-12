@@ -10,6 +10,10 @@ import { chapter08 } from './chapter-08-testing.ts'
 import { chapter09 } from './chapter-09-laser-sheetmetal.ts'
 import { chapter10 } from './chapter-10-printing.ts'
 import { chapter11 } from './chapter-11-welding.ts'
+import { chapter12 } from './chapter-12-fabrication.ts'
+import { chapter13 } from './chapter-13-carpentry.ts'
+import { chapter14 } from './chapter-14-textiles.ts'
+import { chapter15 } from './chapter-15-zivud.ts'
 import { chapter16 } from './chapter-16-metrology.ts'
 
 /** Playable campaign, in operation order. Add new chapters here once reviewed. */
@@ -25,6 +29,10 @@ export const chapters: Chapter[] = [
   chapter09,
   chapter10,
   chapter11,
+  chapter12,
+  chapter13,
+  chapter14,
+  chapter15,
   chapter16, // enrichment op — practical metrology
 ]
 
@@ -35,9 +43,4 @@ export const chapters: Chapter[] = [
  * talking to the craftsman, pre-release checklist). To be produced by the
  * agent team; keep numbering stable when promoting to a playable chapter.
  */
-export const lockedChapters: LockedChapter[] = [
-  { number: 12, codename: 'OPERATION: IRONWORKS', title: 'מסגרוּת' },
-  { number: 13, codename: 'OPERATION: TIMBERLINE', title: 'נגרוּת' },
-  { number: 14, codename: 'OPERATION: NEEDLE POINT', title: 'תפירה וטקסטיל טכני' },
-  { number: 15, codename: 'OPERATION: HARD WIRE', title: 'הלחמות, קונקטורים וזיווד' },
-]
+export const lockedChapters: LockedChapter[] = []

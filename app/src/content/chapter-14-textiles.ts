@@ -57,6 +57,16 @@ export const chapter14: Chapter = {
           'והמודל המנטלי שמלווה את כל הפרק: בד עובד במתיחה בלבד. הוא לא נושא לחיצה ולא כפיפה — ' +
           'כל תכן טקסטיל טוב הוא תשובה לשאלה "איך אני מסדר את העומסים כך שהבד רק יימתח, ולאורך החוטים".',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch14-ripstop-fabric-closeup.jpg',
+          caption:
+            'ריפסטופ מקרוב: רשת חוטים מעובים שעוצרת קרעים מלהתפשט. בד טכני הוא חומר מהונדס — לא "סתם בד".',
+          credit: 'Flyout, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:RipStop.jpg',
+        },
+      ],
       concepts: [
         {
           term: 'שתי וערב',
@@ -122,6 +132,25 @@ export const chapter14: Chapter = {
           'רתמה שכל הכוח בה זורם ברצועות מקצה לקצה. הבד סוגר, מכסה ומגן; הרצועה נושאת. ' +
           'ככה תיק של צנחנים בנוי — וזו הסיבה שהוא לא נתלש בידית.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch14-lockstitch-diagram.png',
+          caption:
+            'תפר המנעול (Lockstitch) — הדיאגרמה הקלאסית: חוט עליון וחוט תחתון ננעלים בתוך הבד. זה ה"ריתוך" של עולם הטקסטיל, וכמוהו — חוזקו תלוי בביצוע.',
+          credit: 'Anthony Atkielski, Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Lockstitch_-_Anthony_Atkielski.png',
+          plate: true,
+        },
+        {
+          src: 'visuals/ch14-webbing-straps-buckles.jpg',
+          caption:
+            'רצועות (Webbing) עם אבזמים: השלד נושא-העומס של כל מוצר טקסטיל טכני. הבד עוטף — הרצועה נושאת.',
+          credit: 'Auckland War Memorial Museum, Wikimedia Commons',
+          license: 'CC BY 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Webbing,_straps_(AM_2008.11.5).jpg',
+        },
+      ],
       concepts: [
         {
           term: 'תפר',
@@ -185,6 +214,32 @@ export const chapter14: Chapter = {
           'כמו הבד שסביבה. עינית שנלחצה על שכבת בד אחת דקה תיתלש עם הבד בעומס הראשון; בנקודת עומס מוסיפים ' +
           'שכבות חיזוק או רצועת webbing מתחת לעינית, ומחלקים את העומס בין כמה עיניות במקום לתלות הכול על אחת. ' +
           'נתוני החוזק המספריים של אבזמים, רצועות ועיניות נלקחים תמיד מנתוני היצרן — [דורש אימות] — לא מהערכה.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch14-zipper-teeth-macro.jpg',
+          caption:
+            'שיני ריצ׳רץ׳ אטום מקרוב: גם לחומרה רכה יש דרגות — מרוכסן פשוט ועד ריצ׳רץ׳ אטים-מים של חליפות צלילה.',
+          credit: 'Peter Southwood, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Plastic_watertight_drysuit_zipper_closed_teeth_detail_P8110024.jpg',
+        },
+        {
+          src: 'visuals/ch14-hook-loop-macro.jpg',
+          caption:
+            'צד ה"ווים" של סקוץ׳ בהגדלה: אלפי ווים זעירים. נוח לפתיחה תדירה — ונחלש עם הזמן ובלכלוך. בחירת סגירה היא החלטת עומס ותדירות.',
+          credit: 'Kamranki, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Hook_and_loop_fastener_-_macro_photograph_of_%22hooks%22.jpg',
+        },
+        {
+          src: 'visuals/ch14-grommets-fabric.jpg',
+          caption:
+            'עיניות (Grommets) בקצה בד מחוזק: טבעת מתכת שמפזרת עומס נקודתי על הבד — עם תפרים שמחזקים את הסביבה.',
+          credit: 'Panamitsu, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Grommets_of_a_New_Zealand_flag.jpg',
+        },
       ],
       concepts: [
         {
@@ -252,6 +307,16 @@ export const chapter14: Chapter = {
           'סימון נקודות עומס והחיזוק הנדרש בהן (בר-טאק, box-X, שכבות); רשימת חומרה (אבזמים, ריצ׳רצ׳ים, עיניות); ' +
           'וסיומת לכל קצה. את גזרת התבניות עצמן — כמה תוספת תפר ואיך לפרק את הצורה לפאנלים — ' +
           'משאירים למתפרה או מגבשים איתה יחד: זה המקצוע שלה.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch14-industrial-sewing-machine.jpg',
+          caption:
+            'מכונת תפירה תעשייתית: המקבילה של המתפרה למרכז העיבוד. התבנית (Pattern) שאתה מגדיר היא השרטוט — והיא כוללת תוספות תפר, בדיוק כמו עודף עיבוד.',
+          credit: 'Haddybellz, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Industrial_sewing_machine.jpg',
+        },
       ],
       concepts: [
         {
@@ -321,6 +386,16 @@ export const chapter14: Chapter = {
           'שאלות טובות למתפרה: "יש לך מכונת בר-טאק?", "תפרת webbing עם עומסים?", "איזה חוט תשתמשי כאן?", ' +
           '"מה בתכן הזה יסבך אותך?". כמו אצל הכרסם — בעלת המקצוע רואה במוצר שלך דברים שאתה לא רואה, ' +
           'ושיחה לפני ההזמנה שווה יותר מכל תיקון אחריה.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch14-safety-harness-fitting.jpg',
+          caption:
+            'התאמת רתמת בטיחות (צילום NIOSH): כשטקסטיל נושא אדם — נכנסים לעולם של תקנים, בדיקות עומס וציוד מוסמך בלבד. [עומסי עבודה — דורש אימות]',
+          credit: 'NIOSH, Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Construction_worker_harness_(9253634989).jpg',
+        },
       ],
       concepts: [
         {

@@ -55,6 +55,32 @@ export const chapter15: Chapter = {
           'ולכן חוטים שמתחברים לקונקטורים בסביבות רוטטות (רכב, תעופה, רובוטיקה) כמעט תמיד מקורמפים, לא מולחמים. ' +
           'הלחמה נשארת מצוינת למקומה: על לוח מודפס, בחיבורים שאיש לא מושך בהם.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch15-soldering-iron-pcb-repair.jpg',
+          caption:
+            'טכנאי הצי האמריקאי מלחים כרטיס: הלחמה טובה היא מיומנות — הרטבה מלאה, ברק, וכמות בדיל נכונה.',
+          credit: 'John Wagner, U.S. Navy — Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:US_Navy_070129-N-3038W-059_Electronics_Technician_3rd_Class_Christopher_Ralph_uses_a_soldering_iron_to_make_repairs_on_a_circuit_board_in_the_micro-miniature_electronics_repair_shop_aboard_the_Nimitz-class_aircraft_carrier_USS.jpg',
+        },
+        {
+          src: 'visuals/ch15-cold-solder-joint.jpg',
+          caption:
+            'הלחמה קרה (Cold joint) מקרוב: משטח עמום ומחוספס במקום ברק חלק. עובדת היום — מתנתקת בשטח, בדיוק כשקר או רוטט.',
+          credit: 'Coronium, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Cold_solder_joint2.jpg',
+        },
+        {
+          src: 'visuals/ch15-crimped-terminal-wire.jpg',
+          caption:
+            'שרוול לחיצה (Crimp) במהדק בורג: החיבור המכני האמין לחוטים בסביבת רעידות — בתנאי שהשרוול, החוט והכלי מותאמים. [התאמה — דורש אימות מול הוראות יצרן]',
+          credit: 'Simon A. Eugster, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Screw_terminal_with_crimped_wire.jpg',
+        },
+      ],
       concepts: [
         {
           term: 'הרטבה',
@@ -116,6 +142,16 @@ export const chapter15: Chapter = {
           'ויצרנים מגדירים לכל דגם מספר מחזורים מדורג — יש קונקטורים שנועדו להתחבר פעמים ספורות בחיי המוצר, ' +
           'ויש כאלה שנבנו לחיבור יומיומי. את המספרים לוקחים מדף הנתונים של היצרן — [דורש אימות] — ' +
           'אבל העיקרון תקף תמיד: קונקטור זול שנבחר לממשק שמנתקים כל יום הוא שעון עצר. חשוב כמה פעמים הממשק הזה יחובר בפועל — כולל בבדיקות ובשירות.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch15-locking-connector-powerlock.jpg',
+          caption:
+            'קונקטורים תעשייתיים ננעלים: טבעת נעילה, קידוד צורני שמונע חיבור הפוך, ואטימה. כל מה שקונקטור צריך כדי לשרוד שטח.',
+          credit: 'Alistair1978, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Veam-PowerLock-Connectors-Inline.jpg',
+        },
       ],
       concepts: [
         {
@@ -182,6 +218,25 @@ export const chapter15: Chapter = {
           '[דורש אימות] — והעיקרון התכנוני פשוט: מנתבים בקשתות רחבות, לא בפניות חדות, ומוודאים שליד כל כניסת קונקטור ' +
           'יש מקום לכבל לצאת ישר לפני שהוא מתעקל. כבל שנאלץ להתעקם מיד ביציאה מהקונקטור מושך את המגעים הצידה כל חייו.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch15-cable-gland-strain-relief.png',
+          caption:
+            'אנטומיית Cable gland בפירוק: גוף, קונוס לחיצה ואום אטימה — המנגנון שתופס את הכבל ומוודא שהמשיכה נעצרת בו, לא בהלחמה.',
+          credit: 'Andyremel, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Exploded_CW_Gland_annotated.png',
+          plate: true,
+        },
+        {
+          src: 'visuals/ch15-cable-harness-lacing.jpg',
+          caption:
+            'צמת כבלים קשורה (Lacing): כל כבל מעוגן, מנותב וברדיוס מבוקר. צמה טובה היא רכיב מכני מתוכנן — לא "חבילת חוטים".',
+          credit: 'David J. Fred, Wikimedia Commons',
+          license: 'CC BY-SA 2.5',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Cable-lacing-harness-mockup.jpg',
+        },
+      ],
       concepts: [
         {
           term: 'שחרור מאמץ',
@@ -247,6 +302,16 @@ export const chapter15: Chapter = {
           'ובסביבות רעידות קשות שוקלים בידוד רעידות לתושבת כולה. ולבסוף — שירות: כל קונקטור צריך יד שמגיעה אליו, ' +
           'כל נורית חיווי צריכה עין שרואה אותה, וכל רכיב מתכלה (נתיך!) צריך להיות נגיש בלי לפרק חצי מכונה. ' +
           'זיווד שדורש פירוק שלושה חלקים כדי לנתק קונקטור אחד יגרום לכך שבשטח ינתקו אותו במשיכת כבל — וחוזרים לשיעור הקודם.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch15-enclosure-interior-pcb-mounted.jpg',
+          caption:
+            'כרטיס מורכב בתוך מארז אמיתי על נקודות עיגון: ה-PCB יושב על תושבות (Standoffs), מקובע נגד רעידות, עם גישה לחיווט. ככה נראה זיווד שמכבד את האלקטרוניקה.',
+          credit: 'Raimond Spekking, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Siedle_SIC_3000-01_-_case_opened,_board_1-2084.jpg',
+        },
       ],
       concepts: [
         {
@@ -316,6 +381,25 @@ export const chapter15: Chapter = {
           'אבל כאן צריך לומר את המחיר בקול רם: פוטינג הוא חד-כיווני. אי אפשר לאבחן, אי אפשר לתקן, אי אפשר להחליף רכיב — ' +
           'כל תקלה משמעה זריקת היחידה כולה. גם למסה, לחום הכלוא ולמאמצים על רכיבים בזמן ההתקשות יש מחיר. ' +
           'לכן הציפויים שמורים למה שבאמת חי בסביבה קשה — ולא תחליף לזיווד טוב, אלא שכבה אחרונה מעליו.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch15-heat-shrink-tubing.jpg',
+          caption:
+            'שרוול מתכווץ על מחבר חוטים: שכבת ההגנה הראשונה — בידוד, חיזוק מכני קל, וחסימת לחות בסיסית.',
+          credit: 'Osanusi2151, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Heat_shrink_tubing.jpg',
+        },
+        {
+          src: 'visuals/ch15-conformal-coating-application.png',
+          caption:
+            'ציפוי קונפורמי בחתך: שכבת הגנה דקה על הכרטיס — והדיאגרמה מראה בדיוק את האתגר: דק מדי לא מגן, עבה מדי סודק. הגנה מרבית, במחיר תיקוניות.',
+          credit: 'Christiansilahian, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Traditional_Conformal_Coating_Application.png',
+          plate: true,
+        },
       ],
       concepts: [
         {
