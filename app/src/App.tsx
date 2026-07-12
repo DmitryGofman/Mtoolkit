@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { chapters, lockedChapters } from './content/index.ts'
 import { loadState, saveState, resetState, emptyChapterProgress } from './game/progress.ts'
 import type { PlayerState } from './game/types.ts'
@@ -24,6 +24,11 @@ export default function App() {
 
   const chapter = chapters.find((c) => c.id === activeId) ?? chapters[0]
   const progress = player.chapters[chapter.id] ?? emptyChapterProgress()
+
+  // Advancing to any new screen returns the reader to the top of the page.
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 })
+  }, [screen])
 
   function update(next: PlayerState) {
     setPlayer(next)
@@ -92,7 +97,15 @@ export default function App() {
     <div className="app">
       <div className="bg-grid" aria-hidden />
       <div className="bg-scanline" aria-hidden />
-      <Hud xp={player.xp} onReset={reset} />
+      <Hud
+        xp={player.xp}
+        onReset={reset}
+        onHome={
+          screen.kind === 'command-center'
+            ? undefined
+            : () => setScreen({ kind: 'command-center' })
+        }
+      />
 
       {screen.kind === 'command-center' && (
         <CommandCenter
