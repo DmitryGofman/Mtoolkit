@@ -97,14 +97,24 @@ export interface Rank {
   nameEn: string
 }
 
+/** Where the learner is inside a chapter — used to resume after leaving. */
+export type ResumePoint =
+  | { kind: 'briefing' }
+  | { kind: 'intel'; index: number }
+  | { kind: 'practice'; index: number }
+  | { kind: 'exam'; index: number }
+
 export interface ChapterProgress {
   unitsRead: string[]
   exercisesDone: Record<string, boolean> // id -> answered correctly on first try
+  answers: Record<string, number> // exerciseId -> picked ORIGINAL option index (persists answers)
   examScore: number | null // percent, null until attempted
   completed: boolean
+  resume: ResumePoint | null // last position in this chapter, for resume-where-you-left-off
 }
 
 export interface PlayerState {
+  /** Cached total; the source of truth is computeXp() over `chapters`. */
   xp: number
   chapters: Record<string, ChapterProgress>
 }
