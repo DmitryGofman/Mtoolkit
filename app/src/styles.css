@@ -666,6 +666,19 @@ body {
   padding-top: 16px;
 }
 
+.foot-nav { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+
+/* intel footer: back button on one side, advance on the other */
+.intel-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+.intel-foot .btn-primary { margin-inline-start: auto; }
+
 /* ===================== debrief ===================== */
 .medal { text-align: center; padding: 20px 0 8px; }
 

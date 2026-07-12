@@ -5,10 +5,11 @@ interface Props {
   unit: Unit
   index: number
   total: number
+  onBack?: () => void
   onComplete: () => void
 }
 
-export function IntelUnit({ unit, index, total, onComplete }: Props) {
+export function IntelUnit({ unit, index, total, onBack, onComplete }: Props) {
   return (
     <main className="screen">
       <div className="panel intel">
@@ -80,9 +81,16 @@ export function IntelUnit({ unit, index, total, onComplete }: Props) {
           </p>
         </section>
 
-        <button className="btn-primary" onClick={onComplete}>
-          INTEL ACQUIRED ✔ (+{unit.xp} XP)
-        </button>
+        <div className="intel-foot">
+          {onBack && (
+            <button className="btn-ghost" onClick={onBack}>
+              ◂ אחורה
+            </button>
+          )}
+          <button className="btn-primary" onClick={onComplete}>
+            INTEL ACQUIRED ✔ (+{unit.xp} XP)
+          </button>
+        </div>
       </div>
     </main>
   )
