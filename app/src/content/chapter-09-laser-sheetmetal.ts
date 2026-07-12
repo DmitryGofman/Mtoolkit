@@ -56,6 +56,24 @@ export const chapter09: Chapter = {
           'כשעל שפת החיתוך יושבת פונקציה (למשל קצה קפיצי) — שווה לדעת שהשפה אינה "חומר בתולי". ' +
           'ההשלכות המעשיות לכל חומר — [דורש אימות].',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch09-laser-cutting-sparks.jpg',
+          caption:
+            'ראש לייזר חותך פח: אלומת אור מרוכזת ממיסה את המתכת, וסילון גז מפנה אותה. מהיר, מדויק — ודו-ממדי לחלוטין.',
+          credit: 'Framos123, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Laser_Cutting.jpg',
+        },
+        {
+          src: 'visuals/ch09-laser-cut-edge-kerf.jpg',
+          caption:
+            'קצה חתך לייזר בפלדה עבה, מקרוב: פסי החיתוך (striations) והחריץ שהאלומה משאירה (Kerf). החריץ הזה הוא "עובי העיפרון" של הלייזר — והתכן חייב להביא אותו בחשבון. [רוחב kerf — דורש אימות]',
+          credit: 'EGU-Metall, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Laserschnitt_in_Stahl_S355MC_12.0mm.jpg',
+        },
+      ],
       concepts: [
         {
           term: 'חיתוך לייזר',
@@ -121,6 +139,25 @@ export const chapter09: Chapter = {
           'תוכנות CAD מודרניות יודעות לפרוס אוטומטית לפי K-factor שמזינים להן — וזה מצוין לבדיקת תכן — ' +
           'אבל את הפריסה הסופית, זו שנחתכת, עדיף לרוב שהספק יפיק בעצמו מהמודל המקופל, לפי הטבלאות שלו. ' +
           'על השאלה מי מפיק את הפריסה נרחיב ביחידת חבילת הייצור.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch09-bend-allowance-diagram.svg',
+          caption:
+            'הדיאגרמה שמסבירה למה פריסה היא לא "סכום הצלעות": בכיפוף, החומר נמתח מבחוץ ונדחס מבפנים, ורק הקו הנייטרלי שומר על אורכו. מיקומו — ה-K-factor. [ערכים — דורש אימות]',
+          credit: 'Wizard191, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Bend_allowance.svg',
+          plate: true,
+        },
+        {
+          src: 'visuals/ch09-press-brake-vdie-closeup.jpg',
+          caption:
+            'הכלים שעושים את הכיפוף: סכין (Punch) ותושבת V (Die) של מכופפת. רדיוס הכיפוף שלך נולד מהגיאומטריה של הזוג הזה.',
+          credit: 'Contour, Wikimedia Commons',
+          license: 'CC0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Mes_en_groef_van_een_kantbank.jpg',
+        },
       ],
       concepts: [
         {
@@ -190,6 +227,24 @@ export const chapter09: Chapter = {
           'לריתוך או להברגה, בלי מתקן ייצור. חיתוך הלייזר מדויק מספיק כדי שהמשחק הזה יעבוד — ' +
           'זה אחד המקומות שבהם התהליך מוכר את החוזקה הכי גדולה שלו כמעט בחינם. ' +
           'זכור רק מרווח התאמה סביר בין לשונית לחריץ — [דורש אימות].',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch09-flat-pattern-box-development.jpg',
+          caption:
+            'פריסה (Flat pattern) של קופסת פח עם לשוניות ומגרעות: כל קווי הכיפוף והחיבורים מתוכננים בשטוח — לפני שהחומר נגע במכופפת.',
+          credit: 'HeinrichZieglerGmbH, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Lascheneckverbindung_B3.jpg',
+        },
+        {
+          src: 'visuals/ch09-box-corner-fold-joint.jpg',
+          caption:
+            'פינת הקופסה אחרי הכיפוף: לשונית נכנסת למגרעת (Tab & slot) — הגאומטריה מיישרת את החלק בעצמה ומקלה על הריתוך או ההברגה שאחריה.',
+          credit: 'HeinrichZieglerGmbH, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Lascheneckverbindung_B1.jpg',
+        },
       ],
       concepts: [
         {
@@ -262,6 +317,24 @@ export const chapter09: Chapter = {
           'הוא לרוב סימן לתכן שצריך להתפצל: גוף פח זול + פיצ׳ר מדויק מעובד, או לעבור כולו לעיבוד שבבי. ' +
           'ההשוואה נעשית מול הפונקציה, לא מול ההרגל.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch09-press-brake-machine.jpg',
+          caption:
+            'מכופפת (Press brake) אמיתית: עולם הדיוק השני של הפח. החיתוך מדויק מאוד — הכיפוף פחות, וכל כיפוף מוסיף סטייה משלו לשרשרת.',
+          credit: 'Asurnipal, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Kantmaschine_LVD_PPS_200-30_02.jpg',
+        },
+        {
+          src: 'visuals/ch09-cnc-turret-punch-press.jpg',
+          caption:
+            'מנקבת צריח (Turret punch): האלטרנטיבה ללייזר לייצור סדרתי של חורים וצורות סטנדרטיות — כלי מכני במקום אלומה.',
+          credit: 'Torgeir Arnøy, Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Amadapunch.jpg',
+        },
+      ],
       concepts: [
         {
           term: 'קפיציות חוזרת',
@@ -332,6 +405,16 @@ export const chapter09: Chapter = {
           '"אילו רדיוסי כיפוף הכלים שלך נותנים בעובי הזה?", "מה בחלק הזה מסבך אותך?", ' +
           '"אתה מפיק פריסה מהמודל שלי או שאתה צריך DXF, ולפי איזה K-factor?". ' +
           'שאלה אחת כזאת לפני הקפאת התכן חוסכת סבב ייצור שלם אחריה. את השיחה הזאת מנהלים בשלב התכן — לא אחרי.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch09-laser-cut-nested-parts.jpg',
+          caption:
+            'שולחן חיתוך עם חלקים מקוננים (Nesting): הספק מסדר את הפריסות שלך על הלוח לניצול חומר מרבי. קובץ נקי ומסודר = קינון יעיל = מחיר טוב יותר.',
+          credit: 'Zgyricky, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:2X6m-Steel-Plate-CNC-Laser-Plasma-Cutting-Table_.jpg',
+        },
       ],
       concepts: [
         {

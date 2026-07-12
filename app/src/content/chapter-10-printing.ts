@@ -57,6 +57,25 @@ export const chapter10: Chapter = {
           'ובונה קליפה סביבה. זה נהדר לחיסכון בזמן ובחומר — אבל זה אומר שהחוזק, המשקל והקשיחות של החלק ' +
           'נקבעים בהגדרות ההדפסה, לא רק בקובץ ה-CAD. חלק מודפס הוא לא "החומר בצורת המודל" — הוא מבנה.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch10-fdm-printer-mid-print.jpg',
+          caption:
+            'מדפסת FDM באמצע עבודה: החרירה מניחה חוט פלסטיק מותך, שכבה על שכבה. כל מה שטוב ורע בהדפסה נגזר מהמשפט הזה.',
+          credit: 'HRostamani, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:3D_Printing_an_Object_using_FDM_Printer.jpg',
+        },
+        {
+          src: 'visuals/ch10-sls-process-diagram.png',
+          caption:
+            'עקרון ה-SLS: לייזר ממיס אבקה שכבה אחר שכבה, והאבקה הלא-מותכת משמשת תמיכה טבעית. בלי תמיכות — אבל עם עולם שלם של טיפול באבקה.',
+          credit: 'LaurensvanLieshout, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Selective_laser_sintering_principle.png',
+          plate: true,
+        },
+      ],
       concepts: [
         {
           term: 'ייצור מוסיף',
@@ -119,6 +138,16 @@ export const chapter10: Chapter = {
         'ב-SLA וב-SLS האפקט קיים אך חלש יותר — ריפוי שרף ואיחוי אבקה יוצרים חיבור בין-שכבתי אחיד יותר. ' +
           'אבל "חלש יותר" אינו "לא קיים": גם שם כיוון הבנייה משפיע על חוזק, על דיוק ועל פני שטח. ' +
           'הרגל טוב לכל הטכנולוגיות: לשרטט חץ עומס על החלק, ולשאול איך השכבות מונחות ביחס אליו.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch10-layer-lines-closeup.jpg',
+          caption:
+            'קווי השכבות של FDM בהגדלה: כל קו הוא ריתוך זעיר בין שכבות. החוזק לאורך הקווים גבוה — והחיבור ביניהן הוא נקודת התורפה. זה כל סיפור האנאיזוטרופיה בתמונה אחת.',
+          credit: '3DBenchy, Wikimedia Commons',
+          license: 'CC BY 2.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:3DBenchy.com_macro_close-up_v1_(30117959226).jpg',
+        },
       ],
       concepts: [
         {
@@ -188,6 +217,26 @@ export const chapter10: Chapter = {
           'לשניים שכל אחד מהם מודפס נקי — ומחוברים אחר כך. ב-SLS, נזכיר, אין תמיכות כלל — האבקה תומכת בעצמה — ' +
           'וזה בדיוק אחד הדברים שמשלמים עליו כשבוחרים בה.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch10-support-structures-slicer-view.png',
+          caption:
+            'תמיכות עץ (Tree supports) בתוכנת החיתוך: כל הפיגום הזה יודפס, ישולם, יוסר ביד — וישאיר צלקות. תכן חכם מייתר את רובו.',
+          credit: 'PranjalSingh IITDelhi, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Supports_in_3D_printing.png',
+          plate: true,
+        },
+        {
+          src: 'visuals/ch10-print-orientation-support-tradeoff.png',
+          caption:
+            'אותו חלק, שני כיווני הדפסה: אחד דורש יער תמיכות, השני כמעט כלום. כיוון ההדפסה הוא החלטת תכן — לא הגדרת מדפסת.',
+          credit: 'PranjalSingh IITDelhi, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Orientation_in_SLA.png',
+          plate: true,
+        },
+      ],
       concepts: [
         {
           term: 'תלייה',
@@ -254,6 +303,24 @@ export const chapter10: Chapter = {
           'מתכננים עיבוד משלים. מדפיסים את הקדח קטן בכוונה וקודחים או משחיזים אותו למידה אחרי ההדפסה, ' +
           'מקצים למשטח הקריטי תוספת חומר לפיניש, או משלבים רכיב מדויק — אינסרט הברגה מתכתי, תותב, פין — ' +
           'בתוך החלק המודפס. הדפסה נותנת צורה מורכבת בזול; את הדיוק מוסיפים אחר כך, רק היכן שצריך.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch10-failed-print-spaghetti.jpg',
+          caption:
+            '"ספגטי" — כשל ההדפסה הקלאסי: החלק התנתק או שהחרירה פספסה, והמדפסת המשיכה להדפיס לאוויר. שעות מכונה שהפכו לערימת חוטים.',
+          credit: 'SuperBlobMonster, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Makerbot_printing_problems.jpg',
+        },
+        {
+          src: 'visuals/ch10-print-bed-detachment-fail.jpg',
+          caption:
+            'התנתקות ממשטח ההדפסה באמצע עבודה: הפינות התכווצו, החלק התרומם — והשכבות הבאות כבר לא היו לו למי להיצמד. ככה נראה Warping כשמפסיקים להילחם בו.',
+          credit: 'EwkaC, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Nieudany_wydruk_3D_01.jpg',
+        },
       ],
       concepts: [
         {
@@ -323,6 +390,24 @@ export const chapter10: Chapter = {
           'בתוך יכולת החומר המאומתת; העומס — קצר-מועד ולא קבוע, או שנבדק לזחילה; והכמות — בטווח שבו הדפסה ' +
           'עדיין כלכלית. חלק שעונה על שלושתם, עם כיוון הדפסה מתועד וחומר הנדסי מתאים — הוא חלק סופי גאה. ' +
           'חלק שנשלח לשטח רק כי "אב-הטיפוס החזיק" — הוא תקלה שממתינה לתאריך.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch10-sla-printed-part.jpg',
+          caption:
+            'חלק SLA (שרף): גימור חלק ופרטים עדינים שמביכים כל FDM — במחיר חומר שביר יותר ותהליך ניקוי והקשיה.',
+          credit: 'Wizard191, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:SLA_produced_part.JPG',
+        },
+        {
+          src: 'visuals/ch10-gyroid-infill-part.jpg',
+          caption:
+            'מילוי ג׳ירואיד חשוף: הדפסה מאפשרת פנים חלולים-חכמים שאף תהליך אחר לא מייצר. זה היתרון האמיתי — גיאומטריה שקודם הייתה בלתי אפשרית.',
+          credit: 'A7N8X, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Gyroid.jpg',
+        },
       ],
       concepts: [
         {

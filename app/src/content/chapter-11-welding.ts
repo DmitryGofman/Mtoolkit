@@ -58,6 +58,32 @@ export const chapter11: Chapter = {
           'האם החיבור הזה באמת צריך להיות קבוע לנצח? האם החומרים משני הצדדים רתיכים — וזה לזה? ' +
           'ואיזה תהליך מתאים לעובי, לחומר ולדרישת האיכות? מי שעונה על שלושתן — מסמן ריתוך בביטחון.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch11-mig-welding-arc.jpg',
+          caption:
+            'ריתוך MIG: קשת חשמלית ממיסה תיל מתכת שמוזן ברציפות. מהיר וסלחני יחסית — סוס העבודה של המסגריות.',
+          credit: 'William M. Plate Jr., U.S. Air Force — Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:GMAW.welding.af.ncs.jpg',
+        },
+        {
+          src: 'visuals/ch11-tig-welding-closeup.jpg',
+          caption:
+            'ריתוך TIG מקרוב: אלקטרודת טונגסטן, מוט מילוי ביד השנייה, ושליטה מלאה. איטי, נקי, מדויק — הבחירה לחלקים עדינים ולאלומיניום.',
+          credit: 'Jason T. Poplin, U.S. Navy — Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:US_Navy_090715-N-5821P-002_Aviation_Support_Equipment_Technician_Airman_Anthony_Hammond_performs_tungsten_inert_gas_welding_during_a_training_evolution.jpg',
+        },
+        {
+          src: 'visuals/ch11-spot-welding-robot.jpg',
+          caption:
+            'רובוט ריתוך נקודות: שתי אלקטרודות לוחצות וזרם גבוה מתיך נקודה — החיבור של עולם הפחים והייצור הסדרתי.',
+          credit: 'Robotworx, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Robotworx-spot-welding-robot.jpg',
+        },
+      ],
       concepts: [
         {
           term: 'היתוך מקומי',
@@ -121,6 +147,25 @@ export const chapter11: Chapter = {
         'ולבסוף — קבלת המציאות: כשמשטח או קדח במכלול מרותך חייבים דיוק אמיתי, לא נלחמים בעיוות עד הסוף — ' +
           'עוקפים אותו: מתכננים עודף חומר ומעבדים את הפיצ׳רים המדויקים אחרי הריתוך, כשכל התזוזות כבר קרו. ' +
           '"לרתך ואז לעבד" הוא דפוס יסוד של תכן מרותך, ונחזור אליו ביחידה 5.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch11-welding-distortion-diagram.svg',
+          caption:
+            'עיוות זוויתי מריתוך — הדיאגרמה הקלאסית: התפר מתקרר, מתכווץ, ומושך את הלוחות כלפי מעלה. המכלול "זז" — לא כי מישהו טעה, כי ככה פיזיקה עובדת.',
+          credit: 'Wizard191, Wikimedia Commons',
+          license: 'CC BY-SA 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Welding_angular_distortion.svg',
+          plate: true,
+        },
+        {
+          src: 'visuals/ch11-welding-jig-fixture.jpg',
+          caption:
+            'שולחן קיבוע מודולרי לריתוך: המלחציים מחזיקים את החלקים בגיאומטריה הנכונה בזמן שהחום מנסה לעוות אותם. קיבוע וסדר ריתוכים — הנשק נגד העיוות.',
+          credit: 'Metronic Mauri, Wikimedia Commons',
+          license: 'CC0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Mesa_de_soldadura_con_utillajes_modulares.jpg',
+        },
       ],
       concepts: [
         {
@@ -191,6 +236,16 @@ export const chapter11: Chapter = {
           'לעמוד ליד כל תפר ולשאול: מאיפה הוא רואה? מאיפה נכנס הכלי? מה העוביים משני הצדדים? מה החומרים? ' +
           'ומה יש בסביבה שהחום יהרוס? חמש שאלות, חמש דקות — וזה ההבדל בין שרטוט שמסגרייה אוהבת לשרטוט שחוזר עם סימני שאלה.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch07-welder-at-work.jpg',
+          caption:
+            'הרתך צריך לראות את התפר ולהגיע אליו — עם האקדח, עם היד, ועם מסכת המגן. תפר שמתוכנן במקום שאי אפשר להגיע אליו פשוט לא יבוצע טוב.',
+          credit: 'Kwameghana, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:A_welder_at_work_welding_a_metal_together_(1).jpg',
+        },
+      ],
       concepts: [
         {
           term: 'גישה לריתוך',
@@ -258,6 +313,17 @@ export const chapter11: Chapter = {
           'הערך עצמו לפי חישוב או מקור מאומת, [דורש אימות]) ואז לסמן פרטנית רק את החריגים. ' +
           'ומעל הכול: כל תפר נושא-עומס מקבל סימון מפורש, מלא ובלתי תלוי בפרשנות.',
       ],
+      visuals: [
+        {
+          src: 'visuals/ch11-welding-symbol-elements.png',
+          caption:
+            'מבנה סמל הריתוך המלא (AWS): חץ, קו ייחוס, סמל התפר, מידות ואורך, וסימני היקף ושטח. כל רכיב בסמל הוא דרישה מחייבת — מה שלא סומן, לא קיים. [פרטי התקן — דורש אימות]',
+          credit: 'Hamilton & Sullivan (US Gov), Wikimedia Commons',
+          license: 'Public domain',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Elements_of_a_welding_symbol.PNG',
+          plate: true,
+        },
+      ],
       concepts: [
         {
           term: 'סמל ריתוך',
@@ -324,6 +390,24 @@ export const chapter11: Chapter = {
           'מושבי מיסבים, קדחי מיקום — מעובדים אחרי הריתוך, כשהעיוות כבר קרה וננעל. בשרטוט זה חייב להיות מפורש: ' +
           'עודפי חומר במקומות שיעובדו, וסדר תהליך כתוב — לרתך, (לשחרר מתחים אם נדרש, [דורש אימות]), ואז לעבד. ' +
           'מכלול שהוגדר כך יוצא מהמסגרייה עקום כמו כולם — ומגיע להרכבה מדויק כמו שתכננת.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch11-good-weld-bead-tig.jpg',
+          caption:
+            'תפר TIG טוב — "ערימת מטבעות": גלים אחידים, רוחב קבוע, בלי חורים ובלי חיתוך בשוליים. ככה נראית שליטה בתהליך.',
+          credit: 'Christopher.S.rcbc, Wikimedia Commons',
+          license: 'CC BY-SA 4.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Pipe_to_Flange_TIG_Welding.jpg',
+        },
+        {
+          src: 'visuals/ch11-bad-weld-porosity.jpg',
+          caption:
+            'והצד השני: תפר גס ולא אחיד על צינור. מה שרואים בעין הוא רק ההתחלה — השאלה הקשה היא מה קורה בפנים, ולשם צריך NDT. [קריטריוני קבלה — דורש אימות]',
+          credit: 'Alu.cz, Wikimedia Commons',
+          license: 'CC BY 3.0',
+          sourceUrl: 'https://commons.wikimedia.org/wiki/File:Welding-poor-quality-001.jpg',
+        },
       ],
       concepts: [
         {
