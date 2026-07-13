@@ -15,11 +15,13 @@ import { chapter13 } from './chapter-13-carpentry.ts'
 import { chapter14 } from './chapter-14-textiles.ts'
 import { chapter15 } from './chapter-15-zivud.ts'
 import { chapter16 } from './chapter-16-metrology.ts'
+import { chapter17 } from './chapter-17-drawings-deep.ts'
 
 /** Playable campaign, in operation order. Add new chapters here once reviewed. */
 export const chapters: Chapter[] = [
   chapter01,
   chapter02,
+  chapter17, // in-depth annex to OPERATION: BLUEPRINT — advanced drawing literacy
   chapter03,
   chapter04,
   chapter05,
