@@ -26,17 +26,37 @@ export function CommandCenter({ chapters, locked, progressFor, onDeploy }: Props
           const total = chapter.units.length + chapter.exercises.length
           const done = progress.unitsRead.length + Object.keys(progress.exercisesDone).length
           const pct = Math.round((done / total) * 100)
-          return (
-            <button
-              key={chapter.id}
-              className={`op-card op-active ${chapter.banner ? 'op-has-banner' : ''}`}
-              onClick={() => onDeploy(chapter.id)}
-            >
-              {chapter.banner && (
-                <div className="op-banner" aria-hidden>
-                  <img src={chapter.banner} alt="" loading="lazy" />
+
+          // Banner chapters: the art already carries number, codename, title and
+          // "DEPLOY", so the card is just the banner plus the real progress state.
+          if (chapter.banner) {
+            return (
+              <button
+                key={chapter.id}
+                className="op-card op-active op-banner-card"
+                onClick={() => onDeploy(chapter.id)}
+                title={`${chapter.codename} — ${chapter.title}`}
+              >
+                <img
+                  className="op-banner-img"
+                  src={chapter.banner}
+                  alt={`${chapter.codename} — ${chapter.title}`}
+                  loading="lazy"
+                />
+                {progress.completed ? (
+                  <span className="op-status op-status-done mono">✔ הושלם</span>
+                ) : (
+                  pct > 0 && <span className="op-status mono">{pct}%</span>
+                )}
+                <div className="op-progress" aria-hidden>
+                  <div className="op-progress-fill" style={{ width: `${pct}%` }} />
                 </div>
-              )}
+              </button>
+            )
+          }
+
+          return (
+            <button key={chapter.id} className="op-card op-active" onClick={() => onDeploy(chapter.id)}>
               <div className="op-num mono">{String(chapter.number).padStart(2, '0')}</div>
               <div className="op-code mono">{chapter.codename}</div>
               <div className="op-name">{chapter.title}</div>
