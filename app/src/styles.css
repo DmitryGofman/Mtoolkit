@@ -531,8 +531,76 @@ body {
 
 .lightbox-close:hover { color: var(--red); border-color: var(--red); }
 
-/* ---- HUD actions (home + reset) ---- */
+/* ---- rank-up promotion cinematic ---- */
+.rankup {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(11, 25, 45, 0.9), rgba(3, 6, 12, 0.96));
+  backdrop-filter: blur(3px);
+  cursor: pointer;
+  animation: deploy 0.3s ease-out;
+}
+
+.rankup-canvas { position: absolute; inset: 0; pointer-events: none; }
+
+.rankup-card {
+  position: relative;
+  text-align: center;
+  padding: 8px 20px;
+  cursor: default;
+  animation: rankup-pop 0.5s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+
+@keyframes rankup-pop {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.rankup-kicker { color: var(--cyan); letter-spacing: 0.22em; direction: ltr; margin-bottom: 14px; }
+
+.rankup-badge {
+  font-size: 88px;
+  line-height: 1;
+  color: var(--gold);
+  text-shadow: 0 0 40px rgba(242, 169, 59, 0.9), 0 0 80px rgba(242, 169, 59, 0.5);
+  animation: badge-glow 1.8s ease-in-out infinite;
+}
+
+@keyframes badge-glow {
+  50% { text-shadow: 0 0 55px rgba(242, 169, 59, 1), 0 0 110px rgba(242, 169, 59, 0.7); }
+}
+
+.rankup-rank-he {
+  font-size: 40px;
+  font-weight: 800;
+  margin-top: 12px;
+  background: linear-gradient(90deg, var(--gold-soft), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.rankup-rank-en {
+  color: var(--gold);
+  letter-spacing: 0.24em;
+  font-size: 13px;
+  direction: ltr;
+  margin: 4px 0 22px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rankup-card, .rankup { animation: none; }
+  .rankup-badge { animation: none; }
+}
+
+/* ---- HUD actions (sound + home + reset) ---- */
 .hud-actions { display: flex; gap: 8px; align-items: center; }
+
+.btn-icon { padding: 7px 10px; font-size: 14px; line-height: 1; }
 
 .btn-home { color: var(--gold-soft); border-color: rgba(242, 169, 59, 0.4); }
 

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import type { Exercise } from '../game/types.ts'
 import { VisualCard } from './VisualCard.tsx'
+import { sound } from '../game/sound.ts'
 
 interface Props {
   exercise: Exercise
@@ -52,6 +53,8 @@ export function ExercisePanel({
     const firstTryCorrect = correct && attempts === 0
     setPicked(pos)
     setAttempts((a) => a + 1)
+    if (correct) sound.correct()
+    else sound.wrong()
     onAnswer(originalIndex, firstTryCorrect)
   }
 

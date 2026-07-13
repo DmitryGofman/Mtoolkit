@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { chapters, lockedChapters } from './content/index.ts'
 import {
   loadState,
@@ -6,14 +6,17 @@ import {
   resetState,
   normalizeProgress,
   computeXp,
+  rankFor,
 } from './game/progress.ts'
-import type { PlayerState, ChapterProgress, ResumePoint } from './game/types.ts'
+import type { PlayerState, ChapterProgress, ResumePoint, Rank } from './game/types.ts'
+import { sound } from './game/sound.ts'
 import { Hud } from './components/Hud.tsx'
 import { CommandCenter } from './components/CommandCenter.tsx'
 import { Briefing } from './components/Briefing.tsx'
 import { IntelUnit } from './components/IntelUnit.tsx'
 import { ExercisePanel } from './components/ExercisePanel.tsx'
 import { Debrief } from './components/Debrief.tsx'
+import { RankUp } from './components/RankUp.tsx'
 
 type Screen =
   | { kind: 'command-center' }
@@ -33,6 +36,15 @@ export default function App() {
 
   // XP is derived from saved progress — it can never double-count or drift.
   const xp = useMemo(() => computeXp(chapters, player.chapters), [player.chapters])
+
+  // Fire the promotion cinematic when the player crosses a rank threshold.
+  const prevRankRef = useRef<Rank>(rankFor(xp))
+  const [rankUp, setRankUp] = useState<Rank | null>(null)
+  useEffect(() => {
+    const r = rankFor(xp)
+    if (r.minXp > prevRankRef.current.minXp) setRankUp(r)
+    prevRankRef.current = r
+  }, [xp])
 
   // Advancing to any new screen returns the reader to the top of the page.
   useEffect(() => {
@@ -132,6 +144,7 @@ export default function App() {
       if (score >= 60) p.completed = true
       p.resume = null // chapter run finished
     })
+    sound.complete()
     setScreen({ kind: 'debrief', score })
   }
 
@@ -232,6 +245,8 @@ export default function App() {
           onRetry={() => navTo({ kind: 'exam', index: 0 })}
         />
       )}
+
+      {rankUp && <RankUp rank={rankUp} onClose={() => setRankUp(null)} />}
 
       <footer className="foot mono">
         MECHALC ACADEMY // MVP v0.3 // תוכן לפי docs/syllabus-he.md — כללי אצבע ללמידה, לא תחליף
