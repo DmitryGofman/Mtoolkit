@@ -538,3 +538,12 @@
 - לידים ממופים: `sources/notes/kelman-blog-leads.md`
 - רמת אמינות: B (מקצועי, לא תקן; לאמת עקרונות מול מקור A לפני שימוש)
 - תאריך גישה: 2026-07-10
+
+### Manual of Engineering Drawing (2nd ed.) + GD&T Reference Chart — שרטוט מתקדם
+- רשומות מלאות: `sources/verified/engineering-drawing-refs.md` (REF-DRW-01, REF-DRW-02)
+- REF-DRW-01: Simmons & Maguire, *Manual of Engineering Drawing*, Elsevier Newnes 2004 —
+  BS 8888, חתכים, מידוּת, גבולות והתאמות (BS 4500), טולרנס גאומטרי, MMC, שרטוטי ייצור
+- REF-DRW-02: GD&T Symbols Chart (ASME Y14.5-2018), Engineer Essentials LLC / gdandtbasics.com
+- רמת אמינות: B; הקבצים אצל בעל הפרויקט — לא ברפו (זכויות יוצרים)
+- שימוש בפועל (2026-07-13): פרק 17 — BLUEPRINT APEX (שרטוט הנדסי לעומק)
+- תאריך גישה: 2026-07-13
