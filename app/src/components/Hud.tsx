@@ -7,6 +7,8 @@ interface HudProps {
   onReset: () => void
   /** Return to the command center; progress is kept. Hidden when already there. */
   onHome?: () => void
+  /** Open the player dossier (personal space). */
+  onDossier?: () => void
 }
 
 /** Animate a number toward `target` (respecting reduced-motion). */
@@ -39,7 +41,7 @@ function useCountUp(target: number): number {
   return value
 }
 
-export function Hud({ xp, onReset, onHome }: HudProps) {
+export function Hud({ xp, onReset, onHome, onDossier }: HudProps) {
   const rank = rankFor(xp)
   const next = nextRank(xp)
   const pct = next
@@ -58,21 +60,35 @@ export function Hud({ xp, onReset, onHome }: HudProps) {
         <span className="hud-sub">COMBAT ENGINEERING DIVISION</span>
       </div>
       <div className="hud-rank">
-        <div className="hud-rank-names">
-          <span className="hud-rank-he">{rank.name}</span>
-          <span className="hud-rank-en">{rank.nameEn}</span>
-        </div>
-        <div className="xp-track" title={next ? `${xp} / ${next.minXp} XP` : `${xp} XP`}>
-          <div className="xp-fill" style={{ width: `${pct}%` }} />
-        </div>
-        <div className="hud-xp-label">
-          <span className="mono">{shownXp} XP</span>
-          {next && (
-            <span className="mono dim">
-              {' '}
-              ▸ {next.nameEn}: {next.minXp}
-            </span>
-          )}
+        {onDossier ? (
+          <button
+            className="hud-badge-btn"
+            onClick={onDossier}
+            title="תיק אישי — הדרגות שלך"
+            aria-label="פתיחת התיק האישי"
+          >
+            <img className="hud-badge" src={rank.badge} alt={`${rank.nameEn} badge`} />
+          </button>
+        ) : (
+          <img className="hud-badge" src={rank.badge} alt={`${rank.nameEn} badge`} />
+        )}
+        <div className="hud-rank-info">
+          <div className="hud-rank-names">
+            <span className="hud-rank-he">{rank.name}</span>
+            <span className="hud-rank-en">{rank.nameEn}</span>
+          </div>
+          <div className="xp-track" title={next ? `${xp} / ${next.minXp} XP` : `${xp} XP`}>
+            <div className="xp-fill" style={{ width: `${pct}%` }} />
+          </div>
+          <div className="hud-xp-label">
+            <span className="mono">{shownXp} XP</span>
+            {next && (
+              <span className="mono dim">
+                {' '}
+                ▸ {next.nameEn}: {next.minXp}
+              </span>
+            )}
+          </div>
         </div>
       </div>
       <div className="hud-actions">

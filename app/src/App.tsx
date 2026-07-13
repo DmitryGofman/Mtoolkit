@@ -7,6 +7,7 @@ import {
   normalizeProgress,
   computeXp,
   rankFor,
+  careerStats,
 } from './game/progress.ts'
 import type { PlayerState, ChapterProgress, ResumePoint, Rank } from './game/types.ts'
 import { sound } from './game/sound.ts'
@@ -16,6 +17,7 @@ import { Briefing } from './components/Briefing.tsx'
 import { IntelUnit } from './components/IntelUnit.tsx'
 import { ExercisePanel } from './components/ExercisePanel.tsx'
 import { Debrief } from './components/Debrief.tsx'
+import { Dossier } from './components/Dossier.tsx'
 import { RankUp } from './components/RankUp.tsx'
 
 type Screen =
@@ -25,6 +27,7 @@ type Screen =
   | { kind: 'practice'; index: number }
   | { kind: 'exam'; index: number }
   | { kind: 'debrief'; score: number }
+  | { kind: 'dossier' }
 
 export default function App() {
   const [player, setPlayer] = useState<PlayerState>(loadState)
@@ -89,6 +92,16 @@ export default function App() {
   function goHome() {
     // Resume is already saved on each in-chapter step, so we keep it.
     setScreen({ kind: 'command-center' })
+  }
+
+  // Remember where the dossier was opened from, so closing it returns there.
+  const dossierReturnRef = useRef<Screen>({ kind: 'command-center' })
+  function openDossier() {
+    if (screen.kind !== 'dossier') dossierReturnRef.current = screen
+    setScreen({ kind: 'dossier' })
+  }
+  function closeDossier() {
+    setScreen(dossierReturnRef.current)
   }
 
   function startChapter() {
@@ -185,6 +198,7 @@ export default function App() {
         xp={xp}
         onReset={reset}
         onHome={screen.kind === 'command-center' ? undefined : goHome}
+        onDossier={screen.kind === 'dossier' ? undefined : openDossier}
       />
 
       {screen.kind === 'command-center' && (
@@ -244,6 +258,10 @@ export default function App() {
           onReturn={goHome}
           onRetry={() => navTo({ kind: 'exam', index: 0 })}
         />
+      )}
+
+      {screen.kind === 'dossier' && (
+        <Dossier xp={xp} stats={careerStats(chapters, player.chapters)} onReturn={closeDossier} />
       )}
 
       {rankUp && <RankUp rank={rankUp} onClose={() => setRankUp(null)} />}

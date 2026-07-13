@@ -143,6 +143,30 @@ body {
 .hud-rank {
   margin-inline-start: auto;
   min-width: 220px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hud-rank-info { flex: 1; min-width: 0; }
+
+.hud-badge-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  line-height: 0;
+  border-radius: 6px;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.hud-badge-btn:hover { transform: translateY(-2px); filter: drop-shadow(0 0 8px rgba(53, 224, 255, 0.6)); }
+
+.hud-badge {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  display: block;
 }
 
 .hud-rank-names {
@@ -631,15 +655,21 @@ body {
 .rankup-kicker { color: var(--cyan); letter-spacing: 0.22em; direction: ltr; margin-bottom: 14px; }
 
 .rankup-badge {
-  font-size: 88px;
-  line-height: 1;
-  color: var(--gold);
-  text-shadow: 0 0 40px rgba(242, 169, 59, 0.9), 0 0 80px rgba(242, 169, 59, 0.5);
+  width: 210px;
+  height: 210px;
+  margin: 0 auto;
   animation: badge-glow 1.8s ease-in-out infinite;
 }
 
+.rankup-badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 30px rgba(53, 224, 255, 0.55)) drop-shadow(0 0 60px rgba(242, 169, 59, 0.3));
+}
+
 @keyframes badge-glow {
-  50% { text-shadow: 0 0 55px rgba(242, 169, 59, 1), 0 0 110px rgba(242, 169, 59, 0.7); }
+  50% { filter: brightness(1.12) drop-shadow(0 0 24px rgba(53, 224, 255, 0.7)); }
 }
 
 .rankup-rank-he {
@@ -883,6 +913,138 @@ body {
 
 .btn-ghost:hover { color: var(--red); border-color: var(--red); }
 
+/* ===================== dossier (personal space) ===================== */
+.dossier-hero {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin: 8px 0 26px;
+  flex-wrap: wrap;
+}
+
+.dossier-badge-wrap {
+  width: 132px;
+  height: 132px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  filter: drop-shadow(0 0 22px rgba(53, 224, 255, 0.4));
+}
+
+.dossier-badge { width: 100%; height: 100%; object-fit: contain; }
+
+.dossier-id { flex: 1; min-width: 240px; }
+
+.dossier-rank-he {
+  font-size: 34px;
+  font-weight: 800;
+  background: linear-gradient(90deg, var(--gold-soft), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.dossier-rank-en {
+  color: var(--gold);
+  letter-spacing: 0.22em;
+  font-size: 12px;
+  direction: ltr;
+  margin: 2px 0 12px;
+}
+
+.dossier-xp { height: 9px; max-width: 460px; }
+
+.dossier-xp-label { font-size: 12px; color: var(--gold-soft); margin-top: 6px; direction: rtl; }
+
+.dossier-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 26px;
+}
+
+.stat-tile {
+  background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  border: 1px solid var(--line);
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  padding: 14px 16px;
+  text-align: center;
+}
+
+.stat-value { font-size: 26px; font-weight: 700; color: var(--cyan); }
+
+.stat-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  direction: ltr;
+  margin-top: 2px;
+}
+
+.stat-sub { font-size: 11px; color: var(--dim); margin-top: 4px; }
+
+.rank-ladder {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-top: 4px;
+}
+
+.ladder-rank {
+  text-align: center;
+  padding: 12px 8px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  transition: transform 0.15s ease;
+}
+
+.ladder-badge-wrap { position: relative; width: 74px; height: 74px; margin: 0 auto 8px; }
+
+.ladder-badge { width: 100%; height: 100%; object-fit: contain; }
+
+.ladder-locked { opacity: 0.55; }
+
+.ladder-locked .ladder-badge { filter: grayscale(1) brightness(0.7); }
+
+.ladder-lock {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+}
+
+.ladder-current {
+  border-color: var(--cyan);
+  box-shadow: inset 0 0 24px rgba(53, 224, 255, 0.12), 0 0 18px rgba(53, 224, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.ladder-you {
+  position: absolute;
+  bottom: -4px;
+  inset-inline-start: 50%;
+  transform: translateX(50%);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--void);
+  background: var(--cyan);
+  padding: 1px 6px;
+  white-space: nowrap;
+  clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+}
+
+.ladder-name { font-size: 13px; font-weight: 600; color: var(--text); }
+
+.ladder-en { font-size: 9px; letter-spacing: 0.12em; color: var(--dim); direction: ltr; margin-top: 1px; }
+
+.ladder-xp { font-size: 10px; margin-top: 4px; color: var(--gold-soft); }
+
+.ladder-locked .ladder-xp { color: var(--dim); }
+
+.dossier-actions { margin-top: 26px; display: flex; justify-content: center; }
+
 /* ===================== footer ===================== */
 .foot {
   margin-top: auto;
@@ -898,4 +1060,7 @@ body {
   .hud-rank { min-width: 100%; order: 3; }
   .cc-title { font-size: 30px; }
   .panel { padding: 20px 18px 24px; }
+  .dossier-stats { grid-template-columns: repeat(2, 1fr); }
+  .rank-ladder { grid-template-columns: repeat(2, 1fr); }
+  .dossier-rank-he { font-size: 28px; }
 }
