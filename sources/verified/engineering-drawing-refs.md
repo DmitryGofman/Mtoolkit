@@ -68,6 +68,21 @@
   הטולרנס גלילי כשהערך מוקדם ב-Ø.
 - **פרק 31 בספר (Production drawings):** מרכיבי שרטוט ייצור מלא וסדר קריאה מקצועי.
 
+### קטעי איור שחולצו מהמקורות (2026-07-13, לבקשת בעל הפרויקט)
+
+בעל הפרויקט הנחה במפורש להשתמש באיורים מתוך הקבצים שסיפק. האיורים חולצו
+כקטעי עיון (figure excerpts) עם קרדיט מלא בכל מקום שבו הם מוצגים; זכויות
+היוצרים נשארות של המו״לים, והאחריות לפרסום באתר היא של בעל הפרויקט.
+
+- `app/public/visuals/ch17-line-types-table.png` — Table 5.2 (פרק 5): סוגי הקווים.
+- `app/public/visuals/ch17-sections-ribs.png` — Figs 8.1–8.2 (פרק 8): שלושה חתכים, צלע לא מקווקוות.
+- `app/public/visuals/ch17-chain-dimensioning.png` — Fig 14.5 (פרק 14): שרשרת + מידת עזר (157).
+- `app/public/visuals/ch17-parallel-dimensioning.png` — Fig 14.6 (פרק 14): מידוּת מקבילה מבסיס.
+- `app/public/visuals/ch17-cost-vs-tolerance.png` — Fig 19.8 (פרק 19): עלות מול טולרנס.
+- `app/public/visuals/ch17-datum-targets.png` — Fig 20.32 (פרק 20): יישום מטרות ייחוס.
+- `app/public/visuals/ch17-mmc-bonus.png` — Figs 22.2–22.4 (פרק 22): רצף בונוס MMC (קומפוזיציה).
+- `app/public/visuals/ch17-gdt-chart.jpg` — לוח הסמלים המלא (REF-DRW-02, ‏ASME Y14.5-2018).
+
 ---
 
 ## REF-DRW-02 — GD&T Reference Chart (ASME Y14.5-2018)

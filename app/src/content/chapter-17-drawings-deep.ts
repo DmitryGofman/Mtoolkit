@@ -75,6 +75,15 @@ export const chapter17: Chapter = {
           sourceUrl: 'https://commons.wikimedia.org/wiki/File:Mech_draw_1.svg',
           plate: true,
         },
+        {
+          src: 'visuals/ch17-line-types-table.png',
+          caption:
+            'האלפבית המלא, שחור על גבי לבן (Table 5.2 מהמקור, לפי BS 8888): לכל קו — צורה, שם ורשימת שימושים מחייבת. שים לב ל-G — קו מישור החיתוך עם הקצוות המעובים, ול-H — קו השרשרת הכפול לחלקים שכנים ולמצבי קיצון של מנגנון.',
+          credit: 'Simmons & Maguire, Manual of Engineering Drawing (2nd ed.), Elsevier Newnes 2004',
+          license: '© Elsevier — קטע עיון מהמקור המאומת REF-DRW-01',
+          sourceUrl: 'https://www.sciencedirect.com/book/9780750651202/manual-of-engineering-drawing',
+          plate: true,
+        },
       ],
       concepts: [
         {
@@ -151,6 +160,15 @@ export const chapter17: Chapter = {
           sourceUrl: 'https://commons.wikimedia.org/wiki/File:DIN_69893_hsk_63a_drawing.png',
           plate: true,
         },
+        {
+          src: 'visuals/ch17-sections-ribs.png',
+          caption:
+            'המקרה שנבחן שוב ושוב (Figs 8.1–8.2 מהמקור): אותה תושבת, שלושה מישורי חיתוך. הסתכל היטב על חתך A-A — הצלע הדקה שנחתכה לאורכה לא קיבלה קווקוו, בדיוק לפי המוסכמה: קווקוו היה משדר גוש חומר מלא שלא קיים.',
+          credit: 'Simmons & Maguire, Manual of Engineering Drawing (2nd ed.), Elsevier Newnes 2004',
+          license: '© Elsevier — קטע עיון מהמקור המאומת REF-DRW-01',
+          sourceUrl: 'https://www.sciencedirect.com/book/9780750651202/manual-of-engineering-drawing',
+          plate: true,
+        },
       ],
       concepts: [
         {
@@ -216,6 +234,26 @@ export const chapter17: Chapter = {
           'זה גם הפתרון היחיד המותר לשרשרת ״סגורה״: אסור למדוד גם כל מקטע וגם את הסך הכולל עם טולרנסים — ' +
           'זו הגדרת-יתר שסותרת את עצמה, כי הסכום של המקטעים בפועל כמעט לעולם לא יתלכד עם הטולרנס של ' +
           'הכולל. אחת המידות בשרשרת חייבת להשתחרר — או להפוך למידת עזר בסוגריים.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch17-chain-dimensioning.png',
+          caption:
+            'שרשרת מידות אמיתית (Fig 14.5 מהמקור): שש מידות עוקבות בין הקדחים, והאורך הכולל (157) בסוגריים — מידת עזר שלא עובדים ולא בודקים לפיה. כל פיץ׳ תורם את סטייתו, והסך מצטבר לאורך השרשרת.',
+          credit: 'Simmons & Maguire, Manual of Engineering Drawing (2nd ed.), Elsevier Newnes 2004',
+          license: '© Elsevier — קטע עיון מהמקור המאומת REF-DRW-01',
+          sourceUrl: 'https://www.sciencedirect.com/book/9780750651202/manual-of-engineering-drawing',
+          plate: true,
+        },
+        {
+          src: 'visuals/ch17-parallel-dimensioning.png',
+          caption:
+            'אותו חלק בדיוק, מידוּת מקבילה מבסיס משותף (Fig 14.6 מהמקור): כל קדח נמדד ישירות מהקצה השמאלי. אין ירושת סטיות, אין הצטברות — וכאן האורך הכולל 157 הוא מידה מן המניין, לא מידת עזר.',
+          credit: 'Simmons & Maguire, Manual of Engineering Drawing (2nd ed.), Elsevier Newnes 2004',
+          license: '© Elsevier — קטע עיון מהמקור המאומת REF-DRW-01',
+          sourceUrl: 'https://www.sciencedirect.com/book/9780750651202/manual-of-engineering-drawing',
+          plate: true,
+        },
       ],
       concepts: [
         {
@@ -300,6 +338,15 @@ export const chapter17: Chapter = {
           credit: 'Badsaiyaman, Wikimedia Commons',
           license: 'CC BY-SA 3.0',
           sourceUrl: 'https://commons.wikimedia.org/wiki/File:Passungsarten.jpg',
+          plate: true,
+        },
+        {
+          src: 'visuals/ch17-cost-vs-tolerance.png',
+          caption:
+            'העקומה שכדאי לזכור בעל-פה (Fig 19.8 מהמקור): עלות ייצור מול טולרנס. ההתייקרות אינה ליניארית — ככל שמהדקים, העלות מזנקת בחדות. ״רפוי ככל האפשר, הדוק ככל הנדרש״ הוא קודם כול כלל כלכלי.',
+          credit: 'Simmons & Maguire, Manual of Engineering Drawing (2nd ed.), Elsevier Newnes 2004',
+          license: '© Elsevier — קטע עיון מהמקור המאומת REF-DRW-01',
+          sourceUrl: 'https://www.sciencedirect.com/book/9780750651202/manual-of-engineering-drawing',
           plate: true,
         },
       ],
@@ -387,6 +434,15 @@ export const chapter17: Chapter = {
           sourceUrl: 'https://commons.wikimedia.org/wiki/File:Geometric_Tolerancing_Example.PNG',
           plate: true,
         },
+        {
+          src: 'visuals/ch17-gdt-chart.jpg',
+          caption:
+            'לוח הסמלים המלא של GD&T לפי ASME Y14.5-2018: לכל סמל — איך הוא נראה על השרטוט, על מה הוא שולט, צורת אזור הבקרה, ואילו ייחוסים ומתקנים חלים עליו. זה לוח העיון של השפה כולה — שמור אותו קרוב.',
+          credit: 'GD&T Basics — Engineer Essentials LLC (gdandtbasics.com)',
+          license: '© Engineer Essentials LLC — לוח העיון מהמקור המאומת REF-DRW-02',
+          sourceUrl: 'https://www.gdandtbasics.com/gdt-symbols-chart/',
+          plate: true,
+        },
       ],
       concepts: [
         {
@@ -471,6 +527,15 @@ export const chapter17: Chapter = {
           sourceUrl: 'https://commons.wikimedia.org/wiki/File:3-2-1_Rule.png',
           plate: true,
         },
+        {
+          src: 'visuals/ch17-datum-targets.png',
+          caption:
+            'מטרות ייחוס בפעולה (Fig 20.32 מהמקור): A1–A3 בונות את ייחוס A, ‏B1–B2 את B ו-C1 את C — ומסגרת המיקום Ø0,01|A|B|C נשענת בדיוק עליהן. כך מודדים חלק יצוק באופן שחוזר על עצמו בכל מעבדה.',
+          credit: 'Simmons & Maguire, Manual of Engineering Drawing (2nd ed.), Elsevier Newnes 2004',
+          license: '© Elsevier — קטע עיון מהמקור המאומת REF-DRW-01',
+          sourceUrl: 'https://www.sciencedirect.com/book/9780750651202/manual-of-engineering-drawing',
+          plate: true,
+        },
       ],
       concepts: [
         {
@@ -545,6 +610,17 @@ export const chapter17: Chapter = {
           'וגבולות תחביר (REF-DRW-01): M חל רק על פיצ׳רים בעלי מידה — כאלה שיש להם ציר או מישור אמצע. ' +
           'אין M על משטח, ואין M על שטחיות, עגילות, גליליות, פרופיל או סבסוב. יש גם L — מצב חומר מינימלי, ' +
           'נדיר יותר, ששומר למשל על עובי דופן מזערי בין קדח לקצה.',
+      ],
+      visuals: [
+        {
+          src: 'visuals/ch17-mmc-bonus.png',
+          caption:
+            'רצף הבונוס, ישר מהמקור (Figs 22.2–22.4): למעלה — ההוראה: פין Ø20.0–20.5 עם יושר Ø0.2 ב-M. באמצע — הפין ב-MMC ‏(Ø20.5): מותר 0.2, וקוטר ההרכבה האפקטיבי 20.7. למטה — הפין בגבול התחתון (Ø20.0): מותר כבר 0.7, ואותו קוטר הרכבה בדיוק. הבונוס אינו הנחה — הוא אותה הבטחת הרכבה, מנוסחת בחוכמה.',
+          credit: 'Simmons & Maguire, Manual of Engineering Drawing (2nd ed.), Elsevier Newnes 2004',
+          license: '© Elsevier — קטע עיון מהמקור המאומת REF-DRW-01',
+          sourceUrl: 'https://www.sciencedirect.com/book/9780750651202/manual-of-engineering-drawing',
+          plate: true,
+        },
       ],
       concepts: [
         {
