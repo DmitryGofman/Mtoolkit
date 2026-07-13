@@ -96,6 +96,7 @@ export interface Rank {
   minXp: number
   name: string
   nameEn: string
+  badge: string // emblem art (public/badges/*), shown in HUD, dossier and promotions
 }
 
 /** Where the learner is inside a chapter — used to resume after leaving. */

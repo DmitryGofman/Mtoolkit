@@ -71,7 +71,9 @@ export function RankUp({ rank, onClose }: { rank: Rank; onClose: () => void }) {
       <canvas ref={canvasRef} className="rankup-canvas" aria-hidden />
       <div className="rankup-card" onClick={(e) => e.stopPropagation()}>
         <div className="rankup-kicker mono">// PROMOTION AUTHORIZED — עלית דרגה</div>
-        <div className="rankup-badge">◈</div>
+        <div className="rankup-badge">
+          <img src={rank.badge} alt={`${rank.nameEn} badge`} />
+        </div>
         <div className="rankup-rank-he">{rank.name}</div>
         <div className="rankup-rank-en mono">{rank.nameEn}</div>
         <button className="btn-primary" onClick={onClose}>
