@@ -324,7 +324,59 @@ body {
   text-align: start;
 }
 
+/* campaign card banner (chapters with hero art) */
+.op-has-banner { min-height: 210px; }
+
+.op-banner {
+  position: relative;
+  margin: -18px -20px 10px;
+  height: 118px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--cyan-dim);
+}
+
+.op-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  display: block;
+  filter: saturate(1.05);
+}
+
+.op-banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(5, 8, 15, 0) 45%, var(--panel) 100%);
+}
+
+/* the banner art already carries the chapter number — hide the overlay one */
+.op-has-banner .op-num { display: none; }
+
 /* ===================== briefing ===================== */
+.briefing-banner {
+  position: relative;
+  margin: -26px -30px 20px;
+  aspect-ratio: 1672 / 941;
+  overflow: hidden;
+  border-bottom: 1px solid var(--cyan-dim);
+}
+
+.briefing-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.briefing-banner-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(5, 8, 15, 0) 62%, var(--panel) 100%);
+  pointer-events: none;
+}
+
 .briefing-title { font-size: 34px; font-weight: 800; }
 
 .epigraph {

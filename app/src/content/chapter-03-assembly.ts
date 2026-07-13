@@ -13,6 +13,7 @@ export const chapter03: Chapter = {
   number: 3,
   codename: 'OPERATION: DOCKING BAY',
   title: 'אינטגרציה והרכבה',
+  banner: 'visuals/banner-ch03.jpg',
   epigraph: '״מכלול לא נולד במסך — הוא נולד בידיים. מי שמתכנן לעיניים בלבד, ידיו ישלמו את החוב.״',
   description:
     'ב-CAD כל מכלול מושלם: החלקים צפים למקומם, שום יד לא מפריעה ושום מפתח לא נתקע. ' +

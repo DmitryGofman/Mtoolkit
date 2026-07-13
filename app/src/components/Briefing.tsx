@@ -4,6 +4,12 @@ export function Briefing({ chapter, onStart }: { chapter: Chapter; onStart: () =
   return (
     <main className="screen">
       <div className="panel briefing">
+        {chapter.banner && (
+          <div className="briefing-banner">
+            <img src={chapter.banner} alt={`${chapter.codename} — ${chapter.title}`} loading="eager" />
+            <div className="briefing-banner-scrim" aria-hidden />
+          </div>
+        )}
         <div className="panel-head">
           <span className="mono dim">MISSION BRIEFING // CLEARANCE: RECRUIT+</span>
           <span className="mono accent">{chapter.codename}</span>

@@ -14,6 +14,7 @@ export const chapter10: Chapter = {
   number: 10,
   codename: 'OPERATION: REPLICATOR',
   title: 'הדפסת תלת-ממד',
+  banner: 'visuals/banner-ch10.jpg',
   epigraph: '״עולם אינו נברא במכה אחת — הוא נבנה שכבה על שכבה. ומי שהניח את השכבות, רק הוא יודע היכן העולם ייקרע.״',
   description:
     'המדפסת מבטיחה לך הכול: כל גאומטריה, בן לילה, בלחיצת כפתור. מבצע REPLICATOR יכשיר אותך ' +

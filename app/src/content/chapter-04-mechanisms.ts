@@ -13,6 +13,7 @@ export const chapter04: Chapter = {
   number: 4,
   codename: 'OPERATION: CLOCKWORK',
   title: 'קליבה מכנית ומנגנונים',
+  banner: 'visuals/banner-ch04.jpg',
   epigraph: '״מנגנון שנלחם בעצמו מפסיד תמיד — גם כשהוא מנצח, הניצחון נגבה משעות חייו.״',
   description:
     'מנגנון שנתקע כמעט אף פעם לא נשבר — הוא נלחם בעצמו. מבצע CLOCKWORK יכשיר אותך לחשוב ' +

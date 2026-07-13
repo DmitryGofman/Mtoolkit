@@ -13,6 +13,7 @@ export const chapter02: Chapter = {
   number: 2,
   codename: 'OPERATION: BLUEPRINT',
   title: 'שפה מכנית וקריאת שרטוט',
+  banner: 'visuals/banner-ch02.jpg',
   epigraph: '״המודל הוא חלום; השרטוט הוא שבועה.״',
   description:
     'בין המהנדס לבין רצפת הייצור עוברת שפה אחת בלבד — השרטוט. מבצע BLUEPRINT יכשיר אותך לקרוא ' +

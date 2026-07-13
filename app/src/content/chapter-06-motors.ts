@@ -14,6 +14,7 @@ export const chapter06: Chapter = {
   number: 6,
   codename: 'OPERATION: PRIME MOVER',
   title: 'בחירת מנועים ותנועה',
+  banner: 'visuals/banner-ch06.jpg',
   epigraph: '״אין תנועה בחינם. מי שלא שילם במומנט — ישלם בשטח.״',
   description:
     'כל מכונה שזזה מסתירה מאחוריה החלטה: איזה מנוע, איזה גיר, ואיזה משוב. ' +

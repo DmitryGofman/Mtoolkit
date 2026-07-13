@@ -12,6 +12,7 @@ export const chapter01: Chapter = {
   number: 1,
   codename: 'OPERATION: IRON GRIP',
   title: 'ברגים, הברגות ולוקטייט',
+  banner: 'visuals/banner-ch01.jpg',
   epigraph: '״מי ששולט בתבריג — שולט במכונה.״',
   description:
     'כל מכלול בעולם מוחזק על ידי חיבורים. מבצע IRON GRIP יכשיר אותך לבחור חיבור בורגי נכון, ' +

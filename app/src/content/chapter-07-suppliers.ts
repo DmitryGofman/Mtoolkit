@@ -13,6 +13,7 @@ export const chapter07: Chapter = {
   number: 7,
   codename: 'OPERATION: EMISSARY',
   title: 'עבודה מול ספקים',
+  banner: 'visuals/banner-ch07.jpg',
   epigraph: '״כבד את מי שידיו יודעות את שראשך רק מצייר — כי בלעדיו הרעיון נשאר רעיון.״',
   description:
     'החלק הכי טוב שתכננת שווה בדיוק כמו היכולת שלך להעביר אותו למי שמייצר אותו. ' +

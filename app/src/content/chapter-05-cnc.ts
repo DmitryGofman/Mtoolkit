@@ -12,6 +12,7 @@ export const chapter05: Chapter = {
   number: 5,
   codename: 'OPERATION: COLD STEEL',
   title: 'CNC ותכן לייצור',
+  banner: 'visuals/banner-ch05.jpg',
   epigraph: '״הפלדה זוכרת כל דרך קלה שבחרת. מה שחסכת בתכן — תשלם בכרסומת, בריבית.״',
   description:
     'החלק שלך ב-CAD הוא הבטחה. מבצע COLD STEEL יכשיר אותך להבין מה קורה כשההבטחה פוגשת ' +

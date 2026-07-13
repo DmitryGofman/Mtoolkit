@@ -27,7 +27,16 @@ export function CommandCenter({ chapters, locked, progressFor, onDeploy }: Props
           const done = progress.unitsRead.length + Object.keys(progress.exercisesDone).length
           const pct = Math.round((done / total) * 100)
           return (
-            <button key={chapter.id} className="op-card op-active" onClick={() => onDeploy(chapter.id)}>
+            <button
+              key={chapter.id}
+              className={`op-card op-active ${chapter.banner ? 'op-has-banner' : ''}`}
+              onClick={() => onDeploy(chapter.id)}
+            >
+              {chapter.banner && (
+                <div className="op-banner" aria-hidden>
+                  <img src={chapter.banner} alt="" loading="lazy" />
+                </div>
+              )}
               <div className="op-num mono">{String(chapter.number).padStart(2, '0')}</div>
               <div className="op-code mono">{chapter.codename}</div>
               <div className="op-name">{chapter.title}</div>
