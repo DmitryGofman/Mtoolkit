@@ -12,6 +12,7 @@ export const chapter08: Chapter = {
   number: 8,
   codename: 'OPERATION: PROVING GROUND',
   title: 'ניסויים, בדיקות ותיעוד',
+  banner: 'visuals/banner-ch08.jpg',
   epigraph: '״הדעות מתווכחות, המצגות משכנעות — רק הניסוי אינו יודע לשקר.״',
   description:
     'תכן שלא נבדק הוא השערה. מבצע PROVING GROUND יכשיר אותך לתכנן ניסוי שעונה על שאלה אמיתית, ' +

@@ -15,6 +15,7 @@ export const chapter09: Chapter = {
   number: 9,
   codename: 'OPERATION: PHOTON EDGE',
   title: 'חיתוך לייזר ופחים',
+  banner: 'visuals/banner-ch09.jpg',
   epigraph: '״האור חוצה פלדה כאילו הייתה נייר — אך אינו יודע לכופף אותה. מי ששולט רק באור, מחזיק בידו חצי חלק.״',
   description:
     'חלק פח נולד פעמיים: פעם כשרטוט שטוח שהלייזר חותך, ופעם במכופפת שהופכת אותו לתלת-ממד. ' +

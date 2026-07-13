@@ -73,6 +73,7 @@ export interface Chapter {
   number: number
   codename: string // e.g. "OPERATION: IRON GRIP"
   title: string
+  banner?: string // cinematic hero banner (16:9) shown on briefing + campaign card
   epigraph: string // Dune-style aphorism shown on the briefing screen
   description: string
   objectives: string[]
