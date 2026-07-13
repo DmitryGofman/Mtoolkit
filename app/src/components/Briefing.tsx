@@ -10,11 +10,21 @@ export function Briefing({ chapter, onStart }: { chapter: Chapter; onStart: () =
             <div className="briefing-banner-scrim" aria-hidden />
           </div>
         )}
-        <div className="panel-head">
-          <span className="mono dim">MISSION BRIEFING // CLEARANCE: RECRUIT+</span>
-          <span className="mono accent">{chapter.codename}</span>
-        </div>
-        <h1 className="briefing-title">{chapter.title}</h1>
+        {/* The banner art already carries the codename + title, so show them as
+            text only for chapters without a banner (avoids doubling it up). */}
+        {chapter.banner ? (
+          <div className="panel-head">
+            <span className="mono dim">MISSION BRIEFING // CLEARANCE: RECRUIT+</span>
+          </div>
+        ) : (
+          <>
+            <div className="panel-head">
+              <span className="mono dim">MISSION BRIEFING // CLEARANCE: RECRUIT+</span>
+              <span className="mono accent">{chapter.codename}</span>
+            </div>
+            <h1 className="briefing-title">{chapter.title}</h1>
+          </>
+        )}
         <p className="epigraph">{chapter.epigraph}</p>
         <p className="briefing-desc">{chapter.description}</p>
 
