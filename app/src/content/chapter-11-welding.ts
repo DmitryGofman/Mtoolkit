@@ -14,6 +14,7 @@ export const chapter11: Chapter = {
   number: 11,
   codename: 'OPERATION: ARC LIGHT',
   title: 'ריתוך',
+  banner: 'visuals/banner-ch11.jpg',
   epigraph:
     '״האש שיכולה להרוס את הפלדה היא היחידה שיכולה לאחות אותה. מי ששולט באש בוחר איפה תבער — מי שלא, יגלה איפה בערה.״',
   description:

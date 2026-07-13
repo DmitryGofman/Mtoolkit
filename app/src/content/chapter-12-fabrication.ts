@@ -15,6 +15,7 @@ export const chapter12: Chapter = {
   number: 12,
   codename: 'OPERATION: IRONWORKS',
   title: 'מסגרוּת',
+  banner: 'visuals/banner-ch12.jpg',
   epigraph:
     '״הברזל אינו מחניף ואינו סולח — אך הוא מכבד ידיים ישרות. ' +
     'מי שדורש ממנו דיוק של מכונה בעבודת יד, יקבל במקום חלק — שיעור בענווה.״',

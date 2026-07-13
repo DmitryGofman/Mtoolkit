@@ -14,6 +14,7 @@ export const chapter15: Chapter = {
   number: 15,
   codename: 'OPERATION: HARD WIRE',
   title: 'הלחמות, קונקטורים וזיווד',
+  banner: 'visuals/banner-ch15.jpg',
   epigraph: '״המכונה כולה תלויה בחיבור החלש ביותר שלה. מי ששכח חוט אחד — הפקיד את המשימה בידיו.״',
   description:
     'האלקטרוניקה החכמה ביותר מתה ברגע שחוט אחד נשלף. מבצע HARD WIRE יכשיר אותך לחשוב כמהנדס מכונות ' +

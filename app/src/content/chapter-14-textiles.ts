@@ -14,6 +14,7 @@ export const chapter14: Chapter = {
   number: 14,
   codename: 'OPERATION: NEEDLE POINT',
   title: 'תפירה וטקסטיל טכני',
+  banner: 'visuals/banner-ch14.jpg',
   epigraph: '״הפלדה עומדת עד שהיא נשברת. הבד נכנע לרוח — ולכן שורד אותה. חוזק שאינו יודע להתכופף אינו חוזק; הוא רק המתנה לשבר.״',
   description:
     'לא כל בעיה הנדסית נפתרת במתכת. מבצע NEEDLE POINT יכשיר אותך לחשוב על בד כעל חומר הנדסי לכל דבר — ' +

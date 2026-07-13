@@ -15,6 +15,7 @@ export const chapter16: Chapter = {
   number: 16,
   codename: 'OPERATION: TRUE MEASURE',
   title: 'מדידה ומטרולוגיה מעשית',
+  banner: 'visuals/banner-ch16.jpg',
   epigraph: '״המדידה היא תחילת היושר: מי שאינו יודע מה יש בידו — יספר לעצמו סיפורים.״',
   description:
     'שרטוט מגדיר מה החלק אמור להיות; המדידה קובעת מה הוא באמת. מבצע TRUE MEASURE יכשיר אותך ' +
