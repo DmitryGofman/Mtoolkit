@@ -13,6 +13,7 @@ export const chapter13: Chapter = {
   number: 13,
   codename: 'OPERATION: TIMBERLINE',
   title: 'נגרוּת',
+  banner: 'visuals/banner-ch13.jpg',
   epigraph:
     '״הקרש זוכר את העץ שהיה: לאן פנו סיביו, כמה גשם שתה, לאיזו רוח נכפף. ' +
     'תכנן בשביל הזיכרון הזה — או שהקרש ייזכר בו בשבילך, בקיץ הראשון.״',
