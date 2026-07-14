@@ -1564,3 +1564,108 @@
 - רמת אמינות: B; הקבצים אצל בעל הפרויקט — לא ברפו (זכויות יוצרים)
 - שימוש בפועל (2026-07-13): פרק 17 — BLUEPRINT APEX (שרטוט הנדסי לעומק)
 - תאריך גישה: 2026-07-13
+
+## מקורות טבלאות עזר — גל 3 (השלמות)
+
+> נאסף עבור `docs/practical-reference-tables-he.md` — השלמת פערים: טבלה 5.4 (סמלי גימור/N-grade),
+> 3.3 (חוזק פלסטיקה), 8.2/8.3 (ריתוך). נאסף ידנית ע"י הלולאה הראשית (סוכן ה-scout נכשל על מגבלת פלט).
+
+### SRC-TBL-301
+
+```text
+מזהה: SRC-TBL-301
+סטטוס: inbox
+דירוג: B
+כותרת: Surface Roughness Chart — Ra, Rz, RMS & ISO N-Grade Conversion
+ארגון/יצרן: PREMSA Industries (Monterrey, מקסיקו)
+סוג מקור: מדריך/טבלת המרה הנדסית של יצרן עיבוד שבבי
+קישור/מיקום: https://premsaindustries.com/en/resources/surface-finish-chart
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: עמוד אינטרנט עדכני
+נושאים: טבלה 5.4 — טבלת המרה עם עמודות Ra(µin), Ra(µm), Rz(µin), RMS(µin), N-Grade, Machining Process, Typical Application. 21 רשומות בטווח N1–N10 (אומת ב-WebFetch שמכיל את המטריצה N-grade↔Ra המבוקשת).
+ידע רלוונטי: מכסה את עמודות הליבה של טבלה 5.4 (Ra↔N-grade↔µin) עם תהליך אופייני ושימוש. מצטט במפורש ISO 1302:2002 (הגדרות N-grade), ISO 4287 (Ra/Rz), ASME B46.1 (RMS), ASME Y14.36 (סמלי שרטוט). ארגון מזוהה בשם.
+נתונים מספריים: כן — מטריצת המרה מלאה, אומתה.
+מגבלות שימוש: מקור B (יצרן, לא תקן) — לצטט ISO 1302 / ISO 21920 / ASME B46.1 כסמכות. הטבלה עוצרת ב-N10 ואינה מציגה N11/N12 (Ra 25/50 µm). הדף מזכיר את סמלי-השרטוט (✓) מילולית אך אינו מציג דיאגרמות סמלים — לסמלי הקריאה עצמם נדרש מקור משלים (Mitutoyo/ISO 1302). N-grade הוא נוטציה ישנה (ISO 1302:2002, בוטלה לטובת ISO 21920:2021) — לציין מהדורה בתוכן.
+מי בדק:
+הערות: אישוש-צולב אפשרי מול Xometry/Mactech (נמצאו בחיפוש, לא נבדקו בנפרד).
+```
+
+### SRC-TBL-302
+
+```text
+מזהה: SRC-TBL-302
+סטטוס: inbox
+דירוג: B
+כותרת: Mechanical Properties of Plastic Materials (טבלת השוואה רב-פולימרית)
+ארגון/יצרן: Professional Plastics (מפיץ פלסטיקה תעשייתית; פרטי קשר מזוהים במסמך)
+סוג מקור: טבלת נתוני חומרים (PDF) של מפיץ
+קישור/מיקום: https://www.professionalplastics.com/professionalplastics/MechanicalPropertiesofPlastics.pdf
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: PDF, 4 עמודים
+נושאים: טבלה 3.3 — עמודות: Tensile strength (MPa), Tensile modulus (GPa), Elongation at break (%), Hardness (Rockwell), Izod impact (J/m), Poisson's ratio, Compressive strength/modulus (חלקי), Coefficient of friction. מכסה את כל הפולימרים המבוקשים: ABS, PC, POM (Acetal homo+copoly), PA6/PA66/PA12 (Nylon), PEEK, PP — ועוד רבים (PTFE, PET, PEI, PPS, PVDF, PSU...).
+ידע רלוונטי: נקרא במלואו בהצלחה באמצעות Read ישיר על ה-PDF (WebFetch נכשל — FlateDecode, אותה תבנית כשל כמו Bossard/Xometry). מקור נגיש יחיד המכסה את כל 6 הפלסטיקות ההנדסיות בטבלה אחת.
+נתונים מספריים: כן — טבלה מלאה, אומתה ויזואלית.
+מגבלות שימוש: מקור B (מפיץ, לא יצרן שרף/תקן) — המסמך עצמו מצהיר "given as a guide only... no warranty". חסרה עמודת HDT (Heat Deflection Temperature) שביקשנו — להשלים מ-MatWeb/datasheet יצרן (SRC-TBL-303). ערכים כטווחים רחבים (תלוי grade) — לא לצטט ערך יחיד ללא datasheet ספציפי לחומר.
+מי בדק:
+הערות:
+```
+
+### SRC-TBL-303
+
+```text
+מזהה: SRC-TBL-303
+סטטוס: needs-review
+דירוג: A
+כותרת: MatWeb — Engineering Plastics datasheets (ABS, PC, POM, PA6/66, PEEK, PP) incl. HDT
+ארגון/יצרן: MatWeb, LLC
+סוג מקור: מאגר נתוני חומרים מקוון (datasheets per grade)
+קישור/מיקום: https://www.matweb.com/ (ראו גם עמוד ייחוס ABS: https://www.matweb.com/reference/abspolymer.aspx ; אינדקס פולימרים: https://www.matweb.com/Search/MaterialGroupSearch.aspx?GroupID=64)
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: מאגר מקוון עדכני
+נושאים: טבלה 3.3 — משלים את SRC-TBL-302 עם HDT ונתונים לפי grade ספציפי. אותו hub שדורג A ל-3.1/3.2 (SRC-TBL-113/116).
+ידע רלוונטי: מקור A מבוסס לחוזק פלסטיקה; datasheets פרטניים כוללים tensile, flexural modulus, HDT, density. עמוד הייחוס הכללי ל-ABS החזיר 403 ל-WebFetch אוטומטי בסבב זה — לכן needs-review עד פתיחה ידנית בדפדפן / בחירת grade ספציפי.
+נתונים מספריים: כן (בעמודי grade ספציפיים).
+מגבלות שימוש: יש לבחור grade קונקרטי (לא "overview") לקביעת ערך לתוכן. גישה אוטומטית חסומה חלקית — לאמת ידנית.
+מי בדק:
+הערות: MatWeb כבר משמש כמקור A מאומת בפועל לפרק החומרים המתכתי; אותו סטנדרט אמינות חל על הפולימרים.
+```
+
+### SRC-TBL-304
+
+```text
+מזהה: SRC-TBL-304
+סטטוס: needs-review
+דירוג: B
+כותרת: The Reason Behind AWS D1.1 Minimum Fillet Weld Sizes
+ארגון/יצרן: Welding Answers (קהילת מקצוענים; מפתח מזוהה: Akram Mahbub)
+סוג מקור: מאמר הסבר הנדסי מקצועי
+קישור/מיקום: https://weldinganswers.com/the-reason-behind-minimum-weld-sizes/
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: עמוד אינטרנט עדכני
+נושאים: טבלה 8.2 — גודל רגל ריתוך מינימלי מול עובי הלוח. מצטט במפורש AWS D1.1/D1.1M:2020 Table 7.7 וגם AISC 360-16 Table J2.4 כמקבילה מבנית.
+ידע רלוונטי: אישור מקור-סמכות: הערכים (T≤1/4″→1/8″; 1/4–1/2″→3/16″; 1/2–3/4″→1/4″; >3/4″→5/16″; מחזורי→min 3/16″) מופיעים ב-AWS D1.1 Table 7.7 ו-AISC J2.4. אומת בחיפוש שהערכים עקביים בין המקורות. מסביר את ההיגיון (קירור מהיר/סדיקה) אך אינו משכפל את הטבלה המספרית המלאה.
+נתונים מספריים: חלקית — מצטט ערכים אך לא מטריצה מלאה מודפסת.
+מגבלות שימוש: לטבלה המספרית המלאה נדרש AWS D1.1 Table 7.7 (SRC-TBL-217, paywalled) או AISC Steel Construction Manual Table J2.4 (זמין נרחב). לא נמצא שכפול חופשי מיוחס עם המטריצה המלאה — engineersedge חסום (403), clause5.io נדחה (לא מיוחס). זהו מקור מיוחס לאישוש בלבד.
+מי בדק:
+הערות: פער 8.2 נותר PARTIAL — הסמכות מזוהה וברורה, שכפול חופשי-מספרי-מיוחס חסר.
+```
+
+### SRC-TBL-305
+
+```text
+מזהה: SRC-TBL-305
+סטטוס: inbox
+דירוג: B
+כותרת: Weld Strength Calculations (throat/leg, allowable weld stress)
+ארגון/יצרן: RoyMech (Roy Beardmore, ז"ל 2013; האתר נשמר כמורשת)
+סוג מקור: טבלת עזר הנדסית מקוונת
+קישור/מיקום: https://roymech.org/Useful_Tables/Form/Weld_strength.html
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: עמוד אינטרנט (מבוסס BS)
+נושאים: טבלה 8.3 (חוזק תפר) — יחס throat = 0.707 × leg (h = 1.414·t), וטבלת מאמצי-תכן מותרים לפי אלקטרודה/פלדה (למשל pw=220 N/mm² ל-E35/S275). מפנה ל-BS 5950-1:2000 ו-BS EN 10025-1:2004.
+ידע רלוונטי: מקור מיוחס (מחבר בשם) ליחס throat/leg ולמאמצים מותרים — משלים את AWS ל-8.3. מבוסס תקן בריטי/Eurocode ולא AWS.
+נתונים מספריים: כן — יחס גאומטרי ומאמצי-תכן.
+מגבלות שימוש: המחבר מציין במפורש "preliminary design evaluations only". אינו מכיל טבלת min-leg-vs-thickness (8.2). מבוסס BS/Eurocode — לא לערבב ישירות עם ערכי AWS ללא ציון התקן.
+מי בדק:
+הערות:
+```
