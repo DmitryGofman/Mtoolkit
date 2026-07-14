@@ -1087,6 +1087,455 @@
 הערות: נאסף במסגרת סגירת GAP 3, כמועמד עיקרי מומלץ לקידום ל-verified לאחר שמישהו יפתח את הדף ידנית בדפדפן (לא בכלי אוטומטי) ויוודא את תוכן הטבלה. אותו אתר (engineersedge.com) עשוי להיות רלוונטי גם לטבלה 1.6 (חורי מעבר) — ראו metric_clearance_holes_and_tolerances_16186.htm, גם הוא חסום לאימות אוטומטי בסבב זה.
 ```
 
+## מקורות טבלאות עזר — גל 2
+
+> נאסף עבור `docs/practical-reference-tables-he.md` §"סדר איסוף מומלץ — גל 2":
+> טבלאות 5.1, 5.2, 6.1, 6.2, 7.1, 8.1, 8.2, 9.1, 9.4.
+> מזהים SRC-TBL-201 ואילך (טווח חדש, נפרד מ-1xx של גל 1). לכל מקור נבדק בפועל (WebFetch,
+> ובמקרה של PDF שנכשל ב-WebFetch — קריאה ישירה של הקובץ כפי שנהוג מגל 1) שהוא אכן מכיל
+> טבלה/מטריצה בפועל ולא רק אזכור פרוזה של הנושא. לא הועתקו ולא הוזנו נתונים מספריים
+> בפועל לתוכן הלימודי — זהו קטלוג-מקורות בלבד. תאריך גישה לכל הרשומות: 2026-07-14.
+
+### SRC-TBL-201
+
+```text
+מזהה: SRC-TBL-201
+סטטוס: inbox
+דירוג: B
+כותרת: Typical Tolerances of Manufacturing Processes (Figures 15.5, 15.6, 15.8, 15.10 — Process Tolerances / Process Tolerance vs. Feature Size / Surface Finish vs. Production Time / Surface finish produced by various processes)
+ארגון/יצרן: University of Florida, MAE Design and Manufacturing Laboratory (EML 2322L course notes), משחזר איורים מספרות ייצור מוכרת (מספור הפרקים/האיורים תואם ספר לימוד קלאסי בתחום manufacturing engineering; איור 15.10 מצוין במפורש כ"Source: American Machinist" ו"Source: Wikipedia" בהתאמה)
+סוג מקור: חומר קורס אקדמי (PDF, אתר אוניברסיטה .edu) המשחזר תרשימי-ייחוס סטנדרטיים בתעשייה
+קישור/מיקום: https://web.mae.ufl.edu/designlab/Lab%20Assignments/EML2322L-Tolerances.pdf
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: חומר קורס EML2322L, ללא תאריך פרסום מפורש על גבי המסמך
+נושאים: טבלה 5.1 (במקום IT-grade — נתון כ-±tolerance במ"מ ישירות) וטבלה 5.2 (Ra) — נקרא במלואו (Read ישיר על קובץ ה-PDF, לאחר שניסיון WebFetch ראשוני נכשל לחלץ תוכן). Figure 15.5 "Process Tolerances": מטריצת ±tolerance (מ"מ/אינץ') לתהליכים flame cutting, hand grinding, disk grinding/filing, turning/shaping/milling, drilling, boring, reaming/broaching, grinding, honing/lapping/buffing/polishing (traditional) ועוד plasma/EDM/chemical/ECM/laser/electrochemical-grinding/electropolishing (nontraditional), עם הבחנה "less frequent" מול "average application". Figure 15.6 "Process Tolerance vs. Feature Size": מיפוי tolerance-מ"מ מול גודל-חלק טיפוסי לתהליכי open-die forging, hot extrusion, closed-die forging, sand casting, shell molding, die casting, spinning, roll forming, investment casting, powder metallurgy, swaging, wire drawing, drilling, cold extrusion, ECM/EDM, turning/milling, grinding, honing, polishing/lapping — כלומר מכסה גם sand-cast/die-cast/forging/sheet-forming (roll forming) שחסרים בטבלאות IT-grade הרגילות. Figure 15.10 "Surface finish produced by various processes" (Ra µm/µin, Source: Wikipedia): מטריצת Ra לפי קבוצות METAL CUTTING (sawing, planing/shaping, drilling, milling, boring/turning, broaching, reaming), ABRASIVE (grinding, barrel finishing, honing, electro-polishing, electrolytic grinding, polishing, lapping, superfinishing), CASTING (sand, perm mold, investment, die), FORMING (hot rolling, forging, extruding, cold rolling/drawing, roller burnishing), OTHER (flame cutting, chemical milling, electron/laser beam cutting, EDM) — כיסוי כמעט מלא של רשימת התהליכים המבוקשת (5.1/5.2), כולל sand-cast/die-cast/forging/(cold-rolling כקירוב ל-sheet-stamping).
+ידע רלוונטי: זהו המקור הטוב ביותר שנמצא המציג בפועל מטריצה/גרף (לא פרוזה) המכסה כמעט את כל רשימת התהליכים המבוקשת כולל casting/forging/sheet-forming — נדיר למצוא זאת יחד עם תהליכי גילוף/שבבי. חשוב: הנתון ניתן כ-±tolerance במ"מ/אינץ' ו-Ra ישירות, לא כ"IT grade" מסומן (IT01-IT18) — לכן יש להמיר/למפות ל-IT-grade בנפרד (למשל דרך SRC-TBL-118/127/128) אם רוצים בדיוק את הפורמט "IT range" שהוגדר במפרט, או לשנות את עיצוב טבלה 5.1 בלומדה לעמודת "±tolerance טיפוסי (מ"מ)" במקום/בנוסף ל-IT grade — ראו הערה מתודולוגית למטה.
+נתונים מספריים: כן — 4 תרשימים מלאים עם ציר-X/Y מספרי (לא רק תיאור מילולי), נקראו ואומתו ישירות מתוך קובץ ה-PDF.
+מגבלות שימוש: זהו חומר קורס משני (secondary/educational reproduction) ולא פרסום מקורי של המחבר/ההוצאה של התרשימים המקוריים — שם הספר/מחבר המקורי לא מצוין באופן מלא בעמודים שנקראו (רק "Source: American Machinist" ו"Source: Wikipedia" לחלק מהתרשימים). מומלץ לזהות ולצטט את המקור הראשוני (ספר לימוד ייצור מוכר; מספור הפרקים/איורים 15.x מרמז על ספר manufacturing engineering קלאסי) לפני קידום ל-verified, ולוודא רישיון שימוש חוזר של האוניברסיטה בתרשימים.
+מי בדק:
+הערות: הערה מתודולוגית חשובה לגבי טבלה 5.1: תהליכי יציקה/חישול/הטבעה (sand-cast, die-cast, forging, sheet-stamping) אינם מתוארים בספרות בכלל כ"IT grade" (ISO 286) אלא בסולם תקן נפרד — ISO 8062 (Dimensional Casting Tolerance grades, CT1–CT16) ליציקה, ו-DIN 7526 לחישול. ראו SRC-TBL-204. לכן טבלה 5.1 "אחידה" עם עמודת IT-grade יחידה לכל התהליכים (כולל יציקה/חישול) עלולה להטעות מבחינה תקנית — מומלץ לשקול עיצוב טבלה עם שתי עמודות-סולם נפרדות (IT לעיבוד שבבי/גימור, CT ליציקה) או עמודת ±tolerance גנרית כפי שמופיע במקור זה.
+```
+
+### SRC-TBL-202
+
+```text
+מזהה: SRC-TBL-202
+סטטוס: inbox
+דירוג: C
+כותרת: International Tolerance Grade for Different Machining Process
+ארגון/יצרן: MAXNOVO MACHINE (יצרן מכונות CNC — חרטות/כרסומות — יאנגג'ואו, סין)
+סוג מקור: מדריך הנדסי מקוון של יצרן ציוד עיבוד שבבי
+קישור/מיקום: https://www.maxnovocnc.com/International-Tolerance-Grade-for-Different-Machining-Process-id62755217.html
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: עמוד אינטרנט עדכני
+נושאים: טבלה 5.1 (חלקי) — אומת ב-WebFetch שהעמוד נותן טווחי IT-grade לפי תהליך: turning IT8~IT7 (כללי), IT11 (גס), IT10~IT7 (חצי-גימור/גימור), IT7~IT5 (דיוק); milling IT8~IT7 (כללי), IT11~IT13 (גס), IT8~IT11 (חצי-גימור), IT6~IT8 (גימור); planing IT9~IT7; grinding IT8~IT5 ומעלה; drilling IT10; boring IT9~IT7 (פלדה), IT7~IT6 (דיוק); laser cutting IT8–IT16; waterjet IT10–IT16; EDM IT7–IT13.
+ידע רלוונטי: מקור-משלים חלקי לטבלה 5.1 עבור תהליכי עיבוד שבבי בלבד — חסרים לחלוטין reaming, honing, lapping, sand-cast, die-cast, forging, sheet-stamping מהרשימה המבוקשת.
+נתונים מספריים: כן, לתהליכים שכן מכוסים.
+מגבלות שימוש: יצרן ציוד CNC סיני — לא גוף תקינה ולא ספרות אקדמית; אינו מצטט תקן/מקור לערכים. לשמש רק כצלב-בדיקה משני ל-SRC-TBL-201/127/128, לא כמקור עיקרי.
+מי בדק:
+הערות: כיסוי חלקי בלבד ביחס לרשימת 12 התהליכים המבוקשת בטבלה 5.1 — ראו SRC-TBL-201 (Kalpakjian-style chart) ו-SRC-TBL-204 (CT grades ליציקה) להשלמת הפערים.
+```
+
+### SRC-TBL-203
+
+```text
+מזהה: SRC-TBL-203
+סטטוס: needs-review
+דירוג: D
+כותרת: ISO Tolerance Grades (IT Grades) Explained for CNC Machining
+ארגון/יצרן: UTEC Industrial (utec.co) — זהות/תחום פעילות מדויקים של הארגון לא אומתו בסבב זה
+סוג מקור: מדריך הנדסי מקוון (Industry Resource Center)
+קישור/מיקום: https://resources.utec.co/tolerances-fits/iso-tolerance-grades-explained/
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: עמוד אינטרנט עדכני
+נושאים: טבלה 5.1 (חלקי מאוד) — אומת ב-WebFetch: פרוזה בלבד (לא טבלה מובנית) עם טווחי IT לפי תהליך: bandsaw cutting IT14–IT16, CNC turning IT7–IT9, fine turning IT6–IT7, precision boring IT6–IT7 (IT5–IT6 עם כלים עדינים), reaming IT6–IT7, grinding IT5–IT6 (IT4–IT5 דיוק), honing IT4–IT6, lapping IT3–IT5, plasma cutting IT12–IT14.
+ידע רלוונטי: כן נותן טווחי honing/lapping/reaming שחסרים ב-SRC-TBL-202 — אך ללא drilling/milling/EDM/casting/forging/stamping, וללא פורמט טבלאי (פרוזה בלבד).
+נתונים מספריים: כן (בפרוזה בלבד, לא בטבלה).
+מגבלות שימוש: זהות/סמכות הארגון (UTEC Industrial) לא אומתה; אין ציון מקור/תקן לערכים. אינו עומד בקריטריון "מטריצה בטבלה" שהוגדר למשימה — מומלץ needs-review לפני שימוש כלשהו, ורק כהשלמת טווחים ל-honing/lapping/reaming לצד SRC-TBL-201/202.
+מי בדק:
+הערות: לא לקדם ל-verified ללא זיהוי ברור של הארגון/עורך; לשקול rejected אם לא ניתן לזהות מי עומד מאחורי utec.co.
+```
+
+### SRC-TBL-204
+
+```text
+מזהה: SRC-TBL-204
+סטטוס: inbox
+דירוג: C
+כותרת: Casting Tolerances by Different Casting Processes — ISO 8062
+ארגון/יצרן: DeZe Technology Co., Ltd (ספק שירותי ייצור/יציקה, סין)
+סוג מקור: מדריך הנדסי מקוון של ספק ייצור
+קישור/מיקום: https://casting-china.org/casting-tolerances/
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: עמוד אינטרנט עדכני
+נושאים: טבלה 5.1 — הערה מתודולוגית קריטית: תהליכי יציקה (sand-cast, die-cast) אינם מדורגים ב-IT grade (ISO 286) בספרות המקצועית אלא בסולם נפרד — ISO 8062-3, Dimensional Casting Tolerance (DCT/CT) grades CT1–CT16. אומת ב-WebFetch: העמוד מסביר את הסולם ומציג טבלת מיפוי תהליך→CT grade: Green-Sand CT11–CT14, Die Casting CT1–CT4 (מקורות אחרים ציינו גם CT4–CT6), Investment (Lost-Wax) CT5–CT9, Gravity/Low-Pressure Die CT2–CT6, וטבלת סטיות-מקסימום לפי CT grade וטווח מידה.
+ידע רלוונטי: משלים לטבלה 5.1 בכך שהוא מספק את הסולם התקני הנכון (CT, לא IT) לתהליכי יציקה — חשוב כדי לא להטעות בתוכן הלימודי (ראו הערה ב-SRC-TBL-201).
+נתונים מספריים: כן.
+מגבלות שימוש: ספק ייצור מסחרי סיני (לא גוף תקינה, לא יצרן-יצוק מוכר-שם) — משמש להמחשת מבנה הסולם CT בלבד; ערכי CT המספריים המדויקים לכל טווח-מידה יש לאמת מול ISO 8062-3 עצמו (תקן בתשלום, לא נבדק/נאסף בסבב זה) לפני קביעת ערך לתוכן לימודי.
+מי בדק:
+הערות: מומלץ לחפש בנפרד רשומת-תקן רשמית ל-ISO 8062-3 (iso.org) בסבב עתידי, באותו אופן שנעשה לתקנים אחרים בגל 1 (הפניה בתשלום + שחזור נגיש).
+```
+
+### SRC-TBL-205
+
+```text
+מזהה: SRC-TBL-205
+סטטוס: inbox
+דירוג: B
+כותרת: DFM Guidelines for CNC Machining (Design for Machining Toolkit)
+ארגון/יצרן: Protolabs, Inc.
+סוג מקור: מדריך DFM רשמי של ספק ייצור מוביל
+קישור/מיקום: https://www.protolabs.com/resources/design-for-machining-toolkit/
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: עמוד אינטרנט עדכני
+נושאים: טבלה 6.1 (CNC machining DFM rules) — אומת ב-WebFetch: minimum feature/wall thickness "±0.005 in. (±0.13mm)" עם סף "0.020 in. (0.51mm) ומטה" מסומן כ-thin-wall בסיכון שבירה; deep-hole "מעל שישה קטרים מהווה אתגר" (typically דורש שני צדדים/מקדחים מיוחדים); thread depth "מעל פי 3 מהקוטר" משאיר חומר מיותר; engraving — פלסטיק/מתכות רכות: רוחב מינ' 0.018in (0.457mm), עומק 0.0118in (0.3mm); מתכות קשות: רוחב מינ' 0.033in (0.838mm), עומק 0.0118in (0.3mm). לא נמצא בעמוד זה עצמו ערך מספרי מפורש ל-internal corner radius/cavity depth (ראו SRC-TBL-206/207 להשלמה).
+ידע רלוונטי: מקור B ראשי (יצרן/ספק שירות בפועל, לא רק "בלוג DFM") לרוב שדות טבלה 6.1.
+נתונים מספריים: כן (למעט corner radius/cavity depth — ראו הערה).
+מגבלות שימוש: הכללים משקפים את יכולות הייצור הספציפיות של Protolabs (למשל טולרנס ±0.13mm) ולא בהכרח כל בית-מלאכה — יש לציין זאת כ"טווח נפוץ בתעשייה", לא כתקן מחייב.
+מי בדק:
+הערות: להשלים corner radius/cavity depth מ-SRC-TBL-206 (Hubs/Protolabs Network) ו-SRC-TBL-207 (Fictiv).
+```
+
+### SRC-TBL-206
+
+```text
+מזהה: SRC-TBL-206
+סטטוס: inbox
+דירוג: B
+כותרת: How to design parts for CNC machining
+ארגון/יצרן: Protolabs Network (לשעבר Hubs)
+סוג מקור: מדריך DFM רשמי (knowledge base) של רשת ייצור/ספק
+קישור/מיקום: https://www.hubs.com/knowledge-base/how-design-parts-cnc-machining/
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: עמוד אינטרנט עדכני
+נושאים: טבלה 6.1 — אומת ב-WebFetch, מכיל את כל ששת הפריטים המבוקשים במפורש: internal corner radius מומלץ = ⅓ מעומק החלל (או יותר); cavity depth מומלץ = פי 4 מרוחב החלל, עם יחס tool-diameter-to-cavity-depth עד 30:1 באמצעות כלים מיוחדים; min wall thickness מומלץ 0.8mm (מתכות)/1.5mm (פלסטיק), מינימום אפשרי 0.5mm/1.0mm; deep-hole depth מומלץ פי 4 מהקוטר, טיפוסי פי 10, אפשרי עד פי 40 בקידוח מיוחד; thread depth — מינימום פי 1.5 מהקוטר לחלק לא-מוברג בחור עיוור, מומלץ פי 3 לאורך ההברגה הכולל; engraving depth מומלץ 5mm עם גופן 20+ (חרוט עדיף על בולט).
+ידע רלוונטי: המקור המקיף ביותר שנמצא לטבלה 6.1 — כל ששת השדות המבוקשים בכתובת אחת, עם ערכים מספריים מפורשים ("Recommended"/"Feasible"/"Typical").
+נתונים מספריים: כן — מלא לכל ששת השדות.
+מגבלות שימוש: מדריך DFM של רשת-ספקים (aggregator, לא בית-מלאכה בודד) — הערכים הם "כללי אצבע נפוצים בתעשייה", לא תקן; יש caveat שהמינימום בפועל תלוי גיאומטריה/חומר/כלי.
+מי בדק:
+הערות: מקור מומלץ ביותר לקידום ל-verified לטבלה 6.1 (יחד עם SRC-TBL-205/207 כצלב-בדיקה).
+```
+
+### SRC-TBL-207
+
+```text
+מזהה: SRC-TBL-207
+סטטוס: inbox
+דירוג: B
+כותרת: Fictiv CNC Machining Design Guide (ומאמר משלים: Optimizing part design for CNC machining)
+ארגון/יצרן: Fictiv, Inc.
+סוג מקור: מדריך DFM רשמי של ספק ייצור מוביל
+קישור/מיקום: https://www.fictiv.com/articles/fictiv-cnc-machining-design-guide ; https://help.fictiv.com/en/articles/2270888-optimizing-part-design-for-cnc-machining
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: עמוד אינטרנט עדכני
+נושאים: טבלה 6.1 — צלב-בדיקה עצמאי (ספק שני) ל-SRC-TBL-206: corner radius = חצי-קוטר הכלי (למשל כלי ¼" מתאים ל-fillet מעל ⅛"), להימנע מ-radii מתחת ל-0.8mm, כלל-אצבע "לפחות שליש מעומק החלל" (עומק 30mm → radius מינ' 10mm); cavity depth: עומק חיתוך סופי לא יעלה על פי 15 מהקוטר בפלסטיק, פי 10 באלומיניום, פי 5 בפלדה; wall thickness: מעל 0.25mm (מתכות)/0.50mm (פלסטיק) כדי "לשרוד" את הייצור, אך מעל 0.5mm/1.0mm בפועל כדי למנוע breakthrough/warping.
+ידע רלוונטי: מקור B נוסף (ספק שירות ייצור עצמאי, שלישי אחרי Protolabs/Hubs) לצלב-בדיקת ערכי corner-radius/cavity-depth/wall-thickness — שים לב שערכי cavity-depth-vs-tool-diameter שונים במקצת בין Fictiv (15/10/5× לפי חומר) ל-Hubs (30:1 עם כלים מיוחדים, 4× מומלץ סטנדרטי) — ההבדל נובע מהגדרה שונה ("depth of cut של קצה כלי" מול "יחס כלי-לחלל כללי"); יש להבהיר זאת בתוכן הלימודי ולא למזג את שני הכללים לכלל-אצבע יחיד ללא הבחנה.
+נתונים מספריים: כן.
+מגבלות שימוש: כמו שאר מדריכי ה-DFM המסחריים — כללי אצבע של ספק ספציפי, לא תקן. יש להוסיף caveat על ההבדל בין הגדרות "cavity depth" בין המקורות (ראו לעיל).
+מי בדק:
+הערות:
+```
+
+### SRC-TBL-208
+
+```text
+מזהה: SRC-TBL-208
+סטטוס: inbox
+דירוג: B
+כותרת: Design Guide: Sheet Metal Fabrication, VERSION 2.2
+ארגון/יצרן: Xometry, Inc.
+סוג מקור: מדריך DFM רשמי של ספק ייצור מוביל (PDF, 12 עמ')
+קישור/מיקום: https://cdn2.hubspot.net/hubfs/340051/Design_Guides/Xometry_DesignGuide_SheetMetal.pdf
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: VERSION 2.2
+נושאים: טבלה 6.2 (Sheet-metal DFM rules) — נקרא במלואו (Read ישיר על קובץ ה-PDF, לאחר ש-WebFetch נכשל לחלץ טקסט/PDF גדול מדי). מכיל כללי-אצבע מלאים כפונקציה של עובי חומר t: min hole/slot diameter ≥ t; hole/slot-to-edge ≥ 2t (מניעת "bulging"); hole-to-bend ≥ 2.5t + bend radius (slot-to-bend ≥ 4t + bend radius); min inside bend radius ≥ 1×t (כלל-אצבע כללי, ללא פירוט חומר/טמפר — ראו SRC-TBL-210/211 לטבלה מפורטת); notch min thickness = max(0.04in/1mm, t), אורך ≤ פי 5 מהרוחב; tab min thickness = max(0.126in/3.2mm, 2t); corner fillet מומלץ = ½t; hem: open-hem ID מינ' = t, return length ≥ 4t; countersink depth מקס' = 0.6t, מרווח ≥ 8t (בין חורים)/4t (מקצה)/3t (מכיפוף); general tolerances (ללא שרטוט): forming/bending ±0.020in, bend-to-feature ±0.010in, linear ±0.005in.
+ידע רלוונטי: מקור B ראשי, מקיף ביותר לטבלה 6.2 — מכסה את כל חמשת הפריטים המבוקשים (min hole Ø, hole-to-edge, hole-to-bend, min flange/hem, slot/tab) ומעבר לכך (countersink, corner fillet, relief cuts, general tolerances). הערה: "flange" כשלעצמו לא מוגדר כפריט נפרד מפורש (בניגוד ל-Protolabs שנותן "flange ≥ 4t" — ראו SRC-TBL-209) — הקרוב ביותר הוא "open-hem return length ≥ 4t".
+נתונים מספריים: כן — מלא לכל הפריטים שנסקרו לעיל, כולל תרשימים.
+מגבלות שימוש: הכללים משקפים את יכולות הייצור הספציפיות של Xometry (ולא בהכרח כל בית-מלאכה) — לציין כ"טווח נפוץ בתעשייה". min bend radius כאן הוא כלל-אצבע כללי (1×t) בלבד, ללא הבחנה בין פלדה/פלב"מ/אלומיניום — לטבלה 7.1 יש להשתמש במקור ייעודי (SRC-TBL-210/211).
+מי בדק:
+הערות: קובץ ה-PDF גדול (כ-7.4MB) ונכשל ב-WebFetch (חריגת גודל/FlateDecode) — נקרא בהצלחה מלאה באמצעות קריאת קובץ ישירה, באותה שיטה שתועדה ב-SRC-TBL-112 בגל 1. מומלץ להשתמש בשיטה זו כברירת מחדל לקבצי Xometry/Bossard-סגנון עתידיים.
+```
+
+### SRC-TBL-209
+
+```text
+מזהה: SRC-TBL-209
+סטטוס: inbox
+דירוג: B
+כותרת: Design Guidelines for Sheet Metal Fabrication
+ארגון/יצרן: Protolabs, Inc.
+סוג מקור: מדריך DFM רשמי של ספק ייצור מוביל
+קישור/מיקום: https://www.protolabs.com/services/sheet-metal-fabrication/design-guidelines/
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: עמוד אינטרנט עדכני
+נושאים: טבלה 6.2 — צלב-בדיקה עצמאי (ספק שני) ל-SRC-TBL-208. אומת ב-WebFetch: min hole/slot Ø ≥ material thickness; hole-to-edge: ≤0.036in→0.062in (1.574mm) מהקצה, >0.036in→≥0.125in (3.175mm) מהקצה (מדיניות סף-עובי שונה מ-Xometry, שנותנת כלל "2t" רציף); flange length ≥ פי 4 מעובי החומר (עמודה מפורשת שחסרה ב-Xometry); notch ≥ max(t, 0.04in/1.016mm); tab ≥ max(2t, 0.126in/3.2mm); hole-to-bend proximity: בתוך 4t מהכיפוף בסיכון לעיוות (ללא נוסחת "2.5t+R" מפורשת כמו Xometry).
+ידע רלוונטי: משלים ומצלב-בודק את SRC-TBL-208 — נותן במפורש "flange ≥ 4t" (השדה שחסר אצל Xometry), אך נותן hole-to-edge כמדיניות מדורגת-סף (step function) ולא כנוסחה ליניארית "2t" כמו Xometry — יש להבהיר בתוכן שקיימים שני ניסוחים שונים בתעשייה לאותו כלל, ושניהם נותנים תוצאה דומה בפועל לרוב העביים המקובלים.
+נתונים מספריים: כן.
+מגבלות שימוש: ראו הערה לעיל לגבי אי-התאמת ניסוח hole-to-edge/hole-to-bend מול SRC-TBL-208 — יש לבחור ניסוח אחד לתוכן הלימודי ולציין את שניהם כדוגמה ל"כללי אצבע שונים בין ספקים".
+מי בדק:
+הערות:
+```
+
+### SRC-TBL-210
+
+```text
+מזהה: SRC-TBL-210
+סטטוס: inbox
+דירוג: B
+כותרת: Bend Radii & Minimum Bend Sizes
+ארגון/יצרן: Protocase, Inc. (יצרן בפועל של תיבות/שאסי מפח בהזמנה אישית, קנדה)
+סוג מקור: מדריך הנדסי רשמי של יצרן ייצור בפועל (לא רק מתווך/ברוקר)
+קישור/מיקום: https://www.protocase.com/resources/bend-radii/
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: עמוד אינטרנט עדכני
+נושאים: טבלה 7.1 (Sheet-metal minimum bend radius) — אומת ב-WebFetch: טבלאות מפורטות לפי חומר: Cold Rolled Steel (69 שורות, עובי 0.020"–0.120", רדיוס 0.03"–1.76" תלוי צירוף-כלים), Galvanneal (35 שורות), Stainless Steel (64 שורות, כולל 304, עובי 0.024"–0.125", רדיוס 0.035"–1.125"), Aluminum (116 שורות, כולל 5052-H32 בעובי 0.032"–0.250" עם רדיוס 0.03"–1.8"), Copper (18 שורות).
+ידע רלוונטי: מקור חזק במיוחד — אלו נתוני יכולת-ייצור בפועל של בית-מלאכה אמיתי (לא רק "כלל אצבע" גנרי), עם טבלאות נפרדות לכל שילוב חומר/עובי/כלי כיפוף.
+נתונים מספריים: כן — מלא, אך לא אומת נוכחות של 6061-T6 באופן ספציפי (רק "Aluminum" כללי, כולל 5052-H32 מפורש).
+מגבלות שימוש: אומת ב-WebFetch שאין אזכור כלשהו של כיוון-גרעין (grain direction) בעמוד זה — לכן יש caveat: יש להשלים את היבט הגרעין ממקור נוסף (SRC-TBL-211/RivCut) לפני שימוש בתוכן לימודי, כנדרש במפרט המשימה ("NOTE grain-direction caveat").
+מי בדק:
+הערות: מומלץ כמקור עיקרי ל-verified לטבלה 7.1 (נתוני-אמת של יצרן), בשילוב SRC-TBL-211 להיבט הגרעין.
+```
+
+### SRC-TBL-211
+
+```text
+מזהה: SRC-TBL-211
+סטטוס: inbox
+דירוג: B
+כותרת: Minimum Bend Radius Chart: Aluminum, Steel, Stainless
+ארגון/יצרן: RivCut (חברת ייצור CNC/פח מבוססת ארה"ב, יוניון סיטי, קליפורניה)
+סוג מקור: מדריך הנדסי רשמי של יצרן ייצור בפועל
+קישור/מיקום: https://www.rivcut.com/resources/bend-radius-chart
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: עמוד אינטרנט עדכני
+נושאים: טבלה 7.1 — אומת ב-WebFetch: טבלה מפורטת עם 5052-H32, 6061-T6, מild steel 1018, stainless steel 304, copper C110, brass C260, עוביים 0.020"–0.190", ערכים כפולים ("with grain" ו-"across grain") לכל שילוב חומר/עובי — בדיוק ההיבט שחסר ב-SRC-TBL-210.
+ידע רלוונטי: המקור היחיד שנמצא הנותן במפורש ובאופן שיטתי שתי עמודות נפרדות (עם/נגד כיוון גרעין) לכל שילוב — מכסה את דרישת ה-caveat של המשימה במלואה, וגם כן כולל 6061-T6 (בניגוד ל-SRC-TBL-210 שנתן רק "Aluminum" כללי).
+נתונים מספריים: כן — כולל ציטוט מפורש: "Bending across (perpendicular to) the grain allows a tighter bend radius... Bending with (parallel to) the grain requires a larger radius to avoid cracking."
+מגבלות שימוש: אתר יצרן/ספק מסחרי (לא גוף תקינה) — ערכים משקפים יכולת-ייצור ספציפית של RivCut, לא תקן מחייב.
+מי בדק:
+הערות: מקור מומלץ ביותר יחד עם SRC-TBL-210 לקידום ל-verified לטבלה 7.1 — שני מקורות B עצמאיים (יצרנים שונים) עם כיסוי חומרים משלים וטיפול מפורש בכיוון-גרעין.
+```
+
+### SRC-TBL-212
+
+```text
+מזהה: SRC-TBL-212
+סטטוס: rejected
+דירוג: D
+כותרת: Sheet Metal Bending Services (Guidelines: Bending)
+ארגון/יצרן: SendCutSend, Inc.
+סוג מקור: עמוד הנחיות ספק ייצור
+קישור/מיקום: https://sendcutsend.com/guidelines/bending/
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: עמוד אינטרנט עדכני
+נושאים: טבלה 7.1 — נבדק ונדחה: אומת ב-WebFetch שהעמוד עצמו **אינו** מכיל טבלת ערכים בפועל (לא רדיוס-כיפוף מינימלי לפי חומר/עובי, ולא היבט כיוון-גרעין) — הוא רק מפנה למחשבון אינטראקטיבי ("Bending Calculator") וקטלוג-חומרים נפרדים שלא נבדקו/נגישו בסבב זה.
+ידע רלוונטי: אין (העמוד עצמו הוא פרוזה/הפניה בלבד).
+נתונים מספריים: לא (על העמוד הסטטי הזה עצמו).
+מגבלות שימוש: לא לצטט כמקור לטבלה 7.1 — אינו עומד בדרישת "מטריצה בפועל". ייתכן שהמחשבון/קטלוג עצמם (שלא נבדקו) כן מכילים נתונים — מועמד לבדיקה עתידית אם רוצים מקור B נוסף.
+מי בדק:
+הערות: SRC-TBL-210 (Protocase) ו-SRC-TBL-211 (RivCut) מספקים כיסוי מלא וטוב יותר לטבלה 7.1 — אין צורך במקור זה.
+```
+
+### SRC-TBL-213
+
+```text
+מזהה: SRC-TBL-213
+סטטוס: inbox
+דירוג: A
+כותרת: AWS A2.4:2020 — Standard Symbols for Welding, Brazing, and Nondestructive Examination
+ארגון/יצרן: American Welding Society (AWS)
+סוג מקור: תקן אמריקאי רשמי (עמוד רשמי/PDF תצוגה-מקדימה; טקסט מלא בתשלום)
+קישור/מיקום: https://pubs.aws.org/p/1999/a242020-standard-symbols-for-welding-brazing-and-nondestructive-examination ; PDF תצוגה: https://pubs.aws.org/Download_PDFS/2__A2_4_2020_PV.pdf (403 בבדיקת WebFetch — לא נגיש אוטומטית)
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: A2.4:2020
+נושאים: טבלה 8.1 (Weld symbols chart) — התקן המחייב עבור כל סימוני הריתוך (fillet, groove V/U/bevel/J, plug, slot, spot, seam, stud, ועוד) וסימנים משלימים (weld-all-around, field weld, melt-through).
+ידע רלוונטי: מקור הסמכות היחיד/הרשמי לסימוני ריתוך אמריקאיים.
+נתונים מספריים: לא נגיש חינם — גם ה-PDF-תצוגה של AWS עצמו (pubs.aws.org) חזר 403 ב-WebFetch.
+מגבלות שימוש: תקן-מקור לציטוט בלבד.
+מי בדק:
+הערות: לצטט יחד עם SRC-TBL-214 (שחזור נגיש, OER מיוחס) ו-ISO 2553 (המקבילה הבינלאומית — לא אותרה רשומת-תקן נפרדת בסבב זה, להשלים בעתיד).
+```
+
+### SRC-TBL-214
+
+```text
+מזהה: SRC-TBL-214
+סטטוס: needs-review
+דירוג: B
+כותרת: Interpretation of Metal Fab Drawings (ספר לימוד פתוח — פרקים 1,3,5,6,7,8,9: Basics of Welding Symbols / Fillet Weld Symbols / Spot-Seam-Stud Welding Symbols / Groove Welding Symbols / Edge Weld Symbols / Process and Method / Supplementary Welding Symbols)
+ארגון/יצרן: Cameren Moran, פורסם דרך Open Oregon Educational Resources (Pressbooks) — קורס פחחות/ריתוך במכללה בקהילה באורגון
+סוג מקור: ספר לימוד פתוח (OER), רישיון CC BY 4.0
+קישור/מיקום: https://openoregon.pressbooks.pub/weldsymbols/ (פרקים בודדים, למשל https://openoregon.pressbooks.pub/weldsymbols/chapter/chapter-3/ ל-fillet, chapter-6 ל-groove, chapter-9 ל-supplementary)
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: © 2017, רישיון Creative Commons Attribution 4.0 International
+נושאים: טבלה 8.1 — שחזור לימודי מיוחס (מחבר ומוסד מזוהים, רישיון פתוח מפורש) של סימוני AWS: fillet, groove (לפי כותרות הפרקים כולל bevel/J/U וכו'), plug/slot/spot/seam/stud, edge weld, וסימנים משלימים (supplementary — weld-all-around/field-weld וכו').
+ידע רלוונטי: בניגוד ל-SRC-TBL-215 (clause5.io, שנדחה) — כאן יש מחבר בשם מלא (Cameren Moran) ומוסד-מפרסם מזוהה (Open Oregon, מיזם משאבים חינוכיים פתוחים של מכללות קהילה באורגון) עם רישיון CC-BY מפורש — עומד בדיוק בדרישות הקריטריון "ברור מי פרסם" מתוך docs/workflows/source-research-task-template-he.md.
+נתונים מספריים: לא ישים (סימונים גרפיים, לא נתונים מספריים) — אך התוכן "טבלאי-מושגי" (symbol↔meaning) רלוונטי במלואו לטבלה 8.1.
+מגבלות שימוש: ניסיון WebFetch ישיר לעמוד הראשי ולקובץ ה-PDF-להורדה חזר 403 (חסימת bot) — התוכן אומת רק בעקיפין דרך תוצאות חיפוש-רשת (כותרות פרקים, שם מחבר, רישיון). מומלץ אימות ידני בדפדפן לפני קידום ל-verified.
+מי בדק:
+הערות: מקור מבטיח ביותר לטבלה 8.1 מבחינת ייחוס/רישיון, אך טרם אומת תוכן-בפועל (רק כותרות פרקים ותיאור כללי) — סטטוס needs-review עד לאימות ידני.
+```
+
+### SRC-TBL-215
+
+```text
+מזהה: SRC-TBL-215
+סטטוס: rejected
+דירוג: D
+כותרת: Weld Symbol Chart - All AWS A2.4 Weld Symbols
+ארגון/יצרן: Clause5.io — זהות המפעיל/העורך לא מזוהה (אתר "כלים חינמיים לריתוך", ללא עמוד "About"/מחבר מזוהה שאותר)
+סוג מקור: מדריך/מחשבון הנדסי מקוון
+קישור/מיקום: https://clause5.io/welding/symbols/weld-symbol-chart/
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: עמוד אינטרנט עדכני
+נושאים: טבלה 8.1 — אומת ב-WebFetch שהעמוד טוען לכיסוי מלא (fillet, groove types, plug/slot/spot/seam/stud/surfacing/edge, symbols משלימים) בהתבסס על AWS A2.4:2020.
+ידע רלוונטי: מבנה התוכן תואם AWS A2.4, אך לא נמצאה זהות מפעיל/מחבר/ארגון מאחורי האתר בחיפוש-רשת — רק תיאור שיווקי כללי ("built for welding engineers, CWIs, and fabrication shops") ללא שם אדם/חברה מזוהה.
+נתונים מספריים: לא ישים (סימונים גרפיים).
+מגבלות שימוש: אין לצטט כמקור עצמאי לתוכן לימודי — אי-זיהוי עורך/ארגון הוא דגל אדום לפי docs/source-strategy-he.md ולפי דפוס שכבר תועד בגל 1 (השוו SRC-TBL-126, PartWork.ai, rejected מאותה סיבה). ראו גם SRC-TBL-216 (אותו אתר, טבלת AWS D1.1 לריתוך זוויתי) — נדחה מאותה סיבה.
+מי בדק:
+הערות: נשמר בקטלוג לתיעוד (המבנה התוכני תקין ותואם AWS, אך אין לצטט ללא זיהוי עורך). ראו SRC-TBL-214 למקור חלופי מיוחס לאותו נושא.
+```
+
+### SRC-TBL-216
+
+```text
+מזהה: SRC-TBL-216
+סטטוס: rejected
+דירוג: D
+כותרת: AWS D1.1 Table 7.7 — Minimum Fillet Weld Size Calculator
+ארגון/יצרן: Clause5.io — זהות המפעיל/העורך לא מזוהה (ראו SRC-TBL-215)
+סוג מקור: מחשבון/מדריך הנדסי מקוון
+קישור/מיקום: https://clause5.io/welding/fillet-weld-size/
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: עמוד אינטרנט עדכני
+נושאים: טבלה 8.2 (Fillet weld min/max leg vs. plate thickness) — אומת ב-WebFetch שהעמוד מציג טבלה עם 4 טווחי-עובי (T≤1/4in→1/8in מינ'; 1/4–1/2in→3/16in; 1/2–3/4in→1/4in; מעל 3/4in→5/16in) המיוחסת ל-AWS D1.1:2025 Table 7.7, כולל הערת שוליים שמבחינה בין תהליכי ריתוך non-low-hydrogen (T = החלק העבה) ל-low-hydrogen (T = החלק הדק).
+ידע רלוונטי: הערכים המוצגים תואמים (בבדיקת-סבירות מול תוצאות-חיפוש-רשת בלתי-תלויות נוספות) לערכים המוכרים/המצוטטים בפורומים מקצועיים עבור AWS D1.1 Table 5.8/7.7 (מספור הטבלה משתנה מעט בין מהדורות D1.1 — 5.8 במהדורות ישנות יותר, 7.7 בחדשות) — אך זהות העורך אינה מזוהה.
+נתונים מספריים: כן — אך ראו סייג חמור על אמינות המקור (זהות עורך).
+מגבלות שימוש: אין לצטט כמקור עצמאי לתוכן לימודי — אותה בעיית זיהוי-עורך כמו SRC-TBL-215. אין להסתמך על הערכים ללא אימות מול AWS D1.1 הרשמי (ראו SRC-TBL-217) או מקור B/A מזוהה אחר.
+מי בדק:
+הערות: זהו הממצא הטוב ביותר-בפועל שנמצא לטבלה 8.2 (מבחינת שלמות הנתונים), אבל נדחה בשל אי-זיהוי העורך. **פער פתוח**: לא נמצא בסבב זה מקור B/A מזוהה וחינמי המשחזר את טבלת AWS D1.1 למינימום רגל-ריתוך-זוויתי — ראו המלצה בדוח המסכם להטיל משימת המשך ייעודית או לרכוש/לעיין בתקן.
+```
+
+### SRC-TBL-217
+
+```text
+מזהה: SRC-TBL-217
+סטטוס: inbox
+דירוג: A
+כותרת: AWS D1.1/D1.1M:2025 — Structural Welding Code – Steel (כולל Table 7.7 — Minimum Fillet Weld Size)
+ארגון/יצרן: American Welding Society (AWS)
+סוג מקור: תקן אמריקאי רשמי (עמוד רשמי; טקסט מלא בתשלום)
+קישור/מיקום: https://pubs.aws.org (חיפוש "D1.1" — רשומת עמוד ספציפית לא אותרה/נשמרה בסבב זה, להשלים)
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: מהדורת 2025 (Table 7.7); מהדורות קודמות השתמשו במספור Table 5.8
+נושאים: טבלה 8.2 — התקן המחייב לערכי מינימום/מקסימום רגל-ריתוך-זוויתי לפי עובי החלק העבה/הדק המחוברים.
+ידע רלוונטי: מקור הסמכות היחיד. לפי תקצירי חיפוש-רשת (לא אומתו ישירות מהתקן עצמו): 4 מדרגות-עובי סטנדרטיות עם מינימום רגל 1/8"–5/16", ומגבלת מקסימום = עובי החלק הדק מהשניים (footnote נפרד).
+נתונים מספריים: לא נגיש חינם.
+מגבלות שימוש: תקן-מקור לציטוט בלבד. **פער**: לא אותר בסבב זה מקור-שני נגיש-חינם עם עורך מזוהה לשחזור הטבלה (ראו SRC-TBL-216 שנדחה) — זהו הטבלה היחידה מבין תשעת טבלאות הגל שנותרה ללא שחזור-B/A נגיש ומאושר.
+מי בדק:
+הערות: להשלים בסבב עתידי: (1) קישור מדויק לרשומת AWS D1.1:2025 ב-pubs.aws.org; (2) חיפוש ממוקד למקור נגיש-חינם עם עורך/ארגון מזוהה (למשל מדריך של יצרן ציוד ריתוך גדול — Lincoln Electric / Miller Electric / ESAB — שנתקלנו ב-429 Too Many Requests עבור millerwelds.com בסבב זה ולא הצלחנו לאמת, מועמד לניסיון חוזר).
+```
+
+### SRC-TBL-218
+
+```text
+מזהה: SRC-TBL-218
+סטטוס: inbox
+דירוג: B
+כותרת: DFM tips for 3D printed parts with thin walls
+ארגון/יצרן: Protolabs Network (לשעבר Hubs)
+סוג מקור: מדריך DFM רשמי (knowledge base) של רשת ייצור/ספק
+קישור/מיקום: https://www.hubs.com/knowledge-base/dfm-tips-for-3d-printed-parts-with-thin-walls/
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: עמוד אינטרנט עדכני
+נושאים: טבלה 9.1 (Minimum wall thickness by 3D-printing process) — אומת ב-WebFetch: טבלה מפורשת עם עמודות min wall נתמך/חופשי: FDM 0.8/0.8mm; SLA 0.5/1.0mm; SLS 0.8/1.0mm; MJF 0.7/1.0mm; DMLS 0.4–0.8/0.8–1.5mm. חסר PolyJet בטבלה זו — ראו SRC-TBL-219 להשלמה.
+ידע רלוונטי: מקור B ראשי, טבלה אמיתית (לא פרוזה) עם 5 מתוך 6 התהליכים המבוקשים.
+נתונים מספריים: כן.
+מגבלות שימוש: "אלו הנחיות כלליות — הגבולות בפועל תלויים בגיאומטריית החלק, בחירת חומר ועיבוד לאחר-הדפסה" (caveat מפורש מהמקור עצמו). ערכי DMLS ניתנים כטווח רחב (0.4–0.8/0.8–1.5mm) — תלוי מתכת/גיאומטריה.
+מי בדק:
+הערות: להשלים PolyJet מ-SRC-TBL-219 (Protolabs).
+```
+
+### SRC-TBL-219
+
+```text
+מזהה: SRC-TBL-219
+סטטוס: inbox
+דירוג: B
+כותרת: Design Guidelines: PolyJet (3D Printing)
+ארגון/יצרן: Protolabs, Inc.
+סוג מקור: מדריך DFM רשמי של ספק ייצור מוביל
+קישור/מיקום: https://www.protolabs.com/services/3d-printing/polyjet/design-guidelines/
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: עמוד אינטרנט עדכני
+נושאים: טבלה 9.1 (השלמת PolyJet) וטבלה 9.4 (tolerance + layer height ל-PolyJet) — אומת ב-WebFetch: minimum free-standing wall/feature = 0.030in (0.76mm); חורים/ערוצים/חריצים מתחת ל-0.76mm לא ייווצרו כראוי, יחס-צורה מקס' 4:1 (אורך:רוחב); layer height = 0.00118in (30 מיקרון) ברזולוציה רגילה; tolerance = ±0.005in (0.1mm) לאינץ' הראשון + ±0.001in/in (0.001mm/mm) לכל אינץ' נוסף.
+ידע רלוונטי: מקור B ישיר מיצרן/ספק שירות PolyJet בפועל (לא רק אגרגטור) — סוגר את הפער של PolyJet בטבלאות 9.1 ו-9.4 גם יחד.
+נתונים מספריים: כן, מלא.
+מגבלות שימוש: ערכים משקפים יכולת PolyJet הספציפית של Protolabs — לציין כטווח נפוץ בתעשייה, לא תקן.
+מי בדק:
+הערות:
+```
+
+### SRC-TBL-220
+
+```text
+מזהה: SRC-TBL-220
+סטטוס: inbox
+דירוג: B
+כותרת: Understanding 3D Printing Tolerances
+ארגון/יצרן: Protolabs, Inc.
+סוג מקור: מדריך DFM/הנדסי רשמי של ספק ייצור מוביל
+קישור/מיקום: https://www.protolabs.com/resources/design-tips/3d-printing-tolerances/
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: עמוד אינטרנט עדכני
+נושאים: טבלה 9.4 (Achievable tolerance by AM process) — אומת ב-WebFetch: סעיף "Tolerance Capabilities by 3D Printing Type" עם ערכים מפורשים לכל תהליך: DMLS (מתכת) — ±0.003in (0.0762mm) לאינץ' ראשון + 0.1% מהמידה הנומינלית; SLA — ±0.002in (0.0508mm) + 0.1%; MJF — ±0.012in (0.3048mm) + 0.1%; SLS — ±0.010in (0.254mm) + 0.1%; PolyJet — ±0.005in (0.127mm) + 0.1%. גם layer-height חלקי: SLA ≈0.004in (0.1016mm); FDM stair-stepping ב-≈0.008in (200 מיקרון).
+ידע רלוונטי: מקור B מרכזי לטבלה 9.4 — טבלה/רשימה מספרית מפורשת לחמישה מתוך שישה תהליכים (חסר FDM כתהליך נפרד בעל שורה — ראו SRC-TBL-221 להשלמה חלקית/needs-review).
+נתונים מספריים: כן, לחמשת התהליכים שצוינו.
+מגבלות שימוש: ערכים משקפים יכולת Protolabs הספציפית (ולא בהכרח כל ספק) — לציין כטווח נפוץ בתעשייה. FDM לא מכוסה ישירות בעמוד זה (יתכן ש-Protolabs עצמה לא מציעה FDM כשירות ליבה).
+מי בדק:
+הערות: מקור מומלץ ביותר לקידום ל-verified לטבלה 9.4 (יחד עם SRC-TBL-219 ל-PolyJet, שכבר כלול כאן, ו-SRC-TBL-221 ל-FDM).
+```
+
+### SRC-TBL-221
+
+```text
+מזהה: SRC-TBL-221
+סטטוס: needs-review
+דירוג: A
+כותרת: FDM 3D Printing Tolerances by Material & Layer Thickness / FDM Materials and Systems Spec Sheet / FDM Design Guidelines
+ארגון/יצרן: Stratasys Ltd. (ממציאת/יצרנית טכנולוגיית FDM)
+סוג מקור: datasheet ומדריך DFM רשמיים של יצרן ציוד/חומרים מקורי
+קישור/מיקום: https://www.stratasys.com/en/stratasysdirect/resources/resource-guides/fdm-material-tolerance/ ; https://www.stratasys.com/siteassets/fdm-system/fdm-3d-printers-materials-spec-sheet.pdf ; https://www.stratasys.com/siteassets/sdm/resources/design-guidelines/fdm/fdm_design_guidelines_2017-1.pdf
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: לא אומת (403 בכל הניסיונות)
+נושאים: טבלה 9.1 (min wall by slice-thickness ל-FDM) וטבלה 9.4 (FDM tolerance) — לפי תוצאות חיפוש-רשת בלבד (לא אומת ישירות): min wall נע בין 0.36mm–0.66mm תלוי slice thickness (0.18mm–0.33mm); דיוק ייצור מוצהר "±.008in (.200mm), או ±.002in/in (.002mm/mm), הגדול מביניהם".
+ידע רלוונטי: זהו מקור A פוטנציאלי חשוב מאוד (Stratasys הוא ממציא-הטכנולוגיה עצמו, datasheet רשמי) — אך **לא הצלחנו לאמת בפועל**: כל שלושת הקישורים (stratasys.com/en/stratasysdirect/..., שני קבצי ה-PDF) החזירו 403 Forbidden ב-WebFetch בעקביות, בדומה לדפוס שתועד עבור engineersedge.com/MatWeb בגל 1.
+נתונים מספריים: לא אומת ישירות בסבב זה — רק מתקצירי חיפוש-רשת (לא לצטט כערך סופי ללא אימות ישיר).
+מגבלות שימוש: נדרשת פתיחה ואימות ידניים בדפדפן (או ניסיון חוזר עם User-Agent/proxy שונה) לפני כל שימוש בתוכן לימודי או קידום סטטוס.
+מי בדק:
+הערות: אם יאומת בהצלחה, זהו ככל הנראה המקור החזק ביותר (A, יצרן-מקור) להשלמת FDM בטבלאות 9.1/9.4 לצד Xometry (SRC-TBL-222) ו-Hubs (SRC-TBL-218, שכבר מכסה FDM ב-9.1). מומלץ למשימת המשך.
+```
+
+### SRC-TBL-222
+
+```text
+מזהה: SRC-TBL-222
+סטטוס: needs-review
+דירוג: B
+כותרת: What are the key design elements for 3D printing? (כולל min wall/tolerance כלליים ל-FDM ברשת Protolabs Network) ו-Design Guide: Fused Deposition Modeling (FDM), VERSION 2.1 (Xometry)
+ארגון/יצרן: Protolabs Network (Hubs) ; Xometry, Inc.
+סוג מקור: מדריכי DFM רשמיים של ספקי ייצור מובילים
+קישור/מיקום: https://www.hubs.com/knowledge-base/key-design-considerations-3d-printing/ ; https://cdn2.hubspot.net/hubfs/340051/Design_Guides/Xometry_DesignGuide_FDM.pdf (PDF גדול מדי ל-WebFetch, לא אומת ישירות בסבב זה)
+תאריך גישה: 2026-07-14
+גרסה/מהדורה: Xometry FDM Guide VERSION 2.1; עמוד Hubs עדכני
+נושאים: טבלה 9.1/9.4 (FDM) — לפי תוצאות חיפוש-רשת (חלקית לא-מאומתות ישירות): min wall "מעל 0.8mm" (עמוד Hubs שכן אומת ב-WebFetch, אך ללא טבלה השוואתית מלאה בין תהליכים בעמוד הזה עצמו); FDM tolerance כללי ±0.3mm (מתחת ל-100mm) או ±0.3% (מעל).
+ידע רלוונטי: עמוד Hubs "key design considerations" עצמו אומת ב-WebFetch כמכיל רק פריט בודד (min wall 0.8mm) ולא טבלה מלאה — הערכים המפורטים יותר (±0.3mm tolerance, layer height 0.1–0.3mm) מגיעים מתקציר חיפוש-רשת בלבד, לא מ-fetch ישיר מאומת. קובץ ה-PDF של Xometry FDM (המועמד הטוב ביותר, ספק ראשי עם מדריך ייעודי ל-FDM) לא נפתח בהצלחה (חריגת גודל קובץ ב-WebFetch).
+נתונים מספריים: חלקי, לא-מאומת-ישירות ברובו.
+מגבלות שימוש: לא לצטט ערכים ספציפיים (±0.3mm וכו') כמאומתים ללא פתיחה ישירה נוספת של קובץ ה-PDF (למשל בהורדה ידנית + Read ישיר, כפי שנעשה בהצלחה ל-SRC-TBL-208).
+מי בדק:
+הערות: פעולת המשך מומלצת: להוריד את Xometry_DesignGuide_FDM.pdf באופן ידני ולקרוא עם כלי Read ישיר (כמו שנעשה ל-SRC-TBL-208), מאחר ש-WebFetch נכשל עקב גודל קובץ (>10MB) ולא עקב קידוד.
+```
+
 ## מקורות מאומתים
 
 ### NASA RP-1228 — Fastener Design Manual

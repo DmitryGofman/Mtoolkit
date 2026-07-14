@@ -103,9 +103,12 @@
 
 ## 5. יכולת תהליכי ייצור — סבילות ופני-שטח מושגים (Process Capability)
 
-- **5.1 Achievable IT grade by process** ⭐⭐⭐ ☐
-  *עמודות:* process (drilling, turning, milling, reaming, grinding, honing, lapping, EDM, sand-cast, die-cast, forging, sheet-stamp) · IT range typical · IT best.
-  *מקור:* ISO 286 process charts / Machinery's Handbook.
+- **5.1 Achievable tolerance grade by process** ⭐⭐⭐ ☐
+  *עמודות:* process · typical tolerance · best tolerance. *כיסוי:* drilling, turning, milling, reaming, grinding,
+  honing, lapping, EDM, sand-cast, die-cast, forging, sheet-stamp. *מקור:* ISO 286 process charts / Machinery's Handbook.
+  **הערה חשובה:** IT-grades (ISO 286) חלים על **עיבוד שבבי** בלבד. יציקה משתמשת ב-**ISO 8062 CT-grades**,
+  חישול ב-**DIN 7526**, וכיפוף פח בסבילות ±mm — אין להכריח עמודת IT יחידה על כל 12 התהליכים.
+  לבנות את הטבלה עם עמודת "±tolerance (mm)" גנרית או עמודה כפולה (IT למכני / CT ליציקה). מקור: `SRC-TBL-201/204`.
 - **5.2 Achievable surface roughness Ra by process** ⭐⭐⭐ ☐
   *עמודות:* process · Ra typical (µm) · Ra best. *כיסוי:* אותם תהליכים כמו 5.1. *מקור:* ISO 4287 + DFM charts.
 - **5.3 Economical vs. tight tolerance — cost curve** ⭐⭐ ☐
