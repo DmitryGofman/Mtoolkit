@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 340" font-family="Georgia, 'Times New Roman', serif">
+  <rect width="560" height="340" fill="none"/>
+  <style>
+    .hole{fill:none;stroke:#111;stroke-width:2}
+    .zone{fill:#b00020;fill-opacity:0.12;stroke:#b00020;stroke-width:1.6;stroke-dasharray:4 3}
+    .cross{stroke:#111;stroke-width:1.2}
+    .t{font-size:14px;fill:#111;text-anchor:middle}
+    .z{font-size:13px;fill:#b00020;text-anchor:middle}
+    .f{font-size:14px;fill:#111;text-anchor:middle}
+  </style>
+
+  <!-- Panel A: hole at MMC -->
+  <text x="150" y="30" class="t" font-weight="bold">קדח ב-MMC — Ø12.0</text>
+  <circle cx="150" cy="150" r="82" class="hole"/>
+  <!-- tolerance zone Ø0.2 (exaggerated) -->
+  <circle cx="150" cy="150" r="20" class="zone"/>
+  <line x1="150" y1="132" x2="150" y2="168" class="cross"/>
+  <line x1="132" y1="150" x2="168" y2="150" class="cross"/>
+  <text x="150" y="258" class="z">position zone  Ø0.2</text>
+
+  <!-- Panel B: hole larger -->
+  <text x="410" y="30" class="t" font-weight="bold">קדח גדול יותר — Ø12.06</text>
+  <circle cx="410" cy="150" r="88" class="hole"/>
+  <circle cx="410" cy="150" r="26" class="zone"/>
+  <line x1="410" y1="124" x2="410" y2="176" class="cross"/>
+  <line x1="384" y1="150" x2="436" y2="150" class="cross"/>
+  <text x="410" y="258" class="z">position zone  Ø0.26</text>
+
+  <!-- formula footer -->
+  <line x1="40" y1="286" x2="520" y2="286" stroke="#ccc" stroke-width="1"/>
+  <text x="280" y="310" class="f">Bonus = actual size − MMC = 12.06 − 12.0 = 0.06</text>
+  <text x="280" y="330" class="f">allowed zone = stated 0.2 + bonus 0.06 = Ø0.26</text>
+</svg>

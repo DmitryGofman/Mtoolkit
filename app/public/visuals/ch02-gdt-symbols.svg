@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 470" font-family="Georgia, 'Times New Roman', serif">
+  <rect width="660" height="470" fill="none"/>
+  <style>
+    .hdr{font-size:15px;font-weight:bold;fill:#0a6a7a}
+    .nm{font-size:14px;fill:#111}
+    .sub{font-size:11px;fill:#666}
+    .sym{fill:none;stroke:#111;stroke-width:2}
+    .box{fill:none;stroke:#bbb;stroke-width:1}
+  </style>
+
+  <!-- ================= LEFT COLUMN ================= -->
+  <text x="20" y="24" class="hdr">FORM — no datum</text>
+
+  <!-- straightness -->
+  <rect x="20" y="34" width="40" height="30" class="box"/>
+  <line x1="27" y1="49" x2="53" y2="49" class="sym"/>
+  <text x="70" y="53" class="nm">Straightness</text>
+
+  <!-- flatness -->
+  <rect x="20" y="70" width="40" height="30" class="box"/>
+  <path d="M31,90 L41,74 L53,74 L43,90 Z" class="sym"/>
+  <text x="70" y="89" class="nm">Flatness</text>
+
+  <!-- circularity -->
+  <rect x="20" y="106" width="40" height="30" class="box"/>
+  <circle cx="40" cy="121" r="10" class="sym"/>
+  <text x="70" y="125" class="nm">Circularity (roundness)</text>
+
+  <!-- cylindricity -->
+  <rect x="20" y="142" width="40" height="30" class="box"/>
+  <circle cx="40" cy="157" r="9" class="sym"/>
+  <line x1="30" y1="150" x2="36" y2="164" class="sym"/>
+  <line x1="44" y1="150" x2="50" y2="164" class="sym"/>
+  <text x="70" y="161" class="nm">Cylindricity</text>
+
+  <text x="20" y="200" class="hdr">PROFILE — datum optional</text>
+
+  <!-- profile of a line -->
+  <rect x="20" y="210" width="40" height="30" class="box"/>
+  <path d="M28,232 A14 14 0 0 1 52 232" class="sym"/>
+  <text x="70" y="229" class="nm">Profile of a line</text>
+
+  <!-- profile of a surface -->
+  <rect x="20" y="246" width="40" height="30" class="box"/>
+  <path d="M28,268 A14 14 0 0 1 52 268" class="sym"/>
+  <line x1="28" y1="268" x2="52" y2="268" class="sym"/>
+  <text x="70" y="265" class="nm">Profile of a surface</text>
+
+  <!-- ================= RIGHT COLUMN ================= -->
+  <text x="350" y="24" class="hdr">ORIENTATION — datum needed</text>
+
+  <!-- angularity -->
+  <rect x="350" y="34" width="40" height="30" class="box"/>
+  <path d="M357,58 L378,40 M357,58 L379,58" class="sym"/>
+  <text x="400" y="53" class="nm">Angularity</text>
+
+  <!-- perpendicularity -->
+  <rect x="350" y="70" width="40" height="30" class="box"/>
+  <path d="M363,76 L363,94 L381,94" class="sym"/>
+  <text x="400" y="89" class="nm">Perpendicularity</text>
+
+  <!-- parallelism -->
+  <rect x="350" y="106" width="40" height="30" class="box"/>
+  <line x1="362" y1="115" x2="376" y2="127" class="sym"/>
+  <line x1="370" y1="115" x2="384" y2="127" class="sym"/>
+  <text x="400" y="125" class="nm">Parallelism</text>
+
+  <text x="350" y="164" class="hdr">LOCATION — datum needed</text>
+
+  <!-- position -->
+  <rect x="350" y="174" width="40" height="30" class="box"/>
+  <circle cx="370" cy="189" r="9" class="sym"/>
+  <line x1="370" y1="176" x2="370" y2="202" class="sym"/>
+  <line x1="357" y1="189" x2="383" y2="189" class="sym"/>
+  <text x="400" y="193" class="nm">Position</text>
+
+  <!-- concentricity -->
+  <rect x="350" y="210" width="40" height="30" class="box"/>
+  <circle cx="370" cy="225" r="11" class="sym"/>
+  <circle cx="370" cy="225" r="5" class="sym"/>
+  <text x="400" y="229" class="nm">Concentricity</text>
+
+  <!-- symmetry -->
+  <rect x="350" y="246" width="40" height="30" class="box"/>
+  <line x1="361" y1="255" x2="379" y2="255" class="sym"/>
+  <line x1="357" y1="261" x2="383" y2="261" class="sym"/>
+  <line x1="361" y1="267" x2="379" y2="267" class="sym"/>
+  <text x="400" y="265" class="nm">Symmetry</text>
+
+  <text x="350" y="304" class="hdr">RUNOUT — datum needed</text>
+
+  <!-- circular runout -->
+  <rect x="350" y="314" width="40" height="30" class="box"/>
+  <path d="M360,339 L380,319" class="sym"/>
+  <path d="M380,319 L373,321 M380,319 L378,326" class="sym"/>
+  <text x="400" y="333" class="nm">Circular runout</text>
+
+  <!-- total runout -->
+  <rect x="350" y="350" width="40" height="30" class="box"/>
+  <path d="M358,375 L376,357" class="sym"/>
+  <path d="M376,357 L369,359 M376,357 L374,364" class="sym"/>
+  <path d="M366,375 L384,357" class="sym"/>
+  <path d="M384,357 L377,359 M384,357 L382,364" class="sym"/>
+  <text x="400" y="369" class="nm">Total runout</text>
+
+  <!-- footer note -->
+  <line x1="20" y1="420" x2="640" y2="420" stroke="#ccc" stroke-width="1"/>
+  <text x="20" y="442" class="sub">14 geometric characteristics (ISO / ASME Y14.5). Form controls compare a feature to itself — no datum.</text>
+  <text x="20" y="458" class="sub">Orientation, location and runout position a feature relative to one or more datums.</text>
+</svg>
