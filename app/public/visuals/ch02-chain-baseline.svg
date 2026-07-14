@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 430" font-family="Georgia, 'Times New Roman', serif">
   <defs>
     <marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
       <path d="M0,0 L7,3 L0,6 Z" fill="#111"/>
@@ -12,63 +12,64 @@
     .hole{fill:none;stroke:#111;stroke-width:1.6}
     .dim{stroke:#111;stroke-width:1;marker-start:url(#ahs);marker-end:url(#ah)}
     .ext{stroke:#888;stroke-width:0.8}
-    .lbl{font-size:12px;fill:#111;text-anchor:middle}
+    .lbl{font-size:11px;fill:#111;text-anchor:middle}
     .title{font-size:15px;font-weight:bold;fill:#0a6a7a}
     .note{font-size:12px;fill:#b00020}
   </style>
 
+  <!-- 8 holes at x = 75,140,205,270,335,400,465,530 -->
   <!-- ===== CHAIN (top) ===== -->
   <text x="20" y="26" class="title">שרשרת — chain</text>
-  <rect x="40" y="60" width="470" height="60" class="bar"/>
-  <!-- 5 holes at x = 95,185,275,365,455 -->
+  <rect x="45" y="62" width="510" height="52" class="bar"/>
   <g class="hole">
-    <circle cx="95" cy="90" r="12"/><circle cx="185" cy="90" r="12"/>
-    <circle cx="275" cy="90" r="12"/><circle cx="365" cy="90" r="12"/>
-    <circle cx="455" cy="90" r="12"/>
+    <circle cx="75" cy="88" r="10"/><circle cx="140" cy="88" r="10"/><circle cx="205" cy="88" r="10"/>
+    <circle cx="270" cy="88" r="10"/><circle cx="335" cy="88" r="10"/><circle cx="400" cy="88" r="10"/>
+    <circle cx="465" cy="88" r="10"/><circle cx="530" cy="88" r="10"/>
   </g>
-  <!-- extension lines up -->
   <g class="ext">
-    <line x1="95" y1="76" x2="95" y2="40"/><line x1="185" y1="76" x2="185" y2="40"/>
-    <line x1="275" y1="76" x2="275" y2="40"/><line x1="365" y1="76" x2="365" y2="40"/>
-    <line x1="455" y1="76" x2="455" y2="40"/>
+    <line x1="75" y1="76" x2="75" y2="42"/><line x1="140" y1="76" x2="140" y2="42"/>
+    <line x1="205" y1="76" x2="205" y2="42"/><line x1="270" y1="76" x2="270" y2="42"/>
+    <line x1="335" y1="76" x2="335" y2="42"/><line x1="400" y1="76" x2="400" y2="42"/>
+    <line x1="465" y1="76" x2="465" y2="42"/><line x1="530" y1="76" x2="530" y2="42"/>
   </g>
-  <!-- chain dims between neighbours at y=45 -->
   <g class="dim">
-    <line x1="95" y1="45" x2="185" y2="45"/><line x1="185" y1="45" x2="275" y2="45"/>
-    <line x1="275" y1="45" x2="365" y2="45"/><line x1="365" y1="45" x2="455" y2="45"/>
+    <line x1="75" y1="47" x2="140" y2="47"/><line x1="140" y1="47" x2="205" y2="47"/>
+    <line x1="205" y1="47" x2="270" y2="47"/><line x1="270" y1="47" x2="335" y2="47"/>
+    <line x1="335" y1="47" x2="400" y2="47"/><line x1="400" y1="47" x2="465" y2="47"/>
+    <line x1="465" y1="47" x2="530" y2="47"/>
   </g>
   <g class="lbl">
-    <text x="140" y="41">90 ±0.1</text><text x="230" y="41">90 ±0.1</text>
-    <text x="320" y="41">90 ±0.1</text><text x="410" y="41">90 ±0.1</text>
+    <text x="107" y="43">90</text><text x="172" y="43">90</text><text x="237" y="43">90</text>
+    <text x="302" y="43">90</text><text x="367" y="43">90</text><text x="432" y="43">90</text>
+    <text x="497" y="43">90</text>
   </g>
-  <text x="40" y="150" class="note">כל מרווח מוריש את סטייתו הלאה → הקדח האחרון עד ±0.4</text>
+  <text x="45" y="146" class="note">7 מרווחים ±0.1 מצטברים → הקדח ה-8 נודד עד ±0.7</text>
 
   <!-- ===== BASELINE (bottom) ===== -->
-  <text x="20" y="236" class="title">בסיס משותף — baseline</text>
-  <rect x="40" y="270" width="470" height="60" class="bar"/>
+  <text x="20" y="238" class="title">בסיס משותף — baseline</text>
+  <rect x="45" y="272" width="510" height="52" class="bar"/>
   <g class="hole">
-    <circle cx="95" cy="300" r="12"/><circle cx="185" cy="300" r="12"/>
-    <circle cx="275" cy="300" r="12"/><circle cx="365" cy="300" r="12"/>
-    <circle cx="455" cy="300" r="12"/>
+    <circle cx="75" cy="298" r="10"/><circle cx="140" cy="298" r="10"/><circle cx="205" cy="298" r="10"/>
+    <circle cx="270" cy="298" r="10"/><circle cx="335" cy="298" r="10"/><circle cx="400" cy="298" r="10"/>
+    <circle cx="465" cy="298" r="10"/><circle cx="530" cy="298" r="10"/>
   </g>
-  <!-- datum line at left (x=55) -->
-  <line x1="55" y1="270" x2="55" y2="410" stroke="#0a6a7a" stroke-width="1.6"/>
-  <text x="55" y="266" class="lbl" fill="#0a6a7a">datum</text>
+  <line x1="58" y1="272" x2="58" y2="420" stroke="#0a6a7a" stroke-width="1.6"/>
+  <text x="58" y="268" class="lbl" fill="#0a6a7a">datum</text>
   <g class="ext">
-    <line x1="95" y1="312" x2="95" y2="410"/><line x1="185" y1="312" x2="185" y2="405"/>
-    <line x1="275" y1="312" x2="275" y2="400"/><line x1="365" y1="312" x2="365" y2="395"/>
-    <line x1="455" y1="312" x2="455" y2="390"/>
+    <line x1="75" y1="310" x2="75" y2="420"/><line x1="140" y1="310" x2="140" y2="408"/>
+    <line x1="270" y1="310" x2="270" y2="396"/><line x1="400" y1="310" x2="400" y2="384"/>
+    <line x1="530" y1="310" x2="530" y2="372"/>
   </g>
-  <!-- baseline dims all from datum, stacked -->
   <g class="dim">
-    <line x1="55" y1="352" x2="95" y2="352"/>
-    <line x1="55" y1="368" x2="185" y2="368"/>
-    <line x1="55" y1="384" x2="275" y2="384"/>
-    <line x1="55" y1="400" x2="365" y2="400"/>
+    <line x1="58" y1="368" x2="75" y2="368"/>
+    <line x1="58" y1="380" x2="140" y2="380"/>
+    <line x1="58" y1="392" x2="270" y2="392"/>
+    <line x1="58" y1="404" x2="400" y2="404"/>
+    <line x1="58" y1="416" x2="530" y2="416"/>
   </g>
   <g class="lbl">
-    <text x="120" y="349">90</text><text x="150" y="365">180</text>
-    <text x="180" y="381">270</text><text x="210" y="397">360</text>
+    <text x="100" y="365">90</text><text x="130" y="377">180</text><text x="195" y="389">360</text>
+    <text x="260" y="401">540</text><text x="325" y="413">720</text>
   </g>
-  <text x="300" y="352" class="note">כל קדח נמדד מהבסיס — אין הצטברות</text>
+  <text x="360" y="360" class="note">כל קדח נמדד מהבסיס — אין הצטברות</text>
 </svg>
