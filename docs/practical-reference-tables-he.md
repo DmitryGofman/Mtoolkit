@@ -113,6 +113,9 @@
   *עמודות:* process · Ra typical (µm) · Ra best. *כיסוי:* אותם תהליכים כמו 5.1. *מקור:* ISO 4287 + DFM charts.
 - **5.3 Economical vs. tight tolerance — cost curve** ⭐⭐ ☐
   *עמודות:* tolerance band · relative cost multiplier. *מקור:* ספרות ייצור/DFM. **caveat:** אינדיקטיבי.
+- **5.4 Surface-texture symbols & Ra↔N-grade conversion** ⭐⭐⭐ ☐
+  *עמודות:* drawing symbol (basic/machining-required/no-machining) · Ra (µm) · N-grade (N1–N12) · Ra (µin) · typical use.
+  *מקור:* ISO 1302 / ISO 21920 (חדש) / ASME B46.1. **caveat:** N-grades ישנים (ISO 1302:2002) — לציין מהדורה.
 
 ## 6. הנחיות תכן-לייצור (DFM Guidelines)
 
