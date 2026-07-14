@@ -40,8 +40,10 @@
   *עמודות:* class (4.8/5.8/8.8/10.9/12.9) · proof stress · yield R_p0.2 · UTS R_m · hardness · min elong %.
   *מקור:* ISO 898-1.
 - **1.10 Preload & tightening-torque table** ⭐⭐⭐ ☐
-  *עמודות:* size × class · target preload F · torque at μ=0.10 / 0.14 / 0.20. *כיסוי:* M4–M24, 8.8/10.9/12.9.
-  *מקור:* VDI 2230 / קטלוג יצרן. **caveat:** תלוי חיכוך וסיכה — לצטט הנחות.
+  *עמודות:* size × class · target preload F · torque at μ=0.08 / 0.10 / 0.12 / 0.14. *כיסוי:* M4–M24, 8.8/10.9/12.9.
+  *מקור:* VDI 2230 / קטלוג יצרן (Bossard `SRC-TBL-112`). **caveat:** תלוי חיכוך וסיכה — לצטט הנחות.
+  **הערה:** טבלת ה-VDI 2230 הסטנדרטית ל-8.8/10.9/12.9 עוצרת ב-μ=0.14; μ=0.20 מופיע רק לפלב"מ/ציפויים
+  מיוחדים (טבלה נפרדת) — לא להניח μ=0.20 לברגי פחמן רגילים.
 - **1.11 Minimum thread engagement length** ⭐⭐ ☐
   *עמודות:* fastener material · mating material (steel/Al/cast) · engagement in ×D.
   *מקור:* NASA RP-1228 (כבר `verified`) — לאמת שהטבלה שם. **caveat:** תלוי יחס חוזק חומרים.
