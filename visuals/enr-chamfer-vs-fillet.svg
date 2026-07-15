@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -17 120 120">
+<linearGradient id="g" x2="1" y2="1">
+<stop stop-color="#ccc" offset=".2"/>
+<stop stop-color="#666" offset=".3"/>
+<stop stop-color="#666" offset=".5"/>
+<stop stop-color="#ccc" offset=".7"/>
+</linearGradient>
+<path d="M-2,83v-24h20l9-9v-20h-38v62" fill="#666"/>
+<path d="M-25,5l9-9h5q9,0 9,9v16q0,9 9,9h20l-9,9H-25" fill="url(#g)"/>
+<path d="M-25,5h5q9,0 9,9v16q0,9 9,9h20v20h-24l-5,5v28l-5,5h-9" fill="#999"/>
+<text>fillet/round/blend</text>
+<text y="24">fillet/round/blend</text>
+<text y="73">chamfer/bevel</text>
+<text y="97">chamfer/bevel</text>
+</svg>
