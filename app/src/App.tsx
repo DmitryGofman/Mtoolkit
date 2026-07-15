@@ -18,7 +18,9 @@ import { IntelUnit } from './components/IntelUnit.tsx'
 import { ExercisePanel } from './components/ExercisePanel.tsx'
 import { Debrief } from './components/Debrief.tsx'
 import { Dossier } from './components/Dossier.tsx'
+import { Datapad } from './components/Datapad.tsx'
 import { RankUp } from './components/RankUp.tsx'
+import { referenceTables, plannedTables } from './content/tables/index.ts'
 
 type Screen =
   | { kind: 'command-center' }
@@ -28,6 +30,7 @@ type Screen =
   | { kind: 'exam'; index: number }
   | { kind: 'debrief'; score: number }
   | { kind: 'dossier' }
+  | { kind: 'datapad'; tableId?: string }
 
 export default function App() {
   const [player, setPlayer] = useState<PlayerState>(loadState)
@@ -102,6 +105,16 @@ export default function App() {
   }
   function closeDossier() {
     setScreen(dossierReturnRef.current)
+  }
+
+  // Same return-to-origin pattern for the Datapad reference library.
+  const datapadReturnRef = useRef<Screen>({ kind: 'command-center' })
+  function openDatapad(tableId?: string) {
+    if (screen.kind !== 'datapad') datapadReturnRef.current = screen
+    setScreen({ kind: 'datapad', tableId })
+  }
+  function closeDatapad() {
+    setScreen(datapadReturnRef.current)
   }
 
   function startChapter() {
@@ -199,6 +212,7 @@ export default function App() {
         onReset={reset}
         onHome={screen.kind === 'command-center' ? undefined : goHome}
         onDossier={screen.kind === 'dossier' ? undefined : openDossier}
+        onDatapad={screen.kind === 'datapad' ? undefined : () => openDatapad()}
       />
 
       {screen.kind === 'command-center' && (
@@ -255,6 +269,8 @@ export default function App() {
         <Debrief
           chapter={chapter}
           examScore={screen.score}
+          relatedTables={referenceTables.filter((t) => t.relatedChapter === chapter.id)}
+          onOpenTable={openDatapad}
           onReturn={goHome}
           onRetry={() => navTo({ kind: 'exam', index: 0 })}
         />
@@ -262,6 +278,16 @@ export default function App() {
 
       {screen.kind === 'dossier' && (
         <Dossier xp={xp} stats={careerStats(chapters, player.chapters)} onReturn={closeDossier} />
+      )}
+
+      {screen.kind === 'datapad' && (
+        <Datapad
+          key={screen.tableId ?? 'library'}
+          tables={referenceTables}
+          planned={plannedTables}
+          initialTableId={screen.tableId}
+          onReturn={closeDatapad}
+        />
       )}
 
       {rankUp && <RankUp rank={rankUp} onClose={() => setRankUp(null)} />}

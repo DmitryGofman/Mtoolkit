@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
 import type { Exercise } from '../game/types.ts'
 import { VisualCard } from './VisualCard.tsx'
+import { DataTable } from './DataTable.tsx'
+import { tableById } from '../content/tables/index.ts'
 import { sound } from '../game/sound.ts'
 
 interface Props {
@@ -61,6 +63,13 @@ export function ExercisePanel({
   // Practice must be solved to advance; exam only needs an answer.
   const canAdvance = mode === 'exam' ? picked !== null : solved
 
+  // Table-lookup exercises: the referenced Datapad tables open on demand —
+  // reaching for the right table IS the skill being trained.
+  const refTables = (exercise.tableRefs ?? [])
+    .map(tableById)
+    .filter((t): t is NonNullable<ReturnType<typeof tableById>> => t != null)
+  const [openTables, setOpenTables] = useState<Record<string, boolean>>({})
+
   return (
     <main className="screen">
       <div className={`panel exercise ${mode === 'exam' ? 'exercise-exam' : ''}`}>
@@ -77,6 +86,23 @@ export function ExercisePanel({
         </section>
 
         {exercise.visual && <VisualCard visual={exercise.visual} className="exercise-visual" />}
+
+        {refTables.map((t) => (
+          <section key={t.id} className="block ex-table">
+            <button
+              className="btn-ghost ex-table-toggle mono"
+              onClick={() => setOpenTables((m) => ({ ...m, [t.id]: !m[t.id] }))}
+            >
+              {openTables[t.id] ? '▾' : '▸'} DATAPAD // {t.codename} — {t.title}
+            </button>
+            {openTables[t.id] && (
+              <>
+                <DataTable table={t} />
+                <div className="dp-source mono dim">◈ {t.standard}</div>
+              </>
+            )}
+          </section>
+        ))}
 
         <h2 className="exercise-q">{exercise.question}</h2>
 

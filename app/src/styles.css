@@ -1045,6 +1045,122 @@ body {
 
 .dossier-actions { margin-top: 26px; display: flex; justify-content: center; }
 
+/* ===================== datapad — reference tables ===================== */
+.dp-title { font-size: 26px; font-weight: 700; margin: 14px 0 4px; }
+
+.dp-standard { color: var(--gold); font-size: 12px; letter-spacing: 0.12em; direction: ltr; text-align: end; }
+
+.dp-intro { color: var(--dim); max-width: 640px; margin: 10px 0 18px; }
+
+.dp-section { margin-top: 18px; }
+
+.dp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 12px;
+  margin: 10px 0 20px;
+}
+
+.dp-card {
+  text-align: start;
+  font: inherit;
+  color: inherit;
+  background: rgba(53, 224, 255, 0.04);
+  border: 1px solid var(--line);
+  clip-path: var(--clip);
+  padding: 14px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.dp-card:hover:not(.dp-locked) { transform: translateY(-2px); border-color: var(--cyan-dim); }
+
+.dp-locked { opacity: 0.5; filter: saturate(0.4); cursor: default; }
+
+.dp-card-code { color: var(--cyan); font-size: 10px; letter-spacing: 0.1em; direction: ltr; text-align: start; }
+
+.dp-card-name { font-size: 15px; font-weight: 700; }
+
+.dp-card-std { font-size: 10px; direction: ltr; text-align: start; }
+
+.dp-card .tag { align-self: flex-start; margin-top: auto; font-size: 9px; }
+
+/* the table grid itself is engineering data — it runs LTR inside the RTL page */
+.data-table-wrap { overflow-x: auto; margin: 14px 0; border: 1px solid var(--line); clip-path: var(--clip); }
+
+.data-table { width: 100%; border-collapse: collapse; background: rgba(6, 16, 31, 0.55); }
+
+.data-table th {
+  background: rgba(53, 224, 255, 0.08);
+  border-bottom: 1px solid var(--cyan-dim);
+  padding: 8px 12px;
+  text-align: start;
+  vertical-align: bottom;
+}
+
+.dt-col-en { display: block; color: var(--cyan); font-size: 10px; letter-spacing: 0.08em; }
+
+.dt-col-he { display: block; font-size: 11px; color: var(--dim); direction: rtl; text-align: start; }
+
+.data-table td { padding: 6px 12px; border-bottom: 1px solid rgba(46, 74, 107, 0.35); font-size: 13px; }
+
+.data-table tbody tr:hover { background: rgba(53, 224, 255, 0.06); }
+
+.dt-name { color: var(--gold-soft); font-weight: 600; }
+
+.dt-num { color: var(--text); }
+
+.dp-caveat {
+  border: 1px solid rgba(242, 169, 59, 0.4);
+  background: rgba(242, 169, 59, 0.06);
+  clip-path: var(--clip);
+  padding: 12px 14px;
+  margin: 14px 0;
+}
+
+.dp-caveat p { color: var(--gold-soft); font-size: 13px; margin-top: 6px; }
+
+.dp-source { font-size: 10px; direction: ltr; text-align: start; margin-top: 8px; overflow-wrap: anywhere; }
+
+.dp-actions { margin-top: 20px; display: flex; justify-content: space-between; gap: 10px; }
+
+/* inline datapad table inside a field-op exercise */
+.ex-table-toggle { width: 100%; text-align: start; direction: ltr; font-size: 11px; }
+
+/* debrief → datapad references */
+.dp-refs { margin-top: 18px; }
+
+.dp-refs-hint { color: var(--dim); font-size: 13px; margin: 6px 0 10px; }
+
+.dp-refs-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.dp-ref-btn {
+  font: inherit;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: start;
+  background: rgba(53, 224, 255, 0.05);
+  border: 1px solid var(--cyan-dim);
+  clip-path: var(--clip);
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.dp-ref-btn:hover { transform: translateY(-2px); background: rgba(53, 224, 255, 0.12); }
+
+.dp-ref-btn .mono { font-size: 10px; letter-spacing: 0.1em; direction: ltr; text-align: start; }
+
+@media (max-width: 640px) {
+  .dp-grid { grid-template-columns: 1fr 1fr; }
+  .data-table td, .data-table th { padding: 6px 8px; font-size: 12px; }
+}
+
 /* ===================== footer ===================== */
 .foot {
   margin-top: auto;

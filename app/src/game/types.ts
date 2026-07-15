@@ -50,6 +50,43 @@ export interface IntelUnit {
   xp: number
 }
 
+// ===== Reference tables (the Datapad codex) =====
+
+export interface TableColumn {
+  label: string // Hebrew column header
+  labelEn: string // engineering designation, e.g. "Tap drill Ø (mm)"
+  numeric?: boolean // numeric columns render LTR inside the RTL layout
+}
+
+/**
+ * A verified engineering reference table — a page in the "ENGINEER'S DATAPAD".
+ * NEVER invented: values are extracted only from a verified source in
+ * sources/verified/ and cross-checked against an independent source (or read
+ * from the governing standard itself). Evidence: sources/verified/reference-tables.md
+ */
+export interface ReferenceTable {
+  id: string
+  codename: string // English HUD codename, e.g. "DATA-01 // TAP DRILL"
+  title: string // Hebrew title
+  category: string // Datapad section, e.g. "ברגים והברגות" — provisional until curriculum mapping
+  standard: string // governing standard, e.g. "ISO 273:1979"
+  intro: string // one Hebrew sentence: what you use this table for
+  columns: TableColumn[]
+  rows: (string | number)[][] // row-major, aligned to columns
+  caveat: string // limits of validity — mandatory, like RuleOfThumb
+  sourceId: string // SRC-TBL-xxx record in sources/source-index.md
+  sourceNote: string // Hebrew one-liner: how the values were verified
+  relatedChapter: string // chapter whose debrief points here; tables are never locked
+}
+
+/** A table that is planned but not yet sourced/verified — teased locked in the Datapad. */
+export interface PlannedTable {
+  codename: string
+  title: string
+  category: string
+  standard: string
+}
+
 export interface ExerciseOption {
   text: string
   correct: boolean
@@ -62,6 +99,7 @@ export interface Exercise {
   codename: string
   scenario: string
   visual?: Visual // optional scene-setting image; must never reveal the answer
+  tableRefs?: string[] // ReferenceTable ids opened inline — for table-lookup exercises
   question: string
   options: ExerciseOption[]
   skill: string // the measured skill, e.g. "בחירת אורך בורג"

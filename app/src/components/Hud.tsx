@@ -9,6 +9,8 @@ interface HudProps {
   onHome?: () => void
   /** Open the player dossier (personal space). */
   onDossier?: () => void
+  /** Open the Datapad reference-table library. */
+  onDatapad?: () => void
 }
 
 /** Animate a number toward `target` (respecting reduced-motion). */
@@ -41,7 +43,7 @@ function useCountUp(target: number): number {
   return value
 }
 
-export function Hud({ xp, onReset, onHome, onDossier }: HudProps) {
+export function Hud({ xp, onReset, onHome, onDossier, onDatapad }: HudProps) {
   const rank = rankFor(xp)
   const next = nextRank(xp)
   const pct = next
@@ -100,6 +102,15 @@ export function Hud({ xp, onReset, onHome, onDossier }: HudProps) {
         >
           {soundOn ? '🔊' : '🔇'}
         </button>
+        {onDatapad && (
+          <button
+            className="btn-ghost"
+            onClick={onDatapad}
+            title="ספריית טבלאות העזר — ENGINEER'S DATAPAD"
+          >
+            ▦ DATAPAD
+          </button>
+        )}
         {onHome && (
           <button
             className="btn-ghost btn-home"
