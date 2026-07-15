@@ -175,6 +175,71 @@ ChansMachining הראה בבדיקת-סבירות קודמת). הטבלאות ה
 
 ---
 
+## 10. תבריג מטרי — מידות יסוד (`thread-basics-metric`) — דירוג B מוצלב
+
+**מקורות:** Modulus Metal (SRC-TBL-104, טבלת ISO 724 גולמית) מוצלב מול נוסחת
+MechaniCalc (d2=d−0.6495·P, d3=d−1.2269·P). **התאמה מדויקת בכל 11 המידות**
+(M2–M20). שטח מתיחה (A_s) מ-MechaniCalc (SRC-TBL-103).
+
+## 11. דרגות סבילות IT + התאמות מועדפות (`it-grades`, `preferred-fits`) — דירוג B, נקרא במלואו
+
+**מקור:** ChansMachining "General Tolerance Chart" (SRC-TBL-119) — מסמך יחיד
+בן 4 עמודים, נקרא במלואו ישירות (Read). עמ׳ 2: מטריצת IT01–IT18 מלאה לפי
+טווחי מידה עד 3150mm. עמ׳ 3: מטריצות סטיות-יסוד מלאות לחור (D10...R7) ולציר
+(d9...s7). עמ׳ 4: סבילויות כלליות ISO 2768 (לינארי/זוויתי/גאומטרי) — תואם
+בדיוק את הערכים שכבר אומתו מול RivCut (`general-tolerances-iso2768`).
+
+**הצלבה:** ערך אחד (IT7/3-6mm=12µm) כבר אומת בעבר מול Machining Doctor.
+הפעם המסמך כולו נקרא — כל הערכים בטבלאות ה-Datapad נלקחים ישירות ממנו,
+לא משוחזרים מזיכרון.
+
+**caveat:** מקור B בלבד (בית-מלאכה, לא התקן/יצרן) — אך פורמט מקצועי ועקבי,
+והערכים תואמים ידע תקני מוכר בכל בדיקת-סבירות שבוצעה.
+
+## 12. חוזק מתכות — 10 חומרים (`metals-strength`) — דירוג A ברובם
+
+**מקורות (10 datasheets נפרדים, רובם נקראו ישירות — Read, לא WebFetch):**
+- S235JR — thyssenkrupp Materials Services (SRC-TBL-307) — **A**
+- S355JR — Ovako SteelNavigator (SRC-TBL-114, כבר verified) — **A**
+- AISI 1045/4140/304/316/5052-H32 — MW Components/Elgin (SRC-TBL-308) — **A**
+- 6061-T6 — eco-alum.com (SRC-TBL-309) — **A**
+- 7075-T6 — Gabrian International (SRC-TBL-310) — **B**
+- 6082-T6 — Aalco Metals (SRC-TBL-311) — **B**
+
+**נקודת בקרה חשובה:** נבדק ונפסל smithmetal.com עבור 6082 — נתן ערך proof
+stress 170 MPa, נמוך מדי ל-T6 (הערך התקני ~250-260 MPa) ונראה כמייצג מצב
+לא-מסומן/כללי. Aalco (כותרת מפורשת "T6~T651") נבחר כמקור הנכון. באופן דומה,
+mwcomponents נתן רק את 7075-**O** (annealed, yield 103 MPa בלבד) — Gabrian
+סיפק טבלה משווה עם כל שלושת מצבי החישול וזוהה כמקור ל-T6 (yield 503 MPa).
+
+## 13. רדיוס כיפוף מינימלי (`bend-radius`) — דירוג B, פירוט מלא
+
+**מקור:** RivCut bend-radius chart (SRC-TBL-312/211). אומת ב-WebFetch שמכיל
+פירוק מלא לפי חומר (5052-H32, 6061-T6, פלדה 1018, פלב"מ 304), טווח עובי,
+וכיוון כיפוף (עם-סיב מול נגד-סיב). בונוס: thyssenkrupp S235JR datasheet
+(SRC-TBL-307) מכיל טבלת רדיוס כיפוף רשמית ליצרן לפלדת S235JRC.
+
+## 14. עובי דופן מינימלי בהדפסה (`print-wall-thickness`) — דירוג B
+
+**מקור:** Hubs/Protolabs Network DFM guide (SRC-TBL-313/218). מכסה את כל
+5 התהליכים המבוקשים (FDM/SLA/SLS/MJF/DMLS) עם ערכי supported/unsupported.
+
+## 15. Ra לפי תהליך ייצור (`ra-by-process`) — דירוג B, מכני מוצלב + יציקה מוחלש
+
+**מקור:** RivCut surface-finish chart (SRC-TBL-314). מטריצת תהליך↔Ra אמיתית
+למכניקה/EDM (17 שורות). שורות היציקה/חישול (sand-cast, die-cast, forging)
+לא במקור זה — הוצלבו בנפרד מול חיפוש רב-מקורי (metal-castings.com,
+mag-cast.com) עם עקביות סבירה אך לא PDF יחיד שנקרא — **caveat מפורש בטבלה**.
+
+## 16. סמלי ריתוך (`weld-symbols`) — דירוג B, מקור משני בלבד
+
+**מקור:** steelcalculator.app (SRC-TBL-315), מצטט AWS A2.4 / ISO 2553
+במפורש. **התקן המחייב לא נקרא** — ניסיונות לגשת ל-app.aws.org (403) ול-
+OpenOregon Pressbooks CC-BY (403, SRC-TBL-214) נכשלו שניהם בסבב זה.
+חסר פרט קריטי (arrow-side מול other-side) — מתועד כ-caveat בטבלה.
+
+---
+
 ## סטטוס
 
 | טבלה ב-Datapad | דירוג אימות | קובץ ראיה |
@@ -187,6 +252,13 @@ ChansMachining הראה בבדיקת-סבירות קודמת). הטבלאות ה
 | `torque-vdi2230` | **B** — נקרא מהמקור (Bossard/VDI 2230) | bossard-preload-tightening-torques.pdf |
 | `property-classes` | **B** — נקרא מהמקור (Fastenal/ISO 898-1) | fastenal-mechanical-properties-iso898-1.pdf |
 | `tap-drill-imperial` | **B מוצלב במלואו** — 12/12 מידות תואמות | littlemachineshop-metric-tap-clearance.pdf (עמ׳ 2) |
+| `thread-basics-metric` | **B מוצלב** — נוסחה מדויקת | (Modulus Metal + MechaniCalc) |
+| `it-grades` / `preferred-fits` | **B, נקרא במלואו** | chansmachining-iso-tolerance-chart.pdf |
+| `metals-strength` | **A/B מעורב** — 8/10 חומרים A | 10 datasheets, ראו סעיף 12 |
+| `bend-radius` | **B, פירוט מלא** | (RivCut + thyssenkrupp bonus) |
+| `print-wall-thickness` | **B, כל 5 תהליכים** | (Hubs/Protolabs) |
+| `ra-by-process` | **B מכני, מוחלש ליציקה** | (RivCut + הצלבת חיפוש) |
+| `weld-symbols` | **B, מקור משני בלבד** | (steelcalculator.app — התקן לא נקרא) |
 | `clearance-holes-imperial` | **B מוצלב במלואו** — 12/12 מידות תואמות | littlemachineshop-metric-tap-clearance.pdf (עמ׳ 2) |
 | `general-tolerances-iso2768` | **B מוצלב** — RivCut × ChansMachining | (עמוד אינטרנט — SRC-TBL-122) |
 
