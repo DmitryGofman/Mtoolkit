@@ -127,6 +127,54 @@ ISO 1302:2002 + ISO 4287. הטבלה חולצה **פעמיים בשליפות נ
 
 ---
 
+## 6. מומנטי הידוק ו-preload (`torque-vdi2230`) — דירוג B, נקרא מהמקור
+
+**מקור:** Bossard "Preload and tightening torques" (SRC-TBL-112), מבוסס VDI 2230
+edition 2015. ה-PDF (74 עמ׳ קטלוג, טבלה בעמ׳ 61-62) נקרא במלואו ישירות
+(WebFetch נכשל — FlateDecode — כמו בסבבים קודמים). עותק שמור:
+`sources/verified/docs/bossard-preload-tightening-torques.pdf`.
+
+**מה חולץ:** M4/M5/M6/M8/M10/M12/M16/M20/M24, μ=0.10 ו-0.14, preload מרבי (kN)
+ומומנט הידוק מרבי (Nm) לכל אחת משלוש מחלקות 8.8/10.9/12.9. הטבלה המקורית כוללת
+גם μ=0.08/0.12 ו-M1.6–M39 — לא כל השורות חולצו (ראו caveat בטבלת ה-Datapad).
+
+**מגבלות:** ערכי "קירוב" (90% מגבול הכניעה, ללא מקדם ביטחון) המוצהרים ככאלה
+במפורש במקור. לא תחליף לחישוב VDI 2230 המלא.
+
+## 7. מחלקות חוזק לברגים (`property-classes`) — דירוג B, נקרא מהמקור
+
+**מקור:** Fastenal "Mechanical Properties Per ISO 898-1" (SRC-TBL-110), Rev
+3-6-09. נקרא ישירות (WebFetch נכשל גם כאן). עותק שמור:
+`sources/verified/docs/fastenal-mechanical-properties-iso898-1.pdf`.
+
+**מה חולץ:** 4.6, 8.8 (מפוצל M5-M16 / M18-M39 — ערכי proof/tensile שונים
+מעט!), 10.9, 12.9 — proof stress, tensile Rm, yield Rp0.2, טווח קשיות Rockwell,
+וסיווג חומר. המסמך מכיל גם שטחי מתיחה מטריים (טבלה 1.1/1.8) וטבלת ISO 3506-1
+לפלב"מ — לא חולצו בסבב זה.
+
+## 8. קידוח והברגה אינצ'יים UNC/UNF (`tap-drill-imperial`, `clearance-holes-imperial`) — דירוג B מוצלב במלואו
+
+**מקורות:** AmesWeb Unified Tap Drill Calculator (ASME B1.1) + LittleMachineShop
+"Tap & Clearance Drill Sizes" עמ׳ 2 (SRC-TBL-306, אותו PDF כבר משמש למטרי).
+
+**הצלבה:** **כל 12 המידות שנבדקו (#4–3/4") תואמות בדיוק** בין שני המקורות —
+TPI, מקדח 75%/50% לשתי הסדרות UNC/UNF, ומקדחי clearance close/free. אין אף
+אי-התאמה אחת. זו ההצלבה הנקייה ביותר עד כה בפרויקט.
+
+**נקודה מעניינת:** ל-#8, מקדח ה-75% זהה (#29) לשתי הסדרות UNC-32 ו-UNF-36 —
+אומת כצירוף מקרים גיאומטרי אמיתי, לא כשגיאת מקור (כפי שנחשד לגבי AmesWeb
+בעבר לפני ההצלבה).
+
+## 9. סבילויות כלליות ISO 2768-1 — טבלה ליניארית (`general-tolerances-iso2768`) — דירוג B מוצלב
+
+**מקורות:** RivCut (SRC-TBL-122) מוצלב מול ChansMachining (SRC-TBL-119).
+הטבלה הליניארית (8 טווחי מידה × 4 מחלקות f/m/c/v) חולצה במלואה מ-RivCut;
+הערכים תואמים ידע מוכר על ISO 2768-1 (למשל m/6-30mm=±0.2mm, כפי שגם
+ChansMachining הראה בבדיקת-סבירות קודמת). הטבלאות הזוויתית (5 טווחים) והגאומטרית
+(ISO 2768-2, מחלקות H/K/L) קיימות במקור אך לא חולצו בסבב זה.
+
+---
+
 ## סטטוס
 
 | טבלה ב-Datapad | דירוג אימות | קובץ ראיה |
@@ -136,6 +184,11 @@ ISO 1302:2002 + ISO 4287. הטבלה חולצה **פעמיים בשליפות נ
 | `plastics-strength` | **B מקור יחיד** — טווחים verbatim | professional-plastics-mechanical-properties.pdf |
 | `surface-finish-ra` | **B מוצלב** — שליפה כפולה + סדרה קנונית | (עמוד אינטרנט — SRC-TBL-301) |
 | `weld-fillet-min` | **⚠ needs-review** — מקורות משניים בלבד | (SRC-TBL-304; הקוד בתשלום) |
+| `torque-vdi2230` | **B** — נקרא מהמקור (Bossard/VDI 2230) | bossard-preload-tightening-torques.pdf |
+| `property-classes` | **B** — נקרא מהמקור (Fastenal/ISO 898-1) | fastenal-mechanical-properties-iso898-1.pdf |
+| `tap-drill-imperial` | **B מוצלב במלואו** — 12/12 מידות תואמות | littlemachineshop-metric-tap-clearance.pdf (עמ׳ 2) |
+| `clearance-holes-imperial` | **B מוצלב במלואו** — 12/12 מידות תואמות | littlemachineshop-metric-tap-clearance.pdf (עמ׳ 2) |
+| `general-tolerances-iso2768` | **B מוצלב** — RivCut × ChansMachining | (עמוד אינטרנט — SRC-TBL-122) |
 
 מי בדק: הצלבה אוטומטית במסגרת session בניית ה-Datapad (2026-07-14); מומלץ מעבר
 עין אנושי לפני שחרור רשמי ללומדים.
