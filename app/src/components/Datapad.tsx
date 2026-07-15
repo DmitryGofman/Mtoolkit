@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { ReferenceTable, PlannedTable } from '../game/types.ts'
+import { tableCategories } from '../content/tables/index.ts'
 import { DataTable } from './DataTable.tsx'
 
 interface Props {
@@ -75,34 +76,52 @@ export function Datapad({ tables, planned, isChapterDone, chapterName, onReturn 
           וכל ערך בה עבר אימות מול מקור מתועד.
         </p>
 
-        <div className="dp-grid">
-          {tables.map((t) => {
-            const unlocked = isChapterDone(t.unlockedBy)
-            return unlocked ? (
-              <button key={t.id} className="dp-card" onClick={() => setOpenId(t.id)}>
-                <div className="dp-card-code mono">{t.codename}</div>
-                <div className="dp-card-name">{t.title}</div>
-                <div className="dp-card-std mono dim">{t.standard}</div>
-                <div className="tag tag-live mono">ONLINE</div>
-              </button>
-            ) : (
-              <div key={t.id} className="dp-card dp-locked">
-                <div className="dp-card-code mono">{t.codename}</div>
-                <div className="dp-card-name">{t.title}</div>
-                <div className="dp-card-std mono dim">{t.standard}</div>
-                <div className="tag tag-locked mono">🔒 השלם את {chapterName(t.unlockedBy)}</div>
-              </div>
-            )
-          })}
-          {planned.map((p) => (
-            <div key={p.codename} className="dp-card dp-locked">
-              <div className="dp-card-code mono">{p.codename}</div>
-              <div className="dp-card-name">{p.title}</div>
-              <div className="dp-card-std mono dim">{p.standard}</div>
-              <div className="tag tag-locked mono">⟳ באיסוף מקורות</div>
-            </div>
-          ))}
-        </div>
+        {(() => {
+          const cats = [...tableCategories]
+          for (const t of [...tables, ...planned]) if (!cats.includes(t.category)) cats.push(t.category)
+          return cats
+            .map((cat) => ({
+              cat,
+              live: tables.filter((t) => t.category === cat),
+              soon: planned.filter((p) => p.category === cat),
+            }))
+            .filter((s) => s.live.length + s.soon.length > 0)
+            .map((s) => (
+              <section key={s.cat} className="dp-section">
+                <div className="block-label mono">
+                  ▸ {s.cat} — {s.live.filter((t) => isChapterDone(t.unlockedBy)).length}/{s.live.length + s.soon.length}
+                </div>
+                <div className="dp-grid">
+                  {s.live.map((t) => {
+                    const unlocked = isChapterDone(t.unlockedBy)
+                    return unlocked ? (
+                      <button key={t.id} className="dp-card" onClick={() => setOpenId(t.id)}>
+                        <div className="dp-card-code mono">{t.codename}</div>
+                        <div className="dp-card-name">{t.title}</div>
+                        <div className="dp-card-std mono dim">{t.standard}</div>
+                        <div className="tag tag-live mono">ONLINE</div>
+                      </button>
+                    ) : (
+                      <div key={t.id} className="dp-card dp-locked">
+                        <div className="dp-card-code mono">{t.codename}</div>
+                        <div className="dp-card-name">{t.title}</div>
+                        <div className="dp-card-std mono dim">{t.standard}</div>
+                        <div className="tag tag-locked mono">🔒 השלם את {chapterName(t.unlockedBy)}</div>
+                      </div>
+                    )
+                  })}
+                  {s.soon.map((p) => (
+                    <div key={p.codename} className="dp-card dp-locked">
+                      <div className="dp-card-code mono">{p.codename}</div>
+                      <div className="dp-card-name">{p.title}</div>
+                      <div className="dp-card-std mono dim">{p.standard}</div>
+                      <div className="tag tag-locked mono">⟳ באיסוף מקורות</div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ))
+        })()}
 
         <div className="dp-actions">
           <button className="btn-primary" onClick={onReturn}>

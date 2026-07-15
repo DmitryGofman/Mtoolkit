@@ -11,6 +11,7 @@ export const clearanceHolesTable: ReferenceTable = {
   id: 'clearance-holes-metric',
   codename: 'DATA-02 // CLEARANCE',
   title: 'חורי מעבר לברגים — ISO 273',
+  category: 'ברגים והברגות',
   standard: 'ISO 273:1979',
   intro:
     'הבורג לא מתברג לתוך חור מעבר — הוא עובר דרכו. שלוש סדרות: עדינה (מיקום מדויק), בינונית (ברירת המחדל), גסה (טולרנס הרכבה נדיב).',

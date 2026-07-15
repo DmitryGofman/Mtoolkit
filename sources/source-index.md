@@ -1574,7 +1574,7 @@
 
 ```text
 מזהה: SRC-TBL-301
-סטטוס: inbox
+סטטוס: verified
 דירוג: B
 כותרת: Surface Roughness Chart — Ra, Rz, RMS & ISO N-Grade Conversion
 ארגון/יצרן: PREMSA Industries (Monterrey, מקסיקו)
@@ -1587,14 +1587,14 @@
 נתונים מספריים: כן — מטריצת המרה מלאה, אומתה.
 מגבלות שימוש: מקור B (יצרן, לא תקן) — לצטט ISO 1302 / ISO 21920 / ASME B46.1 כסמכות. הטבלה עוצרת ב-N10 ואינה מציגה N11/N12 (Ra 25/50 µm). הדף מזכיר את סמלי-השרטוט (✓) מילולית אך אינו מציג דיאגרמות סמלים — לסמלי הקריאה עצמם נדרש מקור משלים (Mitutoyo/ISO 1302). N-grade הוא נוטציה ישנה (ISO 1302:2002, בוטלה לטובת ISO 21920:2021) — לציין מהדורה בתוכן.
 מי בדק:
-הערות: אישוש-צולב אפשרי מול Xometry/Mactech (נמצאו בחיפוש, לא נבדקו בנפרד).
+הערות: אישוש-צולב אפשרי מול Xometry/Mactech (נמצאו בחיפוש, לא נבדקו בנפרד). שימוש בפועל (2026-07-14): הטבלה המלאה N1–N10 חולצה פעמיים בשליפות נפרדות (תוצאות זהות) והוצלבה מול סדרת ההכפלה הקנונית של ISO — הערכים נכנסו ל-app/src/content/tables/surface-finish.ts (טבלת Datapad DATA-10). ראיות: sources/verified/reference-tables.md.
 ```
 
 ### SRC-TBL-302
 
 ```text
 מזהה: SRC-TBL-302
-סטטוס: inbox
+סטטוס: verified
 דירוג: B
 כותרת: Mechanical Properties of Plastic Materials (טבלת השוואה רב-פולימרית)
 ארגון/יצרן: Professional Plastics (מפיץ פלסטיקה תעשייתית; פרטי קשר מזוהים במסמך)
@@ -1605,7 +1605,7 @@
 נושאים: טבלה 3.3 — עמודות: Tensile strength (MPa), Tensile modulus (GPa), Elongation at break (%), Hardness (Rockwell), Izod impact (J/m), Poisson's ratio, Compressive strength/modulus (חלקי), Coefficient of friction. מכסה את כל הפולימרים המבוקשים: ABS, PC, POM (Acetal homo+copoly), PA6/PA66/PA12 (Nylon), PEEK, PP — ועוד רבים (PTFE, PET, PEI, PPS, PVDF, PSU...).
 ידע רלוונטי: נקרא במלואו בהצלחה באמצעות Read ישיר על ה-PDF (WebFetch נכשל — FlateDecode, אותה תבנית כשל כמו Bossard/Xometry). מקור נגיש יחיד המכסה את כל 6 הפלסטיקות ההנדסיות בטבלה אחת.
 נתונים מספריים: כן — טבלה מלאה, אומתה ויזואלית.
-מגבלות שימוש: מקור B (מפיץ, לא יצרן שרף/תקן) — המסמך עצמו מצהיר "given as a guide only... no warranty". חסרה עמודת HDT (Heat Deflection Temperature) שביקשנו — להשלים מ-MatWeb/datasheet יצרן (SRC-TBL-303). ערכים כטווחים רחבים (תלוי grade) — לא לצטט ערך יחיד ללא datasheet ספציפי לחומר.
+מגבלות שימוש: מקור B (מפיץ, לא יצרן שרף/תקן) — המסמך עצמו מצהיר "given as a guide only... no warranty". חסרה עמודת HDT (Heat Deflection Temperature) שביקשנו — להשלים מ-MatWeb/datasheet יצרן (SRC-TBL-303). ערכים כטווחים רחבים (תלוי grade) — לא לצטט ערך יחיד ללא datasheet ספציפי לחומר. שימוש בפועל (2026-07-14): הטווחים נכנסו verbatim ל-app/src/content/tables/plastics-strength.ts (טבלת Datapad DATA-14) עם caveat "לא ערכי תכן"; עותק הקובץ נשמר: sources/verified/docs/professional-plastics-mechanical-properties.pdf. ראיות: sources/verified/reference-tables.md.
 מי בדק:
 הערות:
 ```

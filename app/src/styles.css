@@ -1052,6 +1052,8 @@ body {
 
 .dp-intro { color: var(--dim); max-width: 640px; margin: 10px 0 18px; }
 
+.dp-section { margin-top: 18px; }
+
 .dp-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));

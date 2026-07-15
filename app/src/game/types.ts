@@ -68,6 +68,7 @@ export interface ReferenceTable {
   id: string
   codename: string // English HUD codename, e.g. "DATA-01 // TAP DRILL"
   title: string // Hebrew title
+  category: string // Datapad section, e.g. "ברגים והברגות" — provisional until curriculum mapping
   standard: string // governing standard, e.g. "ISO 273:1979"
   intro: string // one Hebrew sentence: what you use this table for
   columns: TableColumn[]
@@ -82,6 +83,7 @@ export interface ReferenceTable {
 export interface PlannedTable {
   codename: string
   title: string
+  category: string
   standard: string
 }
 

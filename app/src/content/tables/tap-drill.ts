@@ -14,6 +14,7 @@ export const tapDrillTable: ReferenceTable = {
   id: 'tap-drill-metric',
   codename: 'DATA-01 // TAP DRILL',
   title: 'קידוח קדם-הברגה — תבריג מטרי גס',
+  category: 'ברגים והברגות',
   standard: 'ISO 261 / ISO 2306',
   intro:
     'לפני שמבריגים — קודחים. הטבלה נותנת את קוטר המקדח לכל תבריג: אחיזה של ~75% לחומרים רכים, ~50% לחומרים קשים. כלל מהיר: קוטר ≈ קוטר נומינלי פחות פסיעה.',

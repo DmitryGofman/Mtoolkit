@@ -89,12 +89,53 @@ M8×1.25, M10×1.5, M12×1.75, M16×2.0, M20×2.5).
 
 ---
 
+## 3. חוזק פלסטיקה הנדסית (`plastics-strength`) — דירוג B, מקור יחיד
+
+**מקור:** Professional Plastics, "Mechanical Properties of Plastic Materials"
+(SRC-TBL-302). ה-PDF (4 עמודים) נקרא במלואו בקריאה ישירה; עותק שמור:
+`sources/verified/docs/professional-plastics-mechanical-properties.pdf`.
+
+**מה חולץ:** tensile strength (MPa), tensile modulus (GPa), elongation (%),
+hardness (Rockwell/Shore), Izod (J/m) עבור ABS, PC, POM-C, POM-H, PA6, PA66,
+PEEK, PP, PTFE, UHMW-PE — **כטווחים, verbatim מהמקור** (לא נקבעו ערכי נקודה).
+
+**מגבלות:** מקור יחיד (מפיץ, לא יצרן שרף); אין עמודת HDT — להשלים מ-MatWeb
+(SRC-TBL-303). ה-caveat בטבלת ה-Datapad מזהיר: לא ערכי תכן, datasheet לפי grade.
+
+## 4. גימור פנים Ra/N-grade (`surface-finish-ra`) — דירוג B מוצלב
+
+**מקור:** PREMSA Industries surface-finish chart (SRC-TBL-301), מצטט
+ISO 1302:2002 + ISO 4287. הטבלה חולצה **פעמיים בשליפות נפרדות** (2026-07-14)
+עם תוצאות זהות: N1–N10 עם Ra(µm), Ra(µin), תהליך אופייני ושימוש.
+
+**הצלבה:** הערכים תואמים בדיוק את סדרת ההכפלה הקנונית של דרגות ISO
+(Ra 0.025 × 2ⁿ: 0.025/0.05/0.1/0.2/0.4/0.8/1.6/3.2/6.3/12.5) ואת ערכי
+ה-µin הקלאסיים (1/2/4/8/16/32/63/125/250/500). N11/N12 (Ra 25/50) לא בטבלת
+המקור — צוינו ב-caveat בלבד.
+
+## 5. רגל ריתוך פינתי מינימלית (`weld-fillet-min`) — ⚠ מקור משני, ממתין לאימות מול הקוד
+
+**מקור מחייב:** AWS D1.1 Table 7.7 (SRC-TBL-217) — בתשלום, לא נקרא ישירות.
+**מה כן אומת:** הערכים (T≤1/4″→1/8″; ≤1/2″→3/16″; ≤3/4″→1/4″; >3/4″→5/16″)
+מצוטטים באופן עקבי על-ידי Welding Answers (SRC-TBL-304, מצטט את הקוד במפורש
+כולל מהדורה) וכמה מקורות הנדסיים נוספים שנסרקו בחיפוש. ערכי המ"מ (3/5/6/8)
+הם ההמרות המקובלות.
+
+**סטטוס: needs-review** — הטבלה נכנסה ל-Datapad עם caveat מפורש בגוף הטבלה
+("טרם אומתו מול נוסח AWS D1.1 עצמו"). לפני שימוש בתוכן בחינה/מחייב — לאמת מול
+הקוד או מול AISC Steel Construction Manual Table J2.4.
+
+---
+
 ## סטטוס
 
 | טבלה ב-Datapad | דירוג אימות | קובץ ראיה |
 |----------------|-------------|-----------|
 | `clearance-holes-metric` | **A** — נקרא מהתקן | iso-273-1979-official-preview.pdf |
 | `tap-drill-metric` | **B מוצלב** — 2 מקורות + נוסחה | littlemachineshop-metric-tap-clearance.pdf |
+| `plastics-strength` | **B מקור יחיד** — טווחים verbatim | professional-plastics-mechanical-properties.pdf |
+| `surface-finish-ra` | **B מוצלב** — שליפה כפולה + סדרה קנונית | (עמוד אינטרנט — SRC-TBL-301) |
+| `weld-fillet-min` | **⚠ needs-review** — מקורות משניים בלבד | (SRC-TBL-304; הקוד בתשלום) |
 
 מי בדק: הצלבה אוטומטית במסגרת session בניית ה-Datapad (2026-07-14); מומלץ מעבר
 עין אנושי לפני שחרור רשמי ללומדים.
