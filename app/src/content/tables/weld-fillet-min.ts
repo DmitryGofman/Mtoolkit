@@ -32,5 +32,5 @@ export const weldFilletMinTable: ReferenceTable = {
   sourceId: 'SRC-TBL-304',
   sourceNote:
     'מצוטט לפי Welding Answers (מצטט AWS D1.1:2020 Table 7.7 + AISC 360 J2.4) ועקבי בין כמה מקורות הנדסיים; המקור המחייב עצמו בתשלום — דורש אימות אנושי מול הקוד. ראו sources/verified/reference-tables.md',
-  unlockedBy: 'ch11-welding',
+  relatedChapter: 'ch11-welding',
 }

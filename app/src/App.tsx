@@ -30,7 +30,7 @@ type Screen =
   | { kind: 'exam'; index: number }
   | { kind: 'debrief'; score: number }
   | { kind: 'dossier' }
-  | { kind: 'datapad' }
+  | { kind: 'datapad'; tableId?: string }
 
 export default function App() {
   const [player, setPlayer] = useState<PlayerState>(loadState)
@@ -109,9 +109,9 @@ export default function App() {
 
   // Same return-to-origin pattern for the Datapad reference library.
   const datapadReturnRef = useRef<Screen>({ kind: 'command-center' })
-  function openDatapad() {
+  function openDatapad(tableId?: string) {
     if (screen.kind !== 'datapad') datapadReturnRef.current = screen
-    setScreen({ kind: 'datapad' })
+    setScreen({ kind: 'datapad', tableId })
   }
   function closeDatapad() {
     setScreen(datapadReturnRef.current)
@@ -212,7 +212,7 @@ export default function App() {
         onReset={reset}
         onHome={screen.kind === 'command-center' ? undefined : goHome}
         onDossier={screen.kind === 'dossier' ? undefined : openDossier}
-        onDatapad={screen.kind === 'datapad' ? undefined : openDatapad}
+        onDatapad={screen.kind === 'datapad' ? undefined : () => openDatapad()}
       />
 
       {screen.kind === 'command-center' && (
@@ -269,6 +269,8 @@ export default function App() {
         <Debrief
           chapter={chapter}
           examScore={screen.score}
+          relatedTables={referenceTables.filter((t) => t.relatedChapter === chapter.id)}
+          onOpenTable={openDatapad}
           onReturn={goHome}
           onRetry={() => navTo({ kind: 'exam', index: 0 })}
         />
@@ -280,10 +282,10 @@ export default function App() {
 
       {screen.kind === 'datapad' && (
         <Datapad
+          key={screen.tableId ?? 'library'}
           tables={referenceTables}
           planned={plannedTables}
-          isChapterDone={(id) => normalizeProgress(player.chapters[id]).completed}
-          chapterName={(id) => chapters.find((c) => c.id === id)?.codename ?? id}
+          initialTableId={screen.tableId}
           onReturn={closeDatapad}
         />
       )}

@@ -76,7 +76,7 @@ export interface ReferenceTable {
   caveat: string // limits of validity — mandatory, like RuleOfThumb
   sourceId: string // SRC-TBL-xxx record in sources/source-index.md
   sourceNote: string // Hebrew one-liner: how the values were verified
-  unlockedBy: string // chapter id whose completion unlocks it in the Datapad
+  relatedChapter: string // chapter whose debrief points here; tables are never locked
 }
 
 /** A table that is planned but not yet sourced/verified — teased locked in the Datapad. */

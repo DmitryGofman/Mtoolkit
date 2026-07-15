@@ -41,5 +41,5 @@ export const plasticsStrengthTable: ReferenceTable = {
   sourceId: 'SRC-TBL-302',
   sourceNote:
     'Professional Plastics — הטבלה נקראה במלואה והקובץ שמור ב-sources/verified/docs. מקור יחיד (דירוג B) — טווחים בלבד, ראו caveat. השלמת HDT: MatWeb (SRC-TBL-303)',
-  unlockedBy: 'ch10-printing',
+  relatedChapter: 'ch10-printing',
 }

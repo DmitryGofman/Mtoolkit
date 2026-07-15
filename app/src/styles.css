@@ -1130,6 +1130,32 @@ body {
 /* inline datapad table inside a field-op exercise */
 .ex-table-toggle { width: 100%; text-align: start; direction: ltr; font-size: 11px; }
 
+/* debrief → datapad references */
+.dp-refs { margin-top: 18px; }
+
+.dp-refs-hint { color: var(--dim); font-size: 13px; margin: 6px 0 10px; }
+
+.dp-refs-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.dp-ref-btn {
+  font: inherit;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: start;
+  background: rgba(53, 224, 255, 0.05);
+  border: 1px solid var(--cyan-dim);
+  clip-path: var(--clip);
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.dp-ref-btn:hover { transform: translateY(-2px); background: rgba(53, 224, 255, 0.12); }
+
+.dp-ref-btn .mono { font-size: 10px; letter-spacing: 0.1em; direction: ltr; text-align: start; }
+
 @media (max-width: 640px) {
   .dp-grid { grid-template-columns: 1fr 1fr; }
   .data-table td, .data-table th { padding: 6px 8px; font-size: 12px; }

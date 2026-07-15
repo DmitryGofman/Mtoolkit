@@ -40,5 +40,5 @@ export const clearanceHolesTable: ReferenceTable = {
   sourceId: 'SRC-TBL-107',
   sourceNote:
     'נקרא ישירות מהתקן ISO 273:1979 (תצוגה רשמית מלאה, הקובץ שמור ב-sources/verified/docs). דירוג A. ראו sources/verified/reference-tables.md',
-  unlockedBy: 'ch01-bolts',
+  relatedChapter: 'ch01-bolts',
 }

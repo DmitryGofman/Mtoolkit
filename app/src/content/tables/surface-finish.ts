@@ -38,5 +38,5 @@ export const surfaceFinishTable: ReferenceTable = {
   sourceId: 'SRC-TBL-301',
   sourceNote:
     'PREMSA Industries (מצטט ISO 1302:2002/ISO 4287) — הטבלה חולצה פעמיים בשליפות נפרדות ואומתה מול סדרת ההכפלה הקנונית של דרגות ה-N. ראו sources/verified/reference-tables.md',
-  unlockedBy: 'ch16-metrology',
+  relatedChapter: 'ch16-metrology',
 }

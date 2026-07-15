@@ -1,8 +1,11 @@
-import type { Chapter } from '../game/types.ts'
+import type { Chapter, ReferenceTable } from '../game/types.ts'
 
 interface Props {
   chapter: Chapter
   examScore: number // percent
+  /** Datapad tables this chapter teaches how to read — referenced on completion. */
+  relatedTables: ReferenceTable[]
+  onOpenTable: (tableId: string) => void
   onReturn: () => void
   onRetry: () => void
 }
@@ -14,7 +17,7 @@ function medalFor(score: number): { icon: string; label: string; cls: string } {
   return { icon: '✘', label: 'MISSION FAILED — נדרש ריענון אינטל', cls: 'medal-fail' }
 }
 
-export function Debrief({ chapter, examScore, onReturn, onRetry }: Props) {
+export function Debrief({ chapter, examScore, relatedTables, onOpenTable, onReturn, onRetry }: Props) {
   const medal = medalFor(examScore)
   const passed = examScore >= 60
 
@@ -48,6 +51,22 @@ export function Debrief({ chapter, examScore, onReturn, onRetry }: Props) {
                 ))}
               </ul>
             </div>
+            {relatedTables.length > 0 && (
+              <div className="block dp-refs">
+                <div className="block-label mono">▦ DATAPAD — הטבלאות של המבצע הזה</div>
+                <p className="dp-refs-hint">
+                  עכשיו אתה יודע לקרוא אותן. הן תמיד זמינות ב-DATAPAD — אלה הכתובות:
+                </p>
+                <div className="dp-refs-row">
+                  {relatedTables.map((t) => (
+                    <button key={t.id} className="dp-ref-btn" onClick={() => onOpenTable(t.id)}>
+                      <span className="mono accent">{t.codename}</span>
+                      <span>{t.title}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </>
         ) : (
           <p className="debrief-text">

@@ -42,5 +42,5 @@ export const tapDrillTable: ReferenceTable = {
   sourceId: 'SRC-TBL-306',
   sourceNote:
     'הוצלב בין שני מקורות בלתי-תלויים (AmesWeb ISO 68-1 + LittleMachineShop) ואומת מול נוסחת האחיזה. ראו sources/verified/reference-tables.md',
-  unlockedBy: 'ch01-bolts',
+  relatedChapter: 'ch01-bolts',
 }
